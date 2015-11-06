@@ -2,5 +2,9 @@ Changes
 Makefile.PL
 MANIFEST
 README
-t/AliTV.t
+
+# here are the test scripts
+t/500_AliTV.t
+
+# library files are listed here
 lib/AliTV.pm
