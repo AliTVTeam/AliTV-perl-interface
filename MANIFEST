@@ -7,6 +7,7 @@ README
 t/001_AliTV-Base.t
 t/002_AliTV-Base-version.t
 t/003_AliTV-Base-new.t
+t/004_AliTV-Base-destroy.t
 t/500_AliTV.t
 
 # library files are listed here
