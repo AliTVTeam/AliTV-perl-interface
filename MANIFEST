@@ -9,3 +9,4 @@ t/500_AliTV.t
 
 # library files are listed here
 lib/AliTV.pm
+lib/AliTV/Base.pm
