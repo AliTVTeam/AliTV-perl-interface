@@ -5,6 +5,7 @@ README
 
 # here are the test scripts
 t/001_AliTV-Base.t
+t/002_AliTV-Base-version.t
 t/500_AliTV.t
 
 # library files are listed here
