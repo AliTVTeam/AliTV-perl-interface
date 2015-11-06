@@ -2,6 +2,10 @@ package AliTV::Base;
 
 use AliTV::Base::Version;
 
+sub new
+{
+}
+
 1;
 
 =head1 AliTV::Base class
