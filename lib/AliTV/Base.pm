@@ -4,6 +4,8 @@ use AliTV::Base::Version;
 
 sub new
 {
+    my ($class) = @_;
+    return bless {}, $class;
 }
 
 1;
@@ -36,6 +38,8 @@ methods comprise:
 
 Therefore the module utilizes L<AliTV::Base::Version> to generate a
 single version number for all files.
+
+=item * A basic constructor
 
 =back
 
