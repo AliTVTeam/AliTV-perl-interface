@@ -8,6 +8,13 @@ sub new
     return bless {}, $class;
 }
 
+sub DESTROY
+{
+    my $self = shift;
+
+    # currently nothing to do
+}
+
 1;
 
 =head1 AliTV::Base class
@@ -40,6 +47,8 @@ Therefore the module utilizes L<AliTV::Base::Version> to generate a
 single version number for all files.
 
 =item * A basic constructor
+
+=item * A basic destructor
 
 =back
 
