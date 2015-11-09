@@ -54,6 +54,11 @@ sub file
     return $return_val;
 }
 
+sub _file_check
+{
+    my $self = shift;
+}
+
 1;
 
 =head1 AliTV::Base class
