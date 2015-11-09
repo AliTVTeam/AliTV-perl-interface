@@ -6,6 +6,9 @@ BEGIN { use_ok('AliTV::Base') };
 
 can_ok('AliTV::Base', qw(file));
 
+# the setter should implement a check for existing files and die otherwise
+can_ok('AliTV::Base', qw(_file_check));
+
 my $obj = AliTV::Base->new();
 
 # check if the default value is undef
@@ -23,9 +26,5 @@ $obj = AliTV::Base->new();
 # and use the setter to set the filename
 $inputfile = "data/existing_testfile";
 ok($obj->file($inputfile) eq $inputfile, 'Setter file is able to set the attribute');
-
-# the setter should implement a check for existing files and die otherwise
-can_ok('AliTV::Base', qw(_file_check));
-
 
 done_testing;
