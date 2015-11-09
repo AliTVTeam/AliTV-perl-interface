@@ -16,4 +16,12 @@ my $inputfile = "Testfile";
 $obj->{file} = $inputfile;
 ok($obj->file() eq $inputfile, 'Getter file works without setter');
 
+### Setter file
+# create a new object
+$obj = AliTV::Base->new();
+
+# and use the setter to set the filename
+$inputfile = "Testfile"; 
+ok($obj->file($inputfile) eq $inputfile, 'Setter file is able to set the attribute');
+
 done_testing;
