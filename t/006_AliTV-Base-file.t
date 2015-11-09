@@ -2,6 +2,8 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Exception;
+
 BEGIN { use_ok('AliTV::Base') };
 
 can_ok('AliTV::Base', qw(file));
@@ -26,5 +28,9 @@ $obj = AliTV::Base->new();
 # and use the setter to set the filename
 $inputfile = "data/existing_testfile";
 ok($obj->file($inputfile) eq $inputfile, 'Setter file is able to set the attribute');
+
+# usage of non existing files should lead to an exception
+$inputfile = "data/non_existing_testfile";
+throws_ok { $obj->file($inputfile) } qr/The file .* does not exist!/, 'Exception when using non existing files';
 
 done_testing;
