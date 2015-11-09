@@ -4,8 +4,43 @@ use AliTV::Base::Version;
 
 sub new
 {
-    my ($class) = @_;
-    return bless {}, $class;
+    my $class = shift;
+
+    my $self = {};
+
+    bless $self, $class;
+
+    if (@_%2!=0)
+    {
+	require Carp;
+	Carp::croak("The number of arguments was odd!");
+    }
+
+    my %named_parameter = @_;
+
+    foreach my $attribute (keys %named_parameter)
+    {
+	# ignore all key without leading dash
+	my $method = $attribute;
+	if ($attribute !~ /^-/)
+	{
+	    require Carp;
+	    Carp::croak("The attribute '$attribute' does not start with a leading dash!");
+	} else {
+	    
+	    $method =~ s/^-//;
+
+	    if (__PACKAGE__->can($method))
+	    {
+		$self->$method($named_parameter{$attribute});
+	    } else {
+		require Carp;
+		Carp::croak("The attribute '$method' has no setter in class '".__PACKAGE__."'");
+	    }
+	}
+    }
+
+    return $self;
 }
 
 sub DESTROY
