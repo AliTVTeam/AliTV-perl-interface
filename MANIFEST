@@ -9,9 +9,13 @@ t/002_AliTV-Base-version.t
 t/003_AliTV-Base-new.t
 t/004_AliTV-Base-destroy.t
 t/005_AliTV-Base-clone.t
+t/006_AliTV-Base-file.t
 t/500_AliTV.t
 
 # library files are listed here
 lib/AliTV.pm
 lib/AliTV/Base.pm
 lib/AliTV/Base/Version.pm
+
+# data files are listed here
+data/existing_testfile
