@@ -31,6 +31,11 @@ sub clone
     return $deep_copy;
 }
 
+sub file
+{
+    my $self = shift;
+}
+
 1;
 
 =head1 AliTV::Base class
