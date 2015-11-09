@@ -15,6 +15,22 @@ sub DESTROY
     # currently nothing to do
 }
 
+sub clone
+{
+    my $self = shift;
+
+    unless (ref $self)
+    {
+	require Carp;
+	Carp::croak("Cannot clone class '$self'");
+    }
+
+    # we require the dclone function from Storable
+    require Storable;
+    my $deep_copy = Storable::dclone($self);
+    return $deep_copy;
+}
+
 1;
 
 =head1 AliTV::Base class
@@ -49,6 +65,8 @@ single version number for all files.
 =item * A basic constructor
 
 =item * A basic destructor
+
+=item * A basic clone method
 
 =back
 
