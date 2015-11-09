@@ -34,6 +34,19 @@ sub clone
 sub file
 {
     my $self = shift;
+
+    my $return_val = undef;
+
+    # return the current value if the object has a attribute 'file'
+    if (exists $self->{file})
+    {
+	$return_val = $self->{file};
+    } else {
+	# otherwise generate the attribute and assign the value undef
+	$self->{file} = $return_val;
+    }
+
+    return $return_val;
 }
 
 1;
