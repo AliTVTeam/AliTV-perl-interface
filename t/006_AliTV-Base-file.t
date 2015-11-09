@@ -12,7 +12,7 @@ my $obj = AliTV::Base->new();
 ok(! defined $obj->file(), 'Default value is undef');
 
 # check if the getter works correctly, therefore set the value without setter
-my $inputfile = "Testfile"; 
+my $inputfile = "data/existing_testfile";
 $obj->{file} = $inputfile;
 ok($obj->file() eq $inputfile, 'Getter file works without setter');
 
@@ -21,7 +21,7 @@ ok($obj->file() eq $inputfile, 'Getter file works without setter');
 $obj = AliTV::Base->new();
 
 # and use the setter to set the filename
-$inputfile = "Testfile";
+$inputfile = "data/existing_testfile";
 ok($obj->file($inputfile) eq $inputfile, 'Setter file is able to set the attribute');
 
 # the setter should implement a check for existing files and die otherwise
