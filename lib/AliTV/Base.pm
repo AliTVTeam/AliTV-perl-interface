@@ -19,6 +19,10 @@ sub clone
 {
     my $self = shift;
 
+    # we require the dclone function from Storable
+    require Storable;
+    my $deep_copy = Storable::dclone($self);
+    return $deep_copy;
 }
 
 1;
