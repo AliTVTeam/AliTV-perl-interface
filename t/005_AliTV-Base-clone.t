@@ -3,6 +3,7 @@ use warnings;
 
 use Test::More;
 use Scalar::Util qw(refaddr);
+use Test::Exception;
 
 BEGIN { use_ok('AliTV::Base') };
 
@@ -21,5 +22,13 @@ my $obj_c = $obj_a;
 # first check if $obj_c is a object
 isa_ok($obj_c, 'AliTV::Base', 'Flat copies result in the correct object');
 is(refaddr($obj_a), refaddr($obj_c), 'Flat copies belong to the same object');
+
+# deep copying should result in different objects
+$obj_c = $obj_a->clone();
+isa_ok($obj_c, 'AliTV::Base', 'Deep copies result in the correct object');
+isnt(refaddr($obj_a), refaddr($obj_c), 'Deep copies do not belong to the same object');
+
+# deep copying as class method should fail
+throws_ok { $obj_c = AliTV::Base->clone(); } qr/Cannot clone class/, 'Classes cannot be clones';
 
 done_testing;

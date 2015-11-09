@@ -6,6 +6,7 @@ WriteMakefile(
     NAME              => 'AliTV',
     VERSION_FROM      => 'lib/AliTV.pm', # finds $VERSION
     PREREQ_PM         => {
+	Test::Exception => 0,
 	Storable => 0,              # Core module since perl v5.7.3
     }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
