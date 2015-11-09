@@ -33,4 +33,12 @@ ok($obj->file($inputfile) eq $inputfile, 'Setter file is able to set the attribu
 $inputfile = "data/non_existing_testfile";
 throws_ok { $obj->file($inputfile) } qr/The file .* does not exist!/, 'Exception when using non existing files';
 
+### finally I want to set the file attribute via constructor if it is provided
+$inputfile = "data/existing_testfile";
+$obj = AliTV::Base->new(-file => $inputfile);
+ok($obj->file() eq $inputfile, 'Setter file is able to set the attribute via constructor');
+
+$inputfile = "data/non_existing_testfile";
+throws_ok { $obj = AliTV::Base->new(-file => $inputfile); } qr/The file .* does not exist!/, 'Exception when using non existing files via constructor';
+
 done_testing;
