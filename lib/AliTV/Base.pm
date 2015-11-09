@@ -19,6 +19,12 @@ sub clone
 {
     my $self = shift;
 
+    unless (ref $self)
+    {
+	require Carp;
+	Carp::croak("Cannot clone class '$self'");
+    }
+
     # we require the dclone function from Storable
     require Storable;
     my $deep_copy = Storable::dclone($self);
