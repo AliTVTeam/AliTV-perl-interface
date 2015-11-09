@@ -5,7 +5,7 @@ plan skip_all => "Test::Pod::Coverage 1.00 required for testing POD coverage"
   if $@;
 
 my @modules_expect_to_pass = qw(AliTV AliTV::Base::Version);
-my @modules_expect_to_fail = qw(AliTV::Base AliTV::Seq);
+my @modules_expect_to_fail = qw(AliTV::Base AliTV::Seq AliTV::Tree);
 
 foreach my $module (@modules_expect_to_pass) {
     pod_coverage_ok( $module,

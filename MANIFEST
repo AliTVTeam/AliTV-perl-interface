@@ -13,6 +13,8 @@ t/006_AliTV-Base-file.t
 t/007_AliTV-Base-_initialize.t
 t/050_AliTV-Base-logging.t
 
+t/101_AliTV-Tree.t
+
 t/201_AliTV-Seq.t
 t/202_AliTV-Seq-new.t
 t/203_AliTV-Seq-_initialize.t
@@ -38,3 +40,4 @@ lib/AliTV/Seq.pm
 # data files are listed here
 data/existing_testfile
 data/fasta-input.fasta
+
