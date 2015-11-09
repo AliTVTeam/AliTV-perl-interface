@@ -37,9 +37,14 @@ sub file
 
     my $return_val = undef;
 
-    # return the current value if the object has a attribute 'file'
-    if (exists $self->{file})
+    # check if other arguments are given
+    if (@_)
     {
+	$return_val = shift;    # first parameter is the filename
+	$self->{file} = $return_val;
+    } elsif (exists $self->{file}) 
+    {
+	# return the current value if the object has a attribute 'file'
 	$return_val = $self->{file};
     } else {
 	# otherwise generate the attribute and assign the value undef
