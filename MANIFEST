@@ -14,6 +14,7 @@ t/007_AliTV-Base-_initialize.t
 t/050_AliTV-Base-logging.t
 
 t/101_AliTV-Tree.t
+t/102_AliTV-Tree-new.t
 
 t/201_AliTV-Seq.t
 t/202_AliTV-Seq-new.t
