@@ -42,6 +42,9 @@ sub file
     {
 	$return_val = shift;    # first parameter is the filename
 	$self->{file} = $return_val;
+
+	# call the check for existing files
+	$self->_file_check();
     } elsif (exists $self->{file}) 
     {
 	# return the current value if the object has a attribute 'file'
@@ -57,6 +60,16 @@ sub file
 sub _file_check
 {
     my $self = shift;
+
+    # check if the attribute 'file' exists and is defined
+    if (exists $self->{file} && defined $self->{file})
+    {
+	unless (-e $self->{file})
+	{
+	    require Carp;
+	    Carp::croak("The file '$self->{file}' does not exist!");
+	}
+    }
 }
 
 1;
