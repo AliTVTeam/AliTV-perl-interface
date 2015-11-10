@@ -3,12 +3,17 @@ package AliTV::Seq;
 use base AliTV::Base;
 
 use Bio::Seq;
+use Bio::SeqIO;
 
 sub file
 {
     my $self = shift;
 
     $self->SUPER::file(@_);
+
+    my $fileio  = Bio::SeqIO->new(-file => $self->{file});
+
+    $self->{_seq_obj} = $fileio->next_seq();
 }
 
 sub id

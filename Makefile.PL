@@ -9,6 +9,7 @@ WriteMakefile(
 	Test::Exception => 0,
 	Storable => 0,              # Core module since perl v5.7.3
 	Bio::Seq => 1.006923,
+	Bio::SeqIO => 1.006923,
     }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/AliTV.pm', # retrieve abstract from module
