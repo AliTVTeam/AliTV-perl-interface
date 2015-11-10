@@ -16,8 +16,11 @@ t/500_AliTV.t
 
 # library files are listed here
 lib/AliTV.pm
+
 lib/AliTV/Base.pm
 lib/AliTV/Base/Version.pm
+
+lib/AliTV/Seq.pm
 
 # data files are listed here
 data/existing_testfile
