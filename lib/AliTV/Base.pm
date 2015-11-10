@@ -10,6 +10,16 @@ sub new
 
     bless $self, $class;
 
+    # call the private _inititialize method providing the parameters
+    $self->_initialize(@_);
+
+    return $self;
+}
+
+sub _initialize
+{
+    my $self = shift;
+
     if (@_%2!=0)
     {
 	require Carp;
@@ -39,8 +49,7 @@ sub new
 	    }
 	}
     }
-
-    return $self;
+    
 }
 
 sub DESTROY
