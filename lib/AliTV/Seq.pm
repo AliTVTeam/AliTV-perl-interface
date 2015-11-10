@@ -14,6 +14,11 @@ sub file
 sub id
 {
     my $self = shift;
+
+    if (exists $self->{_seq_obj} && $self->{_seq_obj}->isa("Bio::Seq"))
+    {
+	return $self->{_seq_obj}->id();
+    }
 }
 
 sub _initialize
