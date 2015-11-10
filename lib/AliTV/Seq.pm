@@ -25,6 +25,15 @@ sub seq
     return $self->_Map2BioSeq("seq", @_);
 }
 
+sub seqlength
+{
+    my $self = shift;
+
+    # there is no setter implemented, therefore @_ does not need to be
+    # provided
+    return $self->_Map2BioSeq("length");
+}
+
 sub _Map2BioSeq
 {
     my $self = shift;
