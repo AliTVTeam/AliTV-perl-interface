@@ -2,6 +2,8 @@ package AliTV::Seq;
 
 use base AliTV::Base;
 
+use Bio::Seq;
+
 sub file
 {
     my $self = shift;
@@ -12,6 +14,18 @@ sub file
 sub id
 {
     my $self = shift;
+}
+
+sub _initialize
+{
+    my $self = shift;
+
+    # we want to have an empty Bio::Seq object to store everything
+    # required
+    $self->{_seq_obj} = Bio::Seq->new();
+
+    # call the overridden method
+    $self->SUPER::_initialize();
 }
 
 1;
