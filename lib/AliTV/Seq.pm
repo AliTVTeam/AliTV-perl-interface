@@ -1,5 +1,7 @@
 package AliTV::Seq;
 
+use base AliTV::Base;
+
 1;
 
 =head1 AliTV::Seq
