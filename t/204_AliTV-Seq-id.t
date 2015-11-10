@@ -26,4 +26,8 @@ throws_ok { $obj->id(); }
 	  qr/The sequence storage attribute does not exist/,
           'Exception when using without an existing attribute';
 
+my $new_id = "TESTID";
+$obj = new_ok('AliTV::Seq');
+ok($obj->id($new_id) eq $new_id, 'Setter/getter works as expected');
+
 done_testing;
