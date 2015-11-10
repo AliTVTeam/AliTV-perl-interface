@@ -2,6 +2,13 @@ package AliTV::Seq;
 
 use base AliTV::Base;
 
+sub file
+{
+    my $self = shift;
+
+    $self->SUPER::file(@_);
+}
+
 1;
 
 =head1 AliTV::Seq
