@@ -32,3 +32,4 @@ lib/AliTV/Seq.pm
 
 # data files are listed here
 data/existing_testfile
+data/fasta-input.fasta
