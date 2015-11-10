@@ -17,6 +17,7 @@ t/203_AliTV-Seq-file.t
 t/204_AliTV-Seq-id.t
 t/205_AliTV-Seq-_initialize.t
 t/206_AliTV-Seq-seq.t
+t/207_AliTV-Seq-seqlength.t
 t/500_AliTV.t
 
 # library files are listed here
