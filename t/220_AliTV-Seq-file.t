@@ -13,4 +13,8 @@ my $obj = new_ok('AliTV::Seq');
 
 $obj->file('data/fasta-input.fasta');
 
+is($obj->id(), "Test", 'Returned ID is correct');
+is($obj->seq(), "ACGTTGCGTGC", 'Returned sequence is correct');
+cmp_ok($obj->seqlength(), '==', 11, 'Returned sequence length is correct');
+
 done_testing;
