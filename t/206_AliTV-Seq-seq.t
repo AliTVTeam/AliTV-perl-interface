@@ -28,6 +28,6 @@ throws_ok { $obj->seq(); }
 
 my $new_seq = "ACGTTTGCGTG";
 $obj = new_ok('AliTV::Seq');
-ok($obj->id($new_seq) eq $new_seq, 'Setter/getter works as expected');
+ok($obj->seq($new_seq) eq $new_seq, 'Setter/getter works as expected');
 
 done_testing;

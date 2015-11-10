@@ -15,6 +15,21 @@ sub id
 {
     my $self = shift;
 
+    return $self->_Map2BioSeq("id", @_);
+}
+
+sub seq
+{
+    my $self = shift;
+
+    return $self->_Map2BioSeq("seq", @_);
+}
+
+sub _Map2BioSeq
+{
+    my $self = shift;
+    my $method = shift;
+
     unless (exists $self->{_seq_obj})
     {
 	require Carp;
@@ -27,7 +42,7 @@ sub id
 	Carp::croak('The sequence storage attribute is not a Bio::Seq object');
     }
 
-    return $self->{_seq_obj}->id(@_);
+    return $self->{_seq_obj}->$method(@_);
 }
 
 sub _initialize
