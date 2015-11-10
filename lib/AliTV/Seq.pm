@@ -9,6 +9,11 @@ sub file
     $self->SUPER::file(@_);
 }
 
+sub id
+{
+    my $self = shift;
+}
+
 1;
 
 =head1 AliTV::Seq
@@ -37,6 +42,8 @@ accessed:
 =item Sequence 
 
 =back
+
+=head1 METHODS
 
 =head1 AUTHOR
 
