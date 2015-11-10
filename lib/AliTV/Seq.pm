@@ -27,7 +27,7 @@ sub id
 	Carp::croak('The sequence storage attribute is not a Bio::Seq object');
     }
 
-    return $self->{_seq_obj}->id();
+    return $self->{_seq_obj}->id(@_);
 }
 
 sub _initialize
