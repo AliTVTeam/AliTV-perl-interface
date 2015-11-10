@@ -15,10 +15,19 @@ sub id
 {
     my $self = shift;
 
-    if (exists $self->{_seq_obj} && $self->{_seq_obj}->isa("Bio::Seq"))
+    unless (exists $self->{_seq_obj})
     {
-	return $self->{_seq_obj}->id();
+	require Carp;
+	Carp::croak('The sequence storage attribute does not exist');
     }
+
+    unless (ref($self->{_seq_obj}) eq "Bio::Seq")
+    {
+	require Carp;
+	Carp::croak('The sequence storage attribute is not a Bio::Seq object');
+    }
+
+    return $self->{_seq_obj}->id();
 }
 
 sub _initialize
