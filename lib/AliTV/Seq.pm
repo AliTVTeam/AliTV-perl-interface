@@ -71,6 +71,12 @@ sub _initialize
     $self->SUPER::_initialize();
 }
 
+sub output
+{
+    my $self = shift;
+
+}
+
 1;
 
 =head1 AliTV::Seq
