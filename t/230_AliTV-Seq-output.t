@@ -18,6 +18,6 @@ my $expected = {
    genome_id => "Test"
    };
 
-is_deeply($obj->output(), $expected, 'The expected hash reference is returned');
+is_deeply($obj->prep_json(), $expected, 'The expected hash reference is returned');
 
 done_testing;

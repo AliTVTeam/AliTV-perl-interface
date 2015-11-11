@@ -71,7 +71,7 @@ sub _initialize
     $self->SUPER::_initialize();
 }
 
-sub output
+sub prep_json
 {
     my $self = shift;
 
