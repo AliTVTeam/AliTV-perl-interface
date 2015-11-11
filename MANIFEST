@@ -88,6 +88,8 @@ lib/AliTV/Genome.pm
 lib/AliTV/Alignment.pm
 lib/AliTV/Alignment/lastz.pm
 
+lib/AliTV/Feature.pm
+
 # data files are listed here
 data/existing_testfile
 data/fasta-input.fasta
