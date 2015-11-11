@@ -84,6 +84,11 @@ sub prep_json
     return $output;
 }
 
+sub from_seqio
+{
+    my $self = shift;
+}
+
 1;
 
 =head1 AliTV::Seq
