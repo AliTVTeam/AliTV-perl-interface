@@ -1,5 +1,7 @@
 package AliTV::Feature;
 
+use parent AliTV::Base;
+
 1;
 
 =head1 AliTV::Feature
