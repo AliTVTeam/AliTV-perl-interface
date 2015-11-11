@@ -34,6 +34,8 @@ t/220_AliTV-Seq-file.t
 t/225_AliTV-Seq-from_bioseq.t
 t/230_AliTV-Seq-output.t
 
+t/301_AliTV-Feature.t
+
 t/500_AliTV.t
 t/502_AliTV-new.t
 t/503_AliTV-_initialize.t
