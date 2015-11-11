@@ -75,6 +75,13 @@ sub output
 {
     my $self = shift;
 
+    my $output = {
+	genome_id => $self->id(),
+	length => $self->seqlength(),
+	seq => $self->seq(),
+    };
+
+    return $output;
 }
 
 1;
