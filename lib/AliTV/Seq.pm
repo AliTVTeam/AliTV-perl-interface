@@ -71,6 +71,19 @@ sub _initialize
     $self->SUPER::_initialize();
 }
 
+sub prep_json
+{
+    my $self = shift;
+
+    my $output = {
+	genome_id => $self->id(),
+	length => $self->seqlength(),
+	seq => $self->seq(),
+    };
+
+    return $output;
+}
+
 1;
 
 =head1 AliTV::Seq
