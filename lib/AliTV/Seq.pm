@@ -84,7 +84,7 @@ sub prep_json
     return $output;
 }
 
-sub from_seqio
+sub from_bioseq
 {
     my $self = shift;
     my $seq_obj = shift;
