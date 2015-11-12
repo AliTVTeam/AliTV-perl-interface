@@ -19,6 +19,7 @@ t/211_AliTV-Seq-id.t
 t/212_AliTV-Seq-seq.t
 t/213_AliTV-Seq-seqlength.t
 t/220_AliTV-Seq-file.t
+t/225_AliTV-Seq-from_bioseq.t
 t/230_AliTV-Seq-output.t
 
 t/500_AliTV.t

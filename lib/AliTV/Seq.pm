@@ -84,6 +84,21 @@ sub prep_json
     return $output;
 }
 
+sub from_bioseq
+{
+    my $self = shift;
+    my $seq_obj = shift;
+
+    # test if it is a Bio::Seq object
+    unless (ref($seq_obj) eq "Bio::Seq")
+    {
+	require Carp;
+	Carp::croak('The parameter does not seem to be a Bio::Seq object');
+    }
+
+    $self->{_seq_obj} = $seq_obj->clone();
+}
+
 1;
 
 =head1 AliTV::Seq
