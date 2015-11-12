@@ -2,6 +2,19 @@ package AliTV::Feature;
 
 use parent AliTV::Base;
 
+sub _initialize
+{
+    my $self = shift;
+
+    # we want to have an empty Bio::Seq object to store everything
+    # required
+    $self->{features} = {};
+
+    # call the overridden method
+    $self->SUPER::_initialize();
+}
+
+
 1;
 
 =head1 AliTV::Feature
