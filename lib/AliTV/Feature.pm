@@ -6,9 +6,17 @@ sub _initialize
 {
     my $self = shift;
 
-    # we want to have an empty Bio::Seq object to store everything
-    # required
-    $self->{features} = {};
+    # we want to have an empty hash for all features
+    $self->{_features} = {};
+
+    # we want to tack all imported files
+    $self->{_files} = [];
+
+    # we need to track the current feature type
+    $self->{_current_feature_type} = undef;
+
+    # and we need to track the current feature
+    $self->{_current_feature_index} = undef;
 
     # call the overridden method
     $self->SUPER::_initialize();
