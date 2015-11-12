@@ -25,4 +25,9 @@ is($obj->id(), "Test", 'Returned ID is correct');
 is($obj->seq(), "ACGTTGCGTGC", 'Returned sequence is correct');
 cmp_ok($obj->seqlength(), '==', 11, 'Returned sequence length is correct');
 
+# check if the usage of a non Bio::Seq object as input results in an
+# exception
+
+throws_ok { $obj->from_bioseq(\("Non Bio::Seq object")) } qr/The parameter does not seem to be a Bio::Seq object/, 'Exception when using a non Bio::Seq as input';
+
 done_testing;
