@@ -34,11 +34,11 @@ AliTV::Feature - The AliTV class representing a features for a sequence object
   use AliTV::Feature;
 
   my $seq_obj = AliTV::Feature->new(-file => 'input.gff');
-  
+
 =head1 DESCRIPTION
 
-This is the AliTV class to represent features for sequence objects. The feature information can be 
-loaded from a file which format is supported by Bioperl. 
+This is the AliTV class to represent features for sequence objects. The feature information can be
+loaded from a file which format is supported by Bioperl.
 
 =head1 METHODS
 
