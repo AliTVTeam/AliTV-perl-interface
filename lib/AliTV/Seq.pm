@@ -46,12 +46,12 @@ sub _Map2BioSeq
 
     unless (exists $self->{_seq_obj})
     {
-	$self->{logger}->logdie('The sequence storage attribute does not exist');
+	$self->_logdie('The sequence storage attribute does not exist');
     }
 
     unless (ref($self->{_seq_obj}) eq "Bio::Seq")
     {
-	$self->{logger}->logdie('The sequence storage attribute is not a Bio::Seq object');
+	$self->_logdie('The sequence storage attribute is not a Bio::Seq object');
     }
 
     return $self->{_seq_obj}->$method(@_);
@@ -88,7 +88,7 @@ sub from_bioseq
     # test if it is a Bio::Seq object
     unless (ref($seq_obj) eq "Bio::Seq")
     {
-	$self->{logger}->logdie('The parameter does not seem to be a Bio::Seq object');
+	$self->_logdie('The parameter does not seem to be a Bio::Seq object');
     }
 
     $self->{_seq_obj} = $seq_obj->clone();
