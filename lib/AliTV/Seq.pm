@@ -67,8 +67,6 @@ sub _initialize
     # required
     $self->{_seq_obj} = Bio::Seq->new();
 
-    # call the overridden method
-    $self->SUPER::_initialize();
 }
 
 sub prep_json
