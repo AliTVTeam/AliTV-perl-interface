@@ -5,6 +5,7 @@ use Test::More;
 use Test::Exception;
 
 BEGIN { use_ok('AliTV::Base') };
+local *AliTV::Base::_initialize = sub {};
 
 can_ok('AliTV::Base', qw(new));
 
