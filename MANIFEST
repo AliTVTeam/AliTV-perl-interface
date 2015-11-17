@@ -11,6 +11,7 @@ t/004_AliTV-Base-destroy.t
 t/005_AliTV-Base-clone.t
 t/006_AliTV-Base-file.t
 t/007_AliTV-Base-_initialize.t
+t/050_AliTV-Base-logging.t
 
 t/201_AliTV-Seq.t
 t/202_AliTV-Seq-new.t
