@@ -19,7 +19,7 @@ sub new
 
     if (@_%2!=0)
     {
-        $self->{logger}->logdie("The number of arguments was odd!");
+        $self->_logdie("The number of arguments was odd!");
     }
 
     my %named_parameter = @_;
@@ -30,7 +30,7 @@ sub new
         my $method = $attribute;
         if ($attribute !~ /^-/)
         {
-            $self->{logger}->logdie("The attribute '$attribute' does not start with a leading dash!");
+            $self->_logdie("The attribute '$attribute' does not start with a leading dash!");
         } else {
 
             $method =~ s/^-//;
@@ -39,7 +39,7 @@ sub new
             {
                 $self->$method($named_parameter{$attribute});
             } else {
-                $self->{logger}->logdie("The attribute '$method' has no setter in class '".__PACKAGE__."'");
+                $self->_logdie("The attribute '$method' has no setter in class '".__PACKAGE__."'");
             }
         }
     }
@@ -47,22 +47,87 @@ sub new
     return $self;
 }
 
+sub _logdie
+{
+    my $self = shift;
+    my $msg = shift;
+
+    $self->_logging($msg, "logdie");
+}
+
+sub _logwarn
+{
+    my $self = shift;
+    my $msg = shift;
+
+    $self->_logging($msg, "logwarn");
+}
+
+sub _debug
+{
+    my $self = shift;
+    my $msg = shift;
+
+    $self->_logging($msg, "debug");
+}
+
+sub _info
+{
+    my $self = shift;
+    my $msg = shift;
+
+    $self->_logging($msg, "info");
+}
+
+sub _warn
+{
+    my $self = shift;
+    my $msg = shift;
+
+    $self->_logging($msg, "warn");
+}
+
+sub _error
+{
+    my $self = shift;
+    my $msg = shift;
+
+    $self->_logging($msg, "error");
+}
+
+sub _fatal
+{
+    my $self = shift;
+    my $msg = shift;
+
+    $self->_logging($msg, "fatal");
+}
+
+sub _logging
+{
+    my $self = shift;
+    my $msg = shift;
+    my $level = shift;
+
+    unless (ref($self) &&
+	    exists $self->{logger} &&
+	    ref($self->{logger}) &&
+	    $self->{logger}->can($level))
+    {
+	# without a Log::Log4perl instance we can not use its
+	# functionality, therefore we need to use Carp instead
+	require Carp;
+	Carp::croak($msg);
+    } else {
+	$self->{logger}->$level($msg);
+    }
+}
+
 sub _initialize
 {
     my $self = shift;
 
-    my $msg = "You need to overwrite the method ".__PACKAGE__."::_initialize()";
-
-    unless (ref $self)
-    {
-	# this is a class function, therefore no logger is defined,
-	# use Carp instead
-	require Carp;
-	Carp::croak($msg);
-    } else {
-	$self->{logger}->logdie($msg);
-    }
-    
+    $self->_logdie("You need to overwrite the method ".__PACKAGE__."::_initialize()");
 }
 
 sub DESTROY
@@ -111,7 +176,7 @@ sub file
 
 	# call the check for existing files
 	$self->_file_check();
-    } elsif (exists $self->{file}) 
+    } elsif (exists $self->{file})
     {
 	# return the current value if the object has a attribute 'file'
 	$return_val = $self->{file};
@@ -132,7 +197,7 @@ sub _file_check
     {
 	unless (-e $self->{file})
 	{
-	    $self->{logger}->logdie("The file '$self->{file}' does not exist!");
+	    $self->_logdie("The file '$self->{file}' does not exist!");
 	}
     }
 }
