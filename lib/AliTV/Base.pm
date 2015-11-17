@@ -1,6 +1,7 @@
 package AliTV::Base;
 
 use AliTV::Base::Version;
+use Log::Log4perl;
 
 sub new
 {
@@ -10,13 +11,15 @@ sub new
 
     bless $self, $class;
 
+    # create a logger for the object
+    $self->{logger} = Log::Log4perl->get_logger(ref($self));
+
     # call the private _inititialize method providing the parameters
     $self->_initialize(@_);
 
     if (@_%2!=0)
     {
-        require Carp;
-        Carp::croak("The number of arguments was odd!");
+        $self->{logger}->logdie("The number of arguments was odd!");
     }
 
     my %named_parameter = @_;
@@ -27,8 +30,7 @@ sub new
         my $method = $attribute;
         if ($attribute !~ /^-/)
         {
-            require Carp;
-            Carp::croak("The attribute '$attribute' does not start with a leading dash!");
+            $self->{logger}->logdie("The attribute '$attribute' does not start with a leading dash!");
         } else {
 
             $method =~ s/^-//;
@@ -37,8 +39,7 @@ sub new
             {
                 $self->$method($named_parameter{$attribute});
             } else {
-                require Carp;
-                Carp::croak("The attribute '$method' has no setter in class '".__PACKAGE__."'");
+                $self->{logger}->logdie("The attribute '$method' has no setter in class '".__PACKAGE__."'");
             }
         }
     }
@@ -50,8 +51,17 @@ sub _initialize
 {
     my $self = shift;
 
-    require Carp;
-    Carp::croak("You need to overwrite the method ".__PACKAGE__."::_initialize()");
+    my $msg = "You need to overwrite the method ".__PACKAGE__."::_initialize()";
+
+    unless (ref $self)
+    {
+	# this is a class function, therefore no logger is defined,
+	# use Carp instead
+	require Carp;
+	Carp::croak($msg);
+    } else {
+	$self->{logger}->logdie($msg);
+    }
     
 }
 
@@ -68,13 +78,22 @@ sub clone
 
     unless (ref $self)
     {
+	# this is a class function, therefore no logger is defined,
+	# use Carp instead
 	require Carp;
 	Carp::croak("Cannot clone class '$self'");
     }
 
+    # CODE items can not be dcloned... Therefore delete the logger
+    delete $self->{logger};
+
     # we require the dclone function from Storable
     require Storable;
+    # clone the object
     my $deep_copy = Storable::dclone($self);
+
+    # restore the logger object
+    $deep_copy->{logger} = Log::Log4perl->get_logger(ref($deep_copy));
     return $deep_copy;
 }
 
@@ -113,8 +132,7 @@ sub _file_check
     {
 	unless (-e $self->{file})
 	{
-	    require Carp;
-	    Carp::croak("The file '$self->{file}' does not exist!");
+	    $self->{logger}->logdie("The file '$self->{file}' does not exist!");
 	}
     }
 }
