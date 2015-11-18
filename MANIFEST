@@ -25,6 +25,8 @@ t/230_AliTV-Seq-output.t
 
 t/500_AliTV.t
 
+t/999-AliTV-POD-coverage.t
+
 # library files are listed here
 lib/AliTV.pm
 
