@@ -12,6 +12,8 @@ addons:
     packages:
     - bioperl
     - bioperl-run
+env:
+    - PERL5LIB=/usr/share/perl5/
 install:
     - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=c HARNESS_TIMER=1
     - cpanm --quiet --notest Devel::Cover::Report::Coveralls
