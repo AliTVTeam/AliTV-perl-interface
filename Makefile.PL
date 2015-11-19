@@ -11,6 +11,7 @@ WriteMakefile(
 	Bio::Root::Version => 0,    # should be 1.006923 but does not seem to work
 	Bio::Seq => 0,              # was 1.006923, but the installed version cannot determined
 	Bio::SeqIO => 0,            # was 1.006923, but the installed version cannot determined
+	Bio::TreeIO => 0,           # was 1.006923, but the installed version cannot determined
 	Bio::Tree::TreeI => 0,      # was 1.006923, but the installed version cannot determined
 	Bio::Tree::Node => 0,       # was 1.006923, but the installed version cannot determined
 	Log::Log4perl => 0,
