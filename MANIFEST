@@ -16,6 +16,7 @@ t/050_AliTV-Base-logging.t
 t/101_AliTV-Tree.t
 t/102_AliTV-Tree-new.t
 t/103_AliTV-Tree-_initialize.t
+t/120_AliTV-Tree-file.t
 
 t/201_AliTV-Seq.t
 t/202_AliTV-Seq-new.t
@@ -43,4 +44,8 @@ lib/AliTV/Seq.pm
 # data files are listed here
 data/existing_testfile
 data/fasta-input.fasta
+
+data/tree_a.newick
+data/tree_b.newick
+data/tree_c.newick
 
