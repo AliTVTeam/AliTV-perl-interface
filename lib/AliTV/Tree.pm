@@ -35,4 +35,33 @@ sub file
     }
 }
 
+sub _get_maximum_tree_depth
+{
+    my $self = shift;
+
+    # create a clone of the original tree
+    my $tree_copy = $self->{_tree}->clone();
+
+    # set the branch length for each node to 1
+    for my $node ($tree_copy->get_nodes)
+    {
+	$node->branch_length(1);
+    }
+
+    # search for the maxmimum depth
+    my $max_depth = 0;
+
+    # get the depth for each node
+    foreach my $leaf ($tree_copy->get_leaf_nodes())
+    {
+	if ($leaf->depth() > $max_depth)
+	{
+	    $max_depth = $leaf->depth();
+	}
+    }
+
+    return $max_depth;
+
+}
+
 1;
