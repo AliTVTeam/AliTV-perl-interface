@@ -27,6 +27,12 @@ sub file
     my $fileio  = Bio::TreeIO->new(-file => $self->{file});
 
     $self->{_tree} = $fileio->next_tree();
+
+    # test if we have further trees inside the file
+    if ($fileio->next_tree())
+    {
+	$self->_logwarn("Multiple trees seems to be present in tree file");
+    }
 }
 
 1;
