@@ -132,7 +132,11 @@ sub _make_tree_copy
 
     # just copy the tree from the _tree attribute to the _orig_tree attribute
     $self->{_orig_tree} = $self->{_tree}->clone();
+}
 
+sub balance_node_depth
+{
+    my $self = shift;
 }
 
 1;
