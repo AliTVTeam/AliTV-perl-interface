@@ -40,10 +40,10 @@ sub _get_maximum_tree_depth
     my $self = shift;
 
     # create a clone of the original tree
-    my $tree_copy = $self->{_tree}->clone();
+    $self->_make_tree_copy();
 
     # set the branch length for each node to 1
-    for my $node ($tree_copy->get_nodes)
+    for my $node ($self->{_tree}->get_nodes)
     {
 	$node->branch_length(1);
     }
@@ -52,7 +52,7 @@ sub _get_maximum_tree_depth
     my $max_depth = 0;
 
     # get the depth for each node
-    foreach my $leaf ($tree_copy->get_leaf_nodes())
+    foreach my $leaf ($self->{_tree}->get_leaf_nodes())
     {
 	if ($leaf->depth() > $max_depth)
 	{
