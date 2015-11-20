@@ -21,7 +21,7 @@ while (<DATA>) {
 }
 
 TODO: {
-    local $TODO = "Need to implement the feature";
+    local $TODO = "Need to implement a comparison feature robinson-foulds-dist?";
     foreach my $inputfile ( keys %expected ) {
         $obj->file($inputfile);
         $obj->balance_node_depth();

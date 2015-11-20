@@ -137,6 +137,40 @@ sub _make_tree_copy
 sub balance_node_depth
 {
     my $self = shift;
+
+    # create a clone of the original tree if necessary
+    $self->_make_tree_copy();
+
+    my $required_depth = $self->_get_maximum_tree_depth();
+
+    # go through all leaf nodes
+    foreach my $leaf ($self->{_tree}->get_leaf_nodes())
+    {
+	# if the leaf depth is less than $required_depth we need to add intermediate nodes
+	if ($leaf->depth() < $required_depth)
+	{
+	    # how many intermediate nodes are required?
+	    my $num_nodes_required = $required_depth - $leaf->depth();
+	    # get the parent of the node
+	    my $parent = $leaf->ancestor();
+
+	    # delete the original node
+	    $self->{_tree}->remove_Node($leaf);
+
+	    # we need to create $required_depth-1 intermediate nodes
+	    for (my $i=0; $i<$num_nodes_required; $i++)
+	    {
+		my $node = Bio::Tree::Node->new();
+		$node->branch_length(1);
+		$parent->add_Descendent($node);
+		$parent = $node;
+	    }
+
+	    # finally we add our original node to the end
+	    $parent->add_Descendent($leaf);
+	}
+    }
+
 }
 
 1;
