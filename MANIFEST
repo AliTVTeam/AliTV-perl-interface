@@ -17,6 +17,7 @@ t/101_AliTV-Tree.t
 t/102_AliTV-Tree-new.t
 t/103_AliTV-Tree-_initialize.t
 t/111_AliTV-Tree-_get_maximum_tree_depth.t
+t/112_AliTV-Tree-tree_2_json_structure.t
 t/120_AliTV-Tree-file.t
 
 t/201_AliTV-Seq.t
