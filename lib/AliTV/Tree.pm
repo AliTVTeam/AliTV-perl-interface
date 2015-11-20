@@ -109,4 +109,30 @@ sub _deep_scan
     return $return_value;
 }
 
+sub _make_tree_copy
+{
+    my $self = shift;
+
+    # check if the attribute _tree already exist and its value is defined
+    unless (exists $self->{_tree} && defined $self->{_tree})
+    {
+	# we cannot do anything
+	# print a message
+	$self->_logwarn("No tree attribute is set for the object!");
+	# and return
+	return;
+    }
+
+    # check if the attribute _orig_tree already exist and its value is defined
+    if (exists $self->{_orig_tree} && defined $self->{_orig_tree})
+    {
+	# than nothing is required to do
+	return;
+    }
+
+    # just copy the tree from the _tree attribute to the _orig_tree attribute
+    $self->{_orig_tree} = $self->{_tree}->clone();
+
+}
+
 1;
