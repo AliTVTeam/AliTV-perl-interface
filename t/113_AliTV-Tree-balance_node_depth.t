@@ -20,8 +20,8 @@ while (<DATA>) {
     die "Error while importing the expected structures: $@" if ($@);
 }
 
-SKIP: {
-    skip "Need to create a method first and need to adjust the data", (keys %expected)+0 unless $obj->can("balance_node_depth");
+TODO: {
+    local $TODO = "Need to implement the feature";
     foreach my $inputfile ( keys %expected ) {
         $obj->file($inputfile);
         $obj->balance_node_depth();
