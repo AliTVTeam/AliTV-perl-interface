@@ -30,3 +30,5 @@ done_testing;
 
 __DATA__
 data/tree_a.newick { children => [ { name => 'a' }, { children => [ { name => 'b' }, { children => [ {name => 'c' }, { name => 'd' } ] } ] } ] }
+data/tree_b.newick { children => [ { children => [ { name => 'a' }, { name => 'b' } ] }, { children => [ {name => 'c' }, { name => 'd' } ] } ] }
+data/tree_c.newick { children => [ { name => 'a' }, { children => [ { name => 'b' }, { children => [ {name => 'c' }, { children => [ { name => 'd' }, { children => [ { name => 'e' }, { children => [ { name => 'f' }, { name => 'g' } ] } ] } ] } ] } ] } ] } 
