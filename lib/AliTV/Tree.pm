@@ -173,4 +173,10 @@ sub balance_node_depth
 
 }
 
+sub check_4_leaf_nodes
+{
+    my $self = shift;
+    my @leaf_ids = @_;
+}
+
 1;
