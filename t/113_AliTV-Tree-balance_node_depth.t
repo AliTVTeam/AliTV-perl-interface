@@ -34,3 +34,4 @@ SKIP: {
 done_testing;
 
 __DATA__
+data/tree_a.newick {children => [ {children => [ { children => [{name => 'a'}] }] }, {children => [{children => [{name => 'b'}]}, {children => [{name => 'c'}, {name => 'd'}] }]} ]}
