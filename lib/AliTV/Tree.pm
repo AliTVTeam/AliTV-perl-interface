@@ -64,4 +64,49 @@ sub _get_maximum_tree_depth
 
 }
 
+sub tree_2_json_structure
+{
+    my $self = shift;
+
+    my $json_structure;
+
+    # get the root node
+    my $root_node = $self->{_tree}->get_root_node();
+
+    $json_structure = $self->_deep_scan($root_node);
+
+    return $json_structure;
+}
+
+
+sub _deep_scan
+{
+    my $self = shift;
+
+    my $node = shift;
+
+    my $return_value;
+
+    if($node->is_Leaf())
+    {
+	# we are done --> return a hash ref
+	$return_value = { name => $node->id() };
+    } else {
+	# we have no leaf node, therefore
+	# get a list of all descendents
+	my @desc = $node->each_Descendent();
+
+	$return_value = {};
+
+	# call the function for each descendent and add it to the
+	# return value
+	foreach my $new_node (@desc)
+	{
+	    push(@{$return_value->{children}}, $self->_deep_scan($new_node));
+	}
+    }
+
+    return $return_value;
+}
+
 1;
