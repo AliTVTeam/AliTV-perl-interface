@@ -177,6 +177,47 @@ sub check_4_leaf_nodes
 {
     my $self = shift;
     my @leaf_ids = @_;
+
+    # I am using a the first bit to distinguish between required leafs
+    # (bit #0) and the existing leafs (bit #1)
+    my %flags = ();
+
+    # go through the expected @leaf_ids and set the bit #0 meaning set
+    # the value to 0
+    foreach my $species (@leaf_ids)
+    {
+	$flags{$species} = 1;
+    }
+
+    # go through the existing leafs and set the bit #1 meaning or 2 to
+    # an existing value
+    foreach my $species (map {$_->id() } $self->{_tree}->get_leaf_nodes())
+    {
+	$flags{$species} |= 2;
+    }
+
+    # finally we have three different possibilities:
+    # 1) value equals 1 meaning we miss the id inside the tree --> exception
+    # 2) value equals 2 meaning we have a id not required in our tree --> warning
+    # 3) value equals 3 meaning the id is present and required --> everything is fine
+
+    # first do we need to die?
+    my @need_an_exception = grep { $flags{$_} == 1 } (keys %flags);
+
+    if (@need_an_exception)
+    {
+	$self->_logdie("Required species are not present in the given species set. Missing ids: ".join(", ", @need_an_exception));
+    }
+
+    # second do we have not required ids?
+    my @need_a_warning = grep { $flags{$_} == 2 } (keys %flags);
+
+    if (@need_a_warning)
+    {
+	$self->_logwarn("Tree contains species which are not required! Ignoring! Ids: ".join(", ", @need_a_warning));
+    }
+
+    return 1;
 }
 
 1;
