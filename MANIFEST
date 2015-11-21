@@ -13,6 +13,16 @@ t/006_AliTV-Base-file.t
 t/007_AliTV-Base-_initialize.t
 t/050_AliTV-Base-logging.t
 
+t/101_AliTV-Tree.t
+t/102_AliTV-Tree-new.t
+t/103_AliTV-Tree-_initialize.t
+t/111_AliTV-Tree-_get_maximum_tree_depth.t
+t/112_AliTV-Tree-tree_2_json_structure.t
+t/113_AliTV-Tree-balance_node_depth.t
+t/114_AliTV-Tree-_make_tree_copy.t
+t/115_AliTV-Tree-check_4_leaf_nodes.t
+t/120_AliTV-Tree-file.t
+
 t/201_AliTV-Seq.t
 t/202_AliTV-Seq-new.t
 t/203_AliTV-Seq-_initialize.t
@@ -32,9 +42,16 @@ lib/AliTV.pm
 
 lib/AliTV/Base.pm
 lib/AliTV/Base/Version.pm
+lib/AliTV/Tree.pm
 
 lib/AliTV/Seq.pm
 
 # data files are listed here
 data/existing_testfile
 data/fasta-input.fasta
+
+data/tree_a.newick
+data/tree_b.newick
+data/tree_c.newick
+data/multiple_trees.newick
+

@@ -7,10 +7,14 @@ WriteMakefile(
     VERSION_FROM      => 'lib/AliTV.pm', # finds $VERSION
     PREREQ_PM         => {
 	Test::Exception => 0,
+	Test::Warnings => 0,
 	Storable => 0,              # Core module since perl v5.7.3
 	Bio::Root::Version => 0,    # should be 1.006923 but does not seem to work
 	Bio::Seq => 0,              # was 1.006923, but the installed version cannot determined
 	Bio::SeqIO => 0,            # was 1.006923, but the installed version cannot determined
+	Bio::TreeIO => 0,           # was 1.006923, but the installed version cannot determined
+	Bio::Tree::TreeI => 0,      # was 1.006923, but the installed version cannot determined
+	Bio::Tree::Node => 0,       # was 1.006923, but the installed version cannot determined
 	Log::Log4perl => 0,
     }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
