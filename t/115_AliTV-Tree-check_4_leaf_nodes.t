@@ -3,7 +3,7 @@ use warnings;
 
 use Test::More;
 use Test::Exception;
-use Test::Warnings ':all';
+use Test::Warnings qw(:all :no_end_test);
 
 BEGIN { use_ok('AliTV::Tree') }
 
@@ -23,7 +23,7 @@ my %testset = (
 );
 
 # run through the test sets
-foreach my $set ( keys %testset ) {
+foreach my $set ( sort keys %testset ) {
 
     # first test for an exception
     if ( $set =~ /die/ ) {
