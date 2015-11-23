@@ -17,9 +17,6 @@ sub _initialize
 
     # and we need to track the current feature
     $self->{_current_feature_index} = undef;
-
-    # call the overridden method
-    $self->SUPER::_initialize();
 }
 
 
