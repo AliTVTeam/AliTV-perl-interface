@@ -24,7 +24,13 @@ run the generation script
 
 sub run
 {
+    my $self = shift;
 
+    # check if a file attribute is set and not undef
+    unless (exists $self->{_file} && defined $self->{_file})
+    {
+	$self->_logdie("No file attribute exists");
+    }
 }
 
 1;
