@@ -8,6 +8,9 @@ use parent 'AliTV::Base';
 
 our $VERSION = '0.1';
 
+sub _initialize
+{
+}
 
 1;
 __END__
