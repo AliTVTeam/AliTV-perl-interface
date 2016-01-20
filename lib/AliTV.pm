@@ -12,6 +12,21 @@ sub _initialize
 {
 }
 
+=pod
+
+=head1 Method run
+
+=head2
+
+run the generation script
+
+=cut
+
+sub run
+{
+
+}
+
 1;
 __END__
 =pod
