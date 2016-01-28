@@ -2,6 +2,7 @@ Changes
 Makefile.PL
 MANIFEST
 README
+LICENSE
 
 # here are the test scripts
 t/001_AliTV-Base.t
