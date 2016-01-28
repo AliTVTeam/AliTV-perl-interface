@@ -6,6 +6,8 @@ use warnings;
 
 use parent 'AliTV::Base';
 
+use YAML;
+
 our $VERSION = '0.1';
 
 sub _initialize
@@ -31,6 +33,22 @@ sub run
     {
 	$self->_logdie("No file attribute exists");
     }
+}
+
+sub file
+{
+    my $self = shift;
+
+    # is another parameter given?
+    if (@_)
+    {
+	$self->{_file} = shift;
+
+	# try to import the YAML file
+	$self->{_yml_import} = YAML::LoadFile($self->{_file});
+    }
+
+    return $self->{_file};
 }
 
 1;
