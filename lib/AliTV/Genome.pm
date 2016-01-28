@@ -12,6 +12,13 @@ sub _initialize
 
 }
 
+sub file
+{
+    my $self = shift;
+
+    $self->_logdie("File should never called for AliTV::Genome");
+}
+
 1;
 __END__
 =pod
