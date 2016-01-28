@@ -40,6 +40,7 @@ t/504_AliTV-file.t
 t/510_AliTV-run.t
 
 t/600_AliTV-Genome.t
+t/603_AliTV-Genome-_initialize.t
 
 t/999-AliTV-POD-coverage.t
 
