@@ -10,6 +10,21 @@ sub _initialize
 {
     my $self = shift;
 
+    # set the name default to empty string
+    $self->{_name} = "";
+
+}
+
+sub name
+{
+    my $self = shift;
+
+    if (@_)
+    {
+	$self->{_name} = shift;
+    }
+
+    return $self->{_name};
 }
 
 sub file
