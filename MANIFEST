@@ -35,6 +35,8 @@ t/230_AliTV-Seq-output.t
 
 t/500_AliTV.t
 
+t/600_AliTV-Genome.t
+
 t/999-AliTV-POD-coverage.t
 
 # library files are listed here
@@ -45,6 +47,8 @@ lib/AliTV/Base/Version.pm
 lib/AliTV/Tree.pm
 
 lib/AliTV/Seq.pm
+
+lib/AliTV/Genome.pm
 
 # data files are listed here
 data/existing_testfile
