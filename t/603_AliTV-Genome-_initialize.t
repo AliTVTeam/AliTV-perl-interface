@@ -13,4 +13,9 @@ my $obj = new_ok('AliTV::Genome');
 
 lives_ok { $obj->_initialize() } 'Overwritten function should avoid exception';
 
+my $testname = "Species1";
+$obj->_initialize(name => $testname);
+
+is($obj->name(), $testname, 'Name can be set');
+
 done_testing;
