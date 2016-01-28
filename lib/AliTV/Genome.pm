@@ -13,6 +13,27 @@ sub _initialize
     # set the name default to empty string
     $self->{_name} = "";
 
+    if (@_%2!=0)
+    {
+	$self->_logdie("The number of arguments was odd!");
+    }
+
+    # if nothing was provided, just return
+    if (@_ == 0)
+    {
+	return;
+    }
+
+    # else import the data
+
+    my %params = @_;
+    # check if all required parameters are given
+    # - name <-- string as name for the genome
+
+    if (exists $params{name})
+    {
+	$self->name($params{name});
+    }
 }
 
 sub name
