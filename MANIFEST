@@ -65,5 +65,7 @@ data/tree_b.newick
 data/tree_c.newick
 data/multiple_trees.newick
 
+data/single_genome.yml
+
 # script files are listed here
 bin/alitv.pl
