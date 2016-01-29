@@ -61,6 +61,8 @@ lib/AliTV/Genome.pm
 # data files are listed here
 data/existing_testfile
 data/fasta-input.fasta
+data/fasta-input2.fasta
+data/fasta-input_double_id.fasta
 
 data/tree_a.newick
 data/tree_b.newick
