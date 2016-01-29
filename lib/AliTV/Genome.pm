@@ -69,6 +69,24 @@ sub _initialize
 
 }
 
+sub get_chromosomes
+{
+    my $self = shift;
+
+    # generate a list of sequences part of the genome
+    my $ret = {};
+
+    foreach my $id (keys %{$self->{_seq}})
+    {
+	$ret->{$id} = { length => $self->{_seq}{$id}{len},
+			genome_id => $self->name(),
+			seq => $self->{_seq}{$id}{seq}
+	};
+    }
+
+    return $ret;
+}
+
 sub name
 {
     my $self = shift;
