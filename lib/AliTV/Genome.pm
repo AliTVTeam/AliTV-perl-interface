@@ -6,12 +6,17 @@ use warnings;
 
 use parent 'AliTV::Base';
 
+use Bio::SeqIO;
+
 sub _initialize
 {
     my $self = shift;
 
     # set the name default to empty string
     $self->{_name} = "";
+
+    # set the seq default to empty hash-ref
+    $self->{_seq} = {};
 
     if (@_%2!=0)
     {
@@ -34,6 +39,34 @@ sub _initialize
     {
 	$self->name($params{name});
     }
+
+    if (exists $params{sequence_files})
+    {
+	my @files2import = @{$params{sequence_files}};
+	foreach my $curr_file (@files2import)
+	{
+	    # open the file using BioPerl and extract all sequences
+	    my $fileio = Bio::SeqIO->new(-file => $curr_file);
+
+	    while (my $seq_obj = $fileio->next_seq())
+	    {
+		# get the required values
+		my $id = $seq_obj->id();
+		my $len = $seq_obj->length();
+		my $seq = $seq_obj->seq();
+
+		# check if the id already exists
+		if (exists $self->{_seq}{$id})
+		{
+		    $self->_logdie("The sequence ID '$id' seems to be multiple times present in file '$curr_file'");
+		}
+
+		# store the value
+		$self->{_seq}{$id} = { len => $len, seq => $seq };
+	    }
+	}
+    }
+
 }
 
 sub name
