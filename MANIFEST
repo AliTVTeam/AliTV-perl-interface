@@ -45,6 +45,7 @@ t/603_AliTV-Genome-_initialize.t
 t/604_AliTV-Genome-file.t
 t/605_AliTV-Genome-name.t
 t/606_AliTV-Genome-get_chromosomes.t
+t/607_AliTV-Genome-get_features.t
 
 t/999-AliTV-POD-coverage.t
 
@@ -64,6 +65,9 @@ data/existing_testfile
 data/fasta-input.fasta
 data/fasta-input2.fasta
 data/fasta-input_double_id.fasta
+
+data/test.gb
+data/test.tsv
 
 data/tree_a.newick
 data/tree_b.newick
