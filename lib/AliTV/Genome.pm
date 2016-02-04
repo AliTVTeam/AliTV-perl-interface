@@ -70,6 +70,32 @@ sub _initialize
 	}
     }
 
+    if (exists $params{feature_files})
+    {
+	# we have a list of annotations
+	foreach my $feature_id (keys %{$params{feature_files}})
+	{
+	    my @files2import = @{$params{feature_files}{$feature_id}};
+	    foreach my $curr_file (@files2import)
+	    {
+		# currently I only support tsv files
+		open(FH, "<", $curr_file) || $self->_logdie("Unable to open file '$curr_file': $!");
+		while (<FH>)
+		{
+		    chomp;
+
+		    my ($seq_id, $start, $end, $strand, $name) = split(/\t/, $_);
+
+		    # ignore features for non existing sequences
+
+		    next unless (exists $self->{_seq}{$seq_id});
+		    $self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
+		}
+		close(FH) || $self->_logdie("Unable to close file '$curr_file': $!");
+	    }
+	}
+    }
+
 }
 
 sub _store_feature
