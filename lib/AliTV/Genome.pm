@@ -72,6 +72,16 @@ sub _initialize
 
 }
 
+sub _store_feature
+{
+    my $self = shift;
+
+    my ($feature_id, $seq_id, $start, $end, $strand, $name) = @_;
+
+    push(@{$self->{_feature}{$feature_id}{$seq_id}}, { start => $start, end => $end, strand => $strand, name => $name });
+}
+
+
 sub get_chromosomes
 {
     my $self = shift;
