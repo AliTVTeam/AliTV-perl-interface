@@ -18,6 +18,9 @@ sub _initialize
     # set the seq default to empty hash-ref
     $self->{_seq} = {};
 
+    # set the feature default to empty hash-ref
+    $self->{_feature} = {};
+
     if (@_%2!=0)
     {
 	$self->_logdie("The number of arguments was odd!");
