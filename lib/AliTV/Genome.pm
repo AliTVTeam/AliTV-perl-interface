@@ -107,6 +107,35 @@ sub _store_feature
     push(@{$self->{_feature}{$feature_id}{$seq_id}}, { start => $start, end => $end, strand => $strand, name => $name });
 }
 
+sub get_features
+{
+    my $self = shift;
+
+    # generate a list for each feature type
+
+    my $ret = {};
+
+    foreach my $feat (keys %{$self->{_feature}})
+    {
+	foreach my $seq_id (keys %{$self->{_feature}{$feat}})
+	{
+	    foreach my $entry (@{$self->{_feature}{$feat}{$seq_id}})
+	    {
+		my ($start, $end, $strand) = ($entry->{start}, $entry->{end}, $entry->{strand});
+
+		# if strand is -1 change start and end koordinate
+		if ($strand == -1)
+		{
+		    ($start, $end) = ($end, $start);
+		}
+
+		push(@{$ret->{$feat}}, { karyo => $seq_id, name => $entry->{name}, start => $start, end => $end });
+	    }
+	}
+    }
+
+    return $ret;
+}
 
 sub get_chromosomes
 {
