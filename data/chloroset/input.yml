@@ -1,0 +1,52 @@
+---
+genomes: 
+   -
+    name: Lindenbergia_philippensis
+    sequence_files:
+      - chloroset/Lindenbergia_philippensis.fasta
+    feature_files:
+      genes: 
+                  - chloroset/Lindenbergia_philippensis.gb   
+   - 
+     name: Cistanche_phelypaea
+     sequence_files:
+      - chloroset/Cistanche_phelypaea.fasta
+     feature_files:
+      genes: 
+             - chloroset/Cistanche_phelypaea.gb
+   -
+     name: Epifagus_virginiana
+     sequence_files:
+      - chloroset/Epifagus_virginiana.fasta
+     feature_files:
+      genes: 
+              - chloroset/Epifagus_virginiana.gb
+   - 
+     name: Orobanche_gracilis
+     sequence_files:
+      - chloroset/Orobanche_gracilis.fasta
+     feature_files:
+      genes: 
+              - chloroset/Orobanche_gracilis.gb
+   -
+     name: Nicotiana_tabacum
+     sequence_files:
+      - chloroset/Nicotiana_tabacum.fasta
+     feature_files:
+      genes: 
+              - chloroset/Nicotiana_tabacum.gb
+   - 
+     name: Olea_europaea
+     sequence_files:
+      - chloroset/Olea_europaea.fasta
+     feature_files:
+      genes: 
+              - chloroset/Olea_europaea.gb
+   - 
+     name: Schwalbea_americana
+     sequence_files:
+      - chloroset/Schwalbea_americana.fasta
+     feature_files:
+      genes: 
+              - chloroset/Schwalbea_americana.gb
+tree:   chloroset/species.tree
