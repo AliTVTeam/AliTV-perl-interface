@@ -5,48 +5,77 @@ genomes:
     sequence_files:
       - chloroset/Lindenbergia_philippensis.fasta
     feature_files:
-      genes: 
-                  - chloroset/Lindenbergia_philippensis.gb   
+      ndh: 
+             - chloroset/ndh.tsv
+      ycf:
+             - chloroset/ycf.tsv
+      invertedRepeat:
+             - chloroset/invertedRepeat.tsv
    - 
      name: Cistanche_phelypaea
      sequence_files:
       - chloroset/Cistanche_phelypaea.fasta
      feature_files:
-      genes: 
-             - chloroset/Cistanche_phelypaea.gb
+      ndh: 
+             - chloroset/ndh.tsv
+      ycf:
+             - chloroset/ycf.tsv
+      invertedRepeat:
+             - chloroset/invertedRepeat.tsv
    -
      name: Epifagus_virginiana
      sequence_files:
       - chloroset/Epifagus_virginiana.fasta
      feature_files:
-      genes: 
-              - chloroset/Epifagus_virginiana.gb
+      ndh: 
+             - chloroset/ndh.tsv
+      ycf:
+             - chloroset/ycf.tsv
+      invertedRepeat:
+             - chloroset/invertedRepeat.tsv
    - 
      name: Orobanche_gracilis
      sequence_files:
       - chloroset/Orobanche_gracilis.fasta
      feature_files:
-      genes: 
-              - chloroset/Orobanche_gracilis.gb
+      ndh: 
+             - chloroset/ndh.tsv
+      ycf:
+             - chloroset/ycf.tsv
+      invertedRepeat:
+             - chloroset/invertedRepeat.tsv
    -
      name: Nicotiana_tabacum
      sequence_files:
-      - chloroset/Nicotiana_tabacum.fasta
+      - chloroset/Nicotiana_tabacumA.fasta
+      - chloroset/Nicotiana_tabacumB.fasta
      feature_files:
-      genes: 
-              - chloroset/Nicotiana_tabacum.gb
+      ndh: 
+             - chloroset/ndh.tsv
+      ycf:
+             - chloroset/ycf.tsv
+      invertedRepeat:
+             - chloroset/invertedRepeat.tsv
    - 
      name: Olea_europaea
      sequence_files:
       - chloroset/Olea_europaea.fasta
      feature_files:
-      genes: 
-              - chloroset/Olea_europaea.gb
+      ndh: 
+             - chloroset/ndh.tsv
+      ycf:
+             - chloroset/ycf.tsv
+      invertedRepeat:
+             - chloroset/invertedRepeat.tsv
    - 
      name: Schwalbea_americana
      sequence_files:
       - chloroset/Schwalbea_americana.fasta
      feature_files:
-      genes: 
-              - chloroset/Schwalbea_americana.gb
+      ndh: 
+             - chloroset/ndh.tsv
+      ycf:
+             - chloroset/ycf.tsv
+      invertedRepeat:
+             - chloroset/invertedRepeat.tsv
 tree:   chloroset/species.tree
