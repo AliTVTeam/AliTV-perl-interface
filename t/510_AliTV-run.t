@@ -19,5 +19,6 @@ $obj = new_ok('AliTV', ["-file" => $chloroset]);
 $obj->run();
 
 ok(exists $obj->{_genomes}, 'Attribute _genomes exists');
+is(keys %{$obj->{_genomes}}, 7, 'Number of genomes as expected');
 
 done_testing;
