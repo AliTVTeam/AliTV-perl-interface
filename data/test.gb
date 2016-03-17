@@ -1,0 +1,62 @@
+LOCUS       NC_025642                401 bp    DNA     linear   PLN 24-NOV-2014
+DEFINITION  Cistanche phelypaea chloroplast complete genome, specimen voucher
+            WU: S. Wicke s.n.
+ACCESSION   NC_025642 REGION: 18900..19300
+VERSION     NC_025642.1  GI:725676251
+DBLINK      BioProject: PRJNA267342
+KEYWORDS    RefSeq.
+SOURCE      plastid Cistanche phelypaea
+  ORGANISM  Cistanche phelypaea
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliophyta; eudicotyledons; Gunneridae;
+            Pentapetalae; asterids; lamiids; Lamiales; Orobanchaceae;
+            Orobancheae; Cistanche.
+REFERENCE   1
+  AUTHORS   Wicke,S., Mueller,K.F., DePamphilis,C.W., Quandt,D., Wickett,N.J.,
+            Zhang,Y., Renner,S.S. and Schneeweiss,G.M.
+  TITLE     Mechanisms of functional and physical genome reduction in
+            photosynthetic and nonphotosynthetic parasitic plants
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 401)
+  CONSRTM   NCBI Genome Project
+  TITLE     Direct Submission
+  JOURNAL   Submitted (14-NOV-2014) National Center for Biotechnology
+            Information, NIH, Bethesda, MD 20894, USA
+REFERENCE   3  (bases 1 to 401)
+  AUTHORS   Wicke,S.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (28-AUG-2013) University of Vienna, Plant Biogeography,
+            Rennweg 14, A-1030 Vienna, AUSTRIA
+COMMENT     PROVISIONAL REFSEQ: This record has not yet been subject to final
+            NCBI review. The reference sequence is identical to HG515538.
+            COMPLETENESS: full length.
+FEATURES             Location/Qualifiers
+     source          1..401
+                     /organism="Cistanche phelypaea"
+                     /organelle="plastid"
+                     /mol_type="genomic DNA"
+                     /db_xref="taxon:87754"
+                     /tissue_type="reproductive tissue"
+                     /country="Spain:nr. Albudeite, road RM-15"
+                     /collection_date="25-Apr-2008"
+     gene            complement(<1..401)
+                     /locus_tag="PS35_p01"
+                     /db_xref="GeneID:22242576"
+     gene            18..391
+                     /gene="ycf4"
+                     /locus_tag="PS35_p41"
+                     /pseudo
+                     /db_xref="GeneID:22242506"
+     misc_feature    18..391
+                     /gene="ycf4"
+                     /locus_tag="PS35_p41"
+                     /pseudo
+ORIGIN      
+        1 gatcgagtat gatttgtatg atttggcgat cagaacatat atggatagaa cttataacgg
+       61 ggtctcaaaa actaagtcat tttatttttg ccggccctta tcatttttct gcaagggatc
+      121 atgatgtctt tataaggaat tgctgcggta tgggtctctt tattagttcc tatttgtggt
+      181 gcacaatttc ccggaatgta ggtagtggtt atgatcaatt cgatagaagg gaagaaaaag
+      241 tctgtatttt tttgttgggg attttctgga aaaaaaaaaa ttgtcgcata ttcctctgat
+      301 tccttataaa ataaaaaaag aatattaata aatatgtcag aatagaagtt aaagagggta
+      361 tttatgctcg gtgtgtcctt tatatagaca tttatataga c
+//

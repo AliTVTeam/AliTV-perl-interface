@@ -30,7 +30,7 @@ sub new
         my $method = $attribute;
         if ($attribute !~ /^-/)
         {
-            $self->_logdie("The attribute '$attribute' does not start with a leading dash!");
+            #$self->_logdie("The attribute '$attribute' does not start with a leading dash!");
         } else {
 
             $method =~ s/^-//;

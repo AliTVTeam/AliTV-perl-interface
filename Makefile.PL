@@ -5,6 +5,9 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME              => 'AliTV',
     VERSION_FROM      => 'lib/AliTV.pm', # finds $VERSION
+    EXE_FILES         => [
+	'bin/alitv.pl'
+    ],
     PREREQ_PM         => {
 	Test::Exception => 0,
 	Test::Warnings => 0,
