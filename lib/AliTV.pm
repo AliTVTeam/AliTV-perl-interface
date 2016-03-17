@@ -18,6 +18,7 @@ sub _initialize
     # initialize the yml settings using the default config
     $self->{_yml_import} = $self->_get_default_settings();
     $self->{_file} = undef;
+    $self->{_yml_import} = {};
 
 }
 
