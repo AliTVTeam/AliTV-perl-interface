@@ -19,6 +19,7 @@ sub _initialize
     $self->{_yml_import} = $self->_get_default_settings();
     $self->{_file} = undef;
     $self->{_yml_import} = {};
+    $self->{_genomes} = {};
 
 }
 
