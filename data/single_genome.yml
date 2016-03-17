@@ -1,0 +1,9 @@
+---
+genomes: 
+   -
+    name: Lindenbergia_philippensis
+    sequence_files:
+      - chloroset/Lindenbergia_philippensis.fasta
+    feature_files:
+      genes: 
+                  - chloroset/Lindenbergia_philippensis.gb   

@@ -2,6 +2,7 @@ Changes
 Makefile.PL
 MANIFEST
 README
+LICENSE
 
 # here are the test scripts
 t/001_AliTV-Base.t
@@ -34,6 +35,17 @@ t/225_AliTV-Seq-from_bioseq.t
 t/230_AliTV-Seq-output.t
 
 t/500_AliTV.t
+t/502_AliTV-new.t
+t/503_AliTV-_initialize.t
+t/504_AliTV-file.t
+t/510_AliTV-run.t
+
+t/600_AliTV-Genome.t
+t/603_AliTV-Genome-_initialize.t
+t/604_AliTV-Genome-file.t
+t/605_AliTV-Genome-name.t
+t/606_AliTV-Genome-get_chromosomes.t
+t/607_AliTV-Genome-get_features.t
 
 t/999-AliTV-POD-coverage.t
 
@@ -46,12 +58,23 @@ lib/AliTV/Tree.pm
 
 lib/AliTV/Seq.pm
 
+lib/AliTV/Genome.pm
+
 # data files are listed here
 data/existing_testfile
 data/fasta-input.fasta
+data/fasta-input2.fasta
+data/fasta-input_double_id.fasta
+
+data/test.gb
+data/test.tsv
 
 data/tree_a.newick
 data/tree_b.newick
 data/tree_c.newick
 data/multiple_trees.newick
 
+data/single_genome.yml
+
+# script files are listed here
+bin/alitv.pl
