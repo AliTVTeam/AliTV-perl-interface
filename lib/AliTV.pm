@@ -9,6 +9,8 @@ use parent 'AliTV::Base';
 use YAML;
 use Hash::Merge;
 
+use AliTV::Genome;
+
 our $VERSION = '0.1';
 
 sub _initialize
@@ -18,7 +20,6 @@ sub _initialize
     # initialize the yml settings using the default config
     $self->{_yml_import} = $self->_get_default_settings();
     $self->{_file} = undef;
-    $self->{_yml_import} = {};
     $self->{_genomes} = {};
 
 }
@@ -41,6 +42,19 @@ sub run
     unless (exists $self->{_file} && defined $self->{_file})
     {
 	$self->_logdie("No file attribute exists");
+    }
+
+    foreach my $curr_genome (@{$self->{_yml_import}{genomes}})
+    {
+	my $genome = AliTV::Genome->new(%{$curr_genome});
+	# check that the genome name is not already existing
+
+	if (exists $self->{_genomes}{$genome->name()})
+	{
+	    $self->_logdie(sprintf("Genome-ID '%s' is not uniq", $genome->name()));
+	}
+
+	$self->{_genomes}{$genome->name()} = $genome;
     }
 }
 
