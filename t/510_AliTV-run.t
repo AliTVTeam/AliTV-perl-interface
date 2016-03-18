@@ -13,6 +13,11 @@ my $obj = new_ok('AliTV');
 throws_ok { $obj->run(); } qr/No file attribute exists/, 'Exception without file attribute';
 
 # Testing with chloroset
+my $chloroset_fail = 'data/chloroset/input_same_id_twice.yml';
+$obj = new_ok('AliTV', ["-file" => $chloroset_fail]);
+
+throws_ok { $obj->run(); } qr/Genome-ID .* is not uniq/, 'Exception with non-uniq genome ID';
+
 my $chloroset = 'data/chloroset/input.yml';
 $obj = new_ok('AliTV', ["-file" => $chloroset]);
 

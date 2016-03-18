@@ -77,5 +77,26 @@ data/multiple_trees.newick
 
 data/single_genome.yml
 
+### Chloroset
+
+data/chloroset/input.yml
+data/chloroset/input_same_id_twice.yml
+
+data/chloroset/Cistanche_phelypaea.fasta
+data/chloroset/Epifagus_virginiana.fasta
+data/chloroset/Lindenbergia_philippensis.fasta
+data/chloroset/Nicotiana_tabacumA.fasta
+data/chloroset/Nicotiana_tabacumB.fasta
+data/chloroset/Olea_europaea.fasta
+data/chloroset/Orobanche_gracilis.fasta
+data/chloroset/Schwalbea_americana.fasta
+
+data/chloroset/features.tsv
+data/chloroset/invertedRepeat.tsv
+data/chloroset/ndh.tsv
+data/chloroset/ycf.tsv
+
+data/chloroset/species.tree
+
 # script files are listed here
 bin/alitv.pl
