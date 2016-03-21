@@ -137,6 +137,14 @@ sub get_features
     return $ret;
 }
 
+sub get_seq_names
+{
+    my $self = shift;
+
+    # return a list of all seq names (which need to be unique anyway)
+    return (keys %{$self->{_seq}});
+}
+
 sub get_chromosomes
 {
     my $self = shift;
