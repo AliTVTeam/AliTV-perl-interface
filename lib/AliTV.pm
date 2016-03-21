@@ -38,24 +38,15 @@ sub run
 {
     my $self = shift;
 
-    # check if a file attribute is set and not undef
-    unless (exists $self->{_file} && defined $self->{_file})
-    {
-	$self->_logdie("No file attribute exists");
-    }
+    #################################################################
+    #
+    # Import genomes
+    #
+    #################################################################
+    # Import the given genomes
 
-    foreach my $curr_genome (@{$self->{_yml_import}{genomes}})
-    {
-	my $genome = AliTV::Genome->new(%{$curr_genome});
-	# check that the genome name is not already existing
+    $self->_import_genomes();
 
-	if (exists $self->{_genomes}{$genome->name()})
-	{
-	    $self->_logdie(sprintf("Genome-ID '%s' is not uniq", $genome->name()));
-	}
-
-	$self->{_genomes}{$genome->name()} = $genome;
-    }
 }
 
 sub file
@@ -77,6 +68,31 @@ sub file
     }
 
     return $self->{_file};
+}
+
+sub _import_genomes
+{
+
+    my $self = shift;
+
+    # check if a file attribute is set and not undef
+    unless (exists $self->{_file} && defined $self->{_file})
+    {
+	$self->_logdie("No file attribute exists");
+    }
+
+    foreach my $curr_genome (@{$self->{_yml_import}{genomes}})
+    {
+	my $genome = AliTV::Genome->new(%{$curr_genome});
+	# check that the genome name is not already existing
+
+	if (exists $self->{_genomes}{$genome->name()})
+	{
+	    $self->_logdie(sprintf("Genome-ID '%s' is not uniq", $genome->name()));
+	}
+
+	$self->{_genomes}{$genome->name()} = $genome;
+    }
 }
 
 sub _get_default_settings
