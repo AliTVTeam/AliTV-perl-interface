@@ -17,3 +17,17 @@ can_ok('AliTV', qw(_make_and_set_uniq_seq_names));
 my $obj = new_ok('AliTV');
 
 done_testing;
+
+sub get_sequence_ids
+{
+   my $self = shift;
+   my @all_seq_ids = ();
+
+   foreach my $genome_id (sort keys %{$self->{_genomes}})
+   {
+      push(@all_seq_ids, (keys %{$self->{_genomes}{$genome_id}->get_chromosomes()}));
+   }
+
+   return [ sort (@all_seq_ids) ];
+
+}
