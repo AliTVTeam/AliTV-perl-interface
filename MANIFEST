@@ -47,6 +47,7 @@ t/604_AliTV-Genome-file.t
 t/605_AliTV-Genome-name.t
 t/606_AliTV-Genome-get_chromosomes.t
 t/607_AliTV-Genome-get_features.t
+t/608_AliTV-Genome-get_seq_names.t
 
 t/999-AliTV-POD-coverage.t
 
