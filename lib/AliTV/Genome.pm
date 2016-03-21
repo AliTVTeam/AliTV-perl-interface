@@ -145,6 +145,23 @@ sub get_seq_names
     return (keys %{$self->{_seq}});
 }
 
+sub set_uniq_seq_names
+{
+    my $self = shift;
+
+    my %params = @_;
+
+    while (my ($uniq_seq_id, $seq_id) = each %params)
+    {
+	# check if the seq_id exists in $self->{_seq}
+	if (exists $self->{_seq}{$seq_id})
+	{
+	    $self->{_uniq_ids}{$uniq_seq_id} = $seq_id;
+	    $self->{_nonuniq_ids}{$seq_id} = $uniq_seq_id;
+	}
+   }
+}
+
 sub get_chromosomes
 {
     my $self = shift;
