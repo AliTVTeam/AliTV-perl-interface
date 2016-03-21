@@ -156,7 +156,8 @@ sub get_chromosomes
     {
 	$ret->{$id} = { length => $self->{_seq}{$id}{len},
 			genome_id => $self->name(),
-			seq => $self->{_seq}{$id}{seq}
+			seq => $self->{_seq}{$id}{seq},
+			name => $id
 	};
     }
 
