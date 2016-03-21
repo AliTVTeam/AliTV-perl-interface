@@ -171,10 +171,12 @@ sub get_chromosomes
 
     foreach my $id (keys %{$self->{_seq}})
     {
-	$ret->{$id} = { length => $self->{_seq}{$id}{len},
-			genome_id => $self->name(),
-			seq => $self->{_seq}{$id}{seq},
-			name => $id
+	my $uniq_id = (exists $self->{_nonuniq_ids}{$id}) ? $self->{_nonuniq_ids}{$id} : $id;
+
+	$ret->{$uniq_id} = { length => $self->{_seq}{$id}{len},
+			     genome_id => $self->name(),
+			     seq => $self->{_seq}{$id}{seq},
+			     name => $id
 	};
     }
 
