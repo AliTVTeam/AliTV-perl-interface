@@ -41,6 +41,7 @@ t/504_AliTV-file.t
 t/505_AliTV-_get_default_settings.t
 t/510_AliTV-run.t
 t/513_AliTV-_import_genomes.t
+t/515_AliTV-_make_and_set_uniq_seq_names.t
 
 t/600_AliTV-Genome.t
 t/603_AliTV-Genome-_initialize.t
