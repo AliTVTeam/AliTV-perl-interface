@@ -14,8 +14,6 @@ my %params = (
 );
 
 my $obj = new_ok('AliTV::Genome' => [%params]);
-#my $obj = new_ok('AliTV::Genome');
-#$obj->_initialize(%params);
 
 my $expected = {
    Test  => { length => 11, seq => "ACGTTGCGTGC", genome_id => "Test genome" },
