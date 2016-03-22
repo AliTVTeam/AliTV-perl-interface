@@ -56,6 +56,7 @@ t/610_AliTV-Genome-set_uniq_seq_names.t
 t/615_AliTV-Genome-get_sequences.t
 
 t/700_AliTV-Alignment.t
+t/701_AliTV-Alignment-new.t
 
 t/999-AliTV-POD-coverage.t
 
