@@ -170,6 +170,20 @@ sub _make_and_set_uniq_seq_names
 sub _generate_seq_set
 {
     my $self = shift;
+
+    my @seqs = ();
+
+    # generate a list od all sequences
+    foreach my $genome_id (keys %{$self->{_genomes}})
+    {
+	my @new_seqs = $self->{_genomes}{$genome_id}->get_sequences();
+
+	push(@seqs, @new_seqs);
+    }
+
+    # finally, sort the sequences by id and sequence
+    return sort {$a->id() cmp $b->id() || $a->seq() cmp $b->seq()} (@seqs);
+    
 }
 
 1;
