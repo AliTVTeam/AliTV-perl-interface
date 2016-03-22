@@ -43,6 +43,25 @@ sub parameters
 
 }
 
+sub callback
+{
+    my $self = shift;
+
+    if (@_)
+    {
+	my $callback_ref = shift;
+	if (ref($callback_ref) eq "CODE")
+	{
+	    $self->{_callback} = $callback_ref;
+	} else {
+	    $self->_logdie("Callback need to be a code reference!");
+	}
+    }
+
+    return $self->{_callback};
+
+}
+
 sub file
 {
     my $self = shift;
