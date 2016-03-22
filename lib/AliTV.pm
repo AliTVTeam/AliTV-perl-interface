@@ -57,6 +57,15 @@ sub run
     # generate unique names
 
     $self->_make_and_set_uniq_seq_names();
+
+    #################################################################
+    #
+    # Create sequence set
+    #
+    #################################################################
+    # Prepare a sequence set for the alignment
+
+    $self->_generate_seq_set();
 }
 
 sub file
