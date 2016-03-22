@@ -62,6 +62,13 @@ sub callback
 
 }
 
+sub _check
+{
+    my $self = shift;
+
+    $self->_logdie('Method AliTV::Alignment::_check() need to be overwritten');
+}
+
 sub file
 {
     my $self = shift;
