@@ -7,6 +7,7 @@ use warnings;
 use parent 'AliTV::Base';
 
 use Bio::SeqIO;
+use Bio::Seq;
 
 sub _initialize
 {
@@ -173,8 +174,6 @@ sub get_sequences
     {
 	my $uniq_id = (exists $self->{_nonuniq_ids}{$id}) ? $self->{_nonuniq_ids}{$id} : $id;
 	my $seq = $self->{_seq}{$id}{seq};
-
-	use Bio::Seq;
 
 	my $seq_obj = Bio::Seq->new(
 	    -seq => $seq,
