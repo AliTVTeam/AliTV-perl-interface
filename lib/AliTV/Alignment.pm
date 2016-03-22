@@ -17,6 +17,13 @@ sub _initialize
     return;
 }
 
+sub file
+{
+    my $self = shift;
+
+    $self->_logdie("File should never called for AliTV::Alignment");
+}
+
 1;
 
 =head1 AliTV::Alignment
