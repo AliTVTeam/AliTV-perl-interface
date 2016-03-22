@@ -17,6 +17,19 @@ sub _initialize
     return;
 }
 
+sub program
+{
+    my $self = shift;
+
+    if (@_)
+    {
+	$self->{_program} = shift;
+    }
+
+    return $self->{_program};
+
+}
+
 sub file
 {
     my $self = shift;
