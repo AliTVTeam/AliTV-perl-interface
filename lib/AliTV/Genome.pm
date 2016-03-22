@@ -162,6 +162,34 @@ sub set_uniq_seq_names
    }
 }
 
+sub get_sequences
+{
+    my $self = shift;
+
+    # generate a list of sequences part of the genome
+    my @ret = ();
+
+    foreach my $id (keys %{$self->{_seq}})
+    {
+	my $uniq_id = (exists $self->{_nonuniq_ids}{$id}) ? $self->{_nonuniq_ids}{$id} : $id;
+	my $seq = $self->{_seq}{$id}{seq};
+
+	use Bio::Seq;
+
+	my $seq_obj = Bio::Seq->new(
+	    -seq => $seq,
+	    -display_id => $uniq_id
+	    );
+
+	push(@ret, $seq_obj);
+    }
+
+    # sort by id followed by seq
+    @ret = sort { $a->id() cmp $b->id() || $a->seq() cmp $b->seq() } (@ret);
+
+    return @ret;
+}
+
 sub get_chromosomes
 {
     my $self = shift;
