@@ -39,9 +39,11 @@ t/502_AliTV-new.t
 t/503_AliTV-_initialize.t
 t/504_AliTV-file.t
 t/505_AliTV-_get_default_settings.t
-t/510_AliTV-run.t
+t/510_AliTV-run_failing.t
+t/510_AliTV-run_working.t
 t/513_AliTV-_import_genomes.t
 t/515_AliTV-_make_and_set_uniq_seq_names.t
+t/520_AliTV-_generate_seq_set.t
 
 t/600_AliTV-Genome.t
 t/603_AliTV-Genome-_initialize.t
@@ -52,6 +54,16 @@ t/607_AliTV-Genome-get_features.t
 t/608_AliTV-Genome-get_seq_names.t
 t/610_AliTV-Genome-set_uniq_seq_names.t
 t/615_AliTV-Genome-get_sequences.t
+
+t/700_AliTV-Alignment.t
+t/701_AliTV-Alignment-new.t
+t/703_AliTV-Alignment-_initialize.t
+t/707_AliTV-Alignment-file.t
+t/711_AliTV-Alignment-program.t
+t/713_AliTV-Alignment-parameters.t
+t/715_AliTV-Alignment-callback.t
+t/720_AliTV-Alignment-_check.t
+t/730_AliTV-Alignment-run.t
 
 t/999-AliTV-POD-coverage.t
 
@@ -65,6 +77,8 @@ lib/AliTV/Tree.pm
 lib/AliTV/Seq.pm
 
 lib/AliTV/Genome.pm
+
+lib/AliTV/Alignment.pm
 
 # data files are listed here
 data/existing_testfile
@@ -81,6 +95,8 @@ data/tree_c.newick
 data/multiple_trees.newick
 
 data/single_genome.yml
+data/two_genomes_nonuniq_names.yml
+data/two_genomes_uniq_names.yml
 
 ### Chloroset
 

@@ -57,6 +57,15 @@ sub run
     # generate unique names
 
     $self->_make_and_set_uniq_seq_names();
+
+    #################################################################
+    #
+    # Create sequence set
+    #
+    #################################################################
+    # Prepare a sequence set for the alignment
+
+    $self->_generate_seq_set();
 }
 
 sub file
@@ -165,6 +174,30 @@ sub _make_and_set_uniq_seq_names
 	$self->{_genomes}{$genome_id}->set_uniq_seq_names(@set_list);
     }
 
+}
+
+sub _generate_seq_set
+{
+    my $self = shift;
+
+    my @seqs = ();
+
+    # generate a list od all sequences
+    foreach my $genome_id (keys %{$self->{_genomes}})
+    {
+	my @new_seqs = $self->{_genomes}{$genome_id}->get_sequences();
+
+	push(@seqs, @new_seqs);
+    }
+
+    # finally, sort the sequences by id and sequence
+    @seqs = sort {$a->id() cmp $b->id() || $a->seq() cmp $b->seq()} (@seqs);
+    
+    # store the sequence set as attribute
+    $self->{_seq_set} = \@seqs;
+
+    # and return it
+    return @{$self->{_seq_set}};
 }
 
 1;
