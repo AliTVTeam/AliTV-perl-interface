@@ -182,8 +182,13 @@ sub _generate_seq_set
     }
 
     # finally, sort the sequences by id and sequence
-    return sort {$a->id() cmp $b->id() || $a->seq() cmp $b->seq()} (@seqs);
+    @seqs = sort {$a->id() cmp $b->id() || $a->seq() cmp $b->seq()} (@seqs);
     
+    # store the sequence set as attribute
+    $self->{_seq_set} = \@seqs;
+
+    # and return it
+    return @{$self->{_seq_set}};
 }
 
 1;
