@@ -18,9 +18,4 @@ $obj = new_ok('AliTV', ["-file" => $chloroset_fail]);
 
 throws_ok { $obj->run(); } qr/Genome-ID .* is not uniq/, 'Exception with non-uniq genome ID';
 
-my $chloroset = 'data/chloroset/input.yml';
-$obj = new_ok('AliTV', ["-file" => $chloroset]);
-
-$obj->run();
-
 done_testing;
