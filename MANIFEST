@@ -62,6 +62,7 @@ t/707_AliTV-Alignment-file.t
 t/711_AliTV-Alignment-program.t
 t/713_AliTV-Alignment-parameters.t
 t/715_AliTV-Alignment-callback.t
+t/720_AliTV-Alignment-_check.t
 
 t/999-AliTV-POD-coverage.t
 
