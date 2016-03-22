@@ -1,0 +1,13 @@
+---
+genomes: 
+   -
+    name: Test_genome_1
+    sequence_files:
+      - data/fasta-input.fasta
+      - data/fasta-input2.fasta
+   -
+    name: Test_genome_2
+    sequence_files:
+      - data/fasta-input.fasta
+      - data/fasta-input2.fasta
+

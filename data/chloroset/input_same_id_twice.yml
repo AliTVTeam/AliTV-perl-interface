@@ -1,0 +1,36 @@
+---
+genomes: 
+   -
+    name: Lindenbergia_philippensis
+    sequence_files:
+      - data/chloroset/Lindenbergia_philippensis.fasta
+    feature_files:
+      ndh: 
+             - data/chloroset/ndh.tsv
+      ycf:
+             - data/chloroset/ycf.tsv
+      invertedRepeat:
+             - data/chloroset/invertedRepeat.tsv
+   - 
+     name: Lindenbergia_philippensis
+     sequence_files:
+      - data/chloroset/Cistanche_phelypaea.fasta
+     feature_files:
+      ndh: 
+             - data/chloroset/ndh.tsv
+      ycf:
+             - data/chloroset/ycf.tsv
+      invertedRepeat:
+             - data/chloroset/invertedRepeat.tsv
+   -
+     name: Epifagus_virginiana
+     sequence_files:
+      - data/chloroset/Epifagus_virginiana.fasta
+     feature_files:
+      ndh: 
+             - data/chloroset/ndh.tsv
+      ycf:
+             - data/chloroset/ycf.tsv
+      invertedRepeat:
+             - data/chloroset/invertedRepeat.tsv
+tree:   data/chloroset/species.tree

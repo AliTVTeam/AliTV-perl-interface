@@ -13,6 +13,10 @@ my $obj = new_ok('AliTV::Genome');
 
 lives_ok { $obj->_initialize() } 'Overwritten function should avoid exception';
 
+throws_ok { $obj->_initialize("sequence_files"); }
+	  qr/The number of arguments was odd!/,
+	  'Identical IDs result in exception';
+
 my $testname = "Species1";
 $obj->_initialize(name => $testname);
 

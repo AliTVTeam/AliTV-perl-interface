@@ -14,13 +14,11 @@ my %params = (
 );
 
 my $obj = new_ok('AliTV::Genome' => [%params]);
-#my $obj = new_ok('AliTV::Genome');
-#$obj->_initialize(%params);
 
 my $expected = {
-   Test  => { length => 11, seq => "ACGTTGCGTGC", genome_id => "Test genome" },
-   Test2 => { length => 10, seq => "ACGTTGCGTG" , genome_id => "Test genome" },
-   Test3 => { length =>  9, seq => "ACGTTGCGT"  , genome_id => "Test genome" },
+   Test  => { length => 11, seq => "ACGTTGCGTGC", genome_id => "Test genome", name => "Test" },
+   Test2 => { length => 10, seq => "ACGTTGCGTG" , genome_id => "Test genome", name => "Test2" },
+   Test3 => { length =>  9, seq => "ACGTTGCGT"  , genome_id => "Test genome", name => "Test3" },
 };
 
 is_deeply($obj->get_chromosomes(), $expected, 'Chromosome export as expected');

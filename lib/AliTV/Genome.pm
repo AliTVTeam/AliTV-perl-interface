@@ -7,6 +7,7 @@ use warnings;
 use parent 'AliTV::Base';
 
 use Bio::SeqIO;
+use Bio::Seq;
 
 sub _initialize
 {
@@ -137,6 +138,57 @@ sub get_features
     return $ret;
 }
 
+sub get_seq_names
+{
+    my $self = shift;
+
+    # return a list of all seq names (which need to be unique anyway)
+    return (keys %{$self->{_seq}});
+}
+
+sub set_uniq_seq_names
+{
+    my $self = shift;
+
+    my %params = @_;
+
+    while (my ($uniq_seq_id, $seq_id) = each %params)
+    {
+	# check if the seq_id exists in $self->{_seq}
+	if (exists $self->{_seq}{$seq_id})
+	{
+	    $self->{_uniq_ids}{$uniq_seq_id} = $seq_id;
+	    $self->{_nonuniq_ids}{$seq_id} = $uniq_seq_id;
+	}
+   }
+}
+
+sub get_sequences
+{
+    my $self = shift;
+
+    # generate a list of sequences part of the genome
+    my @ret = ();
+
+    foreach my $id (keys %{$self->{_seq}})
+    {
+	my $uniq_id = (exists $self->{_nonuniq_ids}{$id}) ? $self->{_nonuniq_ids}{$id} : $id;
+	my $seq = $self->{_seq}{$id}{seq};
+
+	my $seq_obj = Bio::Seq->new(
+	    -seq => $seq,
+	    -display_id => $uniq_id
+	    );
+
+	push(@ret, $seq_obj);
+    }
+
+    # sort by id followed by seq
+    @ret = sort { $a->id() cmp $b->id() || $a->seq() cmp $b->seq() } (@ret);
+
+    return @ret;
+}
+
 sub get_chromosomes
 {
     my $self = shift;
@@ -146,9 +198,12 @@ sub get_chromosomes
 
     foreach my $id (keys %{$self->{_seq}})
     {
-	$ret->{$id} = { length => $self->{_seq}{$id}{len},
-			genome_id => $self->name(),
-			seq => $self->{_seq}{$id}{seq}
+	my $uniq_id = (exists $self->{_nonuniq_ids}{$id}) ? $self->{_nonuniq_ids}{$id} : $id;
+
+	$ret->{$uniq_id} = { length => $self->{_seq}{$id}{len},
+			     genome_id => $self->name(),
+			     seq => $self->{_seq}{$id}{seq},
+			     name => $id
 	};
     }
 
