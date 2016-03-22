@@ -6,6 +6,17 @@ use warnings;
 
 use parent 'AliTV::Base';
 
+sub _initialize
+{
+    my $self = shift;
+
+    $self->{_callback} = undef;
+    $self->{_parameters} = undef;
+    $self->{_program} = undef;
+
+    return;
+}
+
 1;
 
 =head1 AliTV::Alignment
