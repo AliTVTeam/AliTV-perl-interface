@@ -30,6 +30,19 @@ sub program
 
 }
 
+sub parameters
+{
+    my $self = shift;
+
+    if (@_)
+    {
+	$self->{_parameters} = shift;
+    }
+
+    return $self->{_parameters};
+
+}
+
 sub file
 {
     my $self = shift;
