@@ -167,6 +167,11 @@ sub _make_and_set_uniq_seq_names
 
 }
 
+sub _generate_seq_set
+{
+    my $self = shift;
+}
+
 1;
 
 =pod
