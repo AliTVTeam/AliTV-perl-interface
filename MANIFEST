@@ -70,6 +70,8 @@ lib/AliTV/Seq.pm
 
 lib/AliTV/Genome.pm
 
+lib/AliTV/Alignment.pm
+
 # data files are listed here
 data/existing_testfile
 data/fasta-input.fasta
