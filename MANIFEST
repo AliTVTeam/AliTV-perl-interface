@@ -65,6 +65,8 @@ t/715_AliTV-Alignment-callback.t
 t/720_AliTV-Alignment-_check.t
 t/730_AliTV-Alignment-run.t
 
+t/750_AliTV-Alignment-lastz.t
+
 t/999-AliTV-POD-coverage.t
 
 # library files are listed here
