@@ -5,6 +5,11 @@ use warnings;
 
 use parent 'AliTV::Alignment';
 
+sub _check
+{
+    my $self = shift;
+}
+
 1;
 
 =head1 AliTV::Alignment::lastz
