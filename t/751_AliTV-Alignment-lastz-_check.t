@@ -21,4 +21,12 @@ throws_ok { $obj->_check(); } qr/Unable to find lastz/, 'Exception if lastz coul
 
 $ENV{PATH} = $old_path;
 
+SKIP: {
+
+  skip "lastz could not be found", 1 unless (which("lastz"));
+
+  lives_ok { $obj->_check(); } 'Test that AliTV::Alignment::lastz found lastz';
+
+}
+
 done_testing;
