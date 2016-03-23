@@ -21,6 +21,11 @@ sub _check
     }
 }
 
+sub run
+{
+    my $self = shift;
+}
+
 1;
 
 =head1 AliTV::Alignment::lastz
