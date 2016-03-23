@@ -81,6 +81,7 @@ lib/AliTV/Seq.pm
 lib/AliTV/Genome.pm
 
 lib/AliTV/Alignment.pm
+lib/AliTV/Alignment/lastz.pm
 
 # data files are listed here
 data/existing_testfile
