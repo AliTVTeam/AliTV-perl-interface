@@ -5,9 +5,20 @@ use warnings;
 
 use parent 'AliTV::Alignment';
 
+use File::Which;
+
 sub _check
 {
     my $self = shift;
+
+    # check if we are able to find lastz
+
+    $self->{_cmd} = which("lastz");
+
+    unless ($self->{_cmd})
+    {
+	$self->_logdie("Unable to find lastz");
+    }
 }
 
 1;
