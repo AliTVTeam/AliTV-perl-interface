@@ -25,3 +25,7 @@ script:
     - cover
 after_success:
     - cover -report coveralls
+notifications:
+  slack:
+    rooms:
+      - cctb-team:Wxk2LNGTqEl9ZxtrbTxlqvpe#dev-alitv-perl
