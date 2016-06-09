@@ -91,7 +91,7 @@ sub import_alignments
 	    # sequences within the alignment have the same length
 	    unless ($aln->is_flush())
 	    {
-		$self->_logdie("Error with alignment, seems to have different length");
+		$self->_logdie("Error with alignment, seems to have different length"); # uncoverable statement
 	    }
 
 	    # get the score and the identidy
