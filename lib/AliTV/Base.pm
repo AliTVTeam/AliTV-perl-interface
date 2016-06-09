@@ -35,7 +35,8 @@ sub new
 
             $method =~ s/^-//;
 
-            if (__PACKAGE__->can($method))
+	    my $class = ref($self);
+            if ($class->can($method))
             {
                 $self->$method($named_parameter{$attribute});
             } else {
