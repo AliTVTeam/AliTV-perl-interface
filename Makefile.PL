@@ -18,6 +18,8 @@ WriteMakefile(
 	Bio::TreeIO => 0,           # was 1.006923, but the installed version cannot determined
 	Bio::Tree::TreeI => 0,      # was 1.006923, but the installed version cannot determined
 	Bio::Tree::Node => 0,       # was 1.006923, but the installed version cannot determined
+	Bio::AlignIO    => 0,       # was 1.006923, but the installed version cannot determined
+	Digest::MD5 => 0,
 	Log::Log4perl => 0,
         Hash::Merge => 0,
         File::Which => 0,
