@@ -81,6 +81,9 @@ sub run
 
     $self->_debug("Finished alignment generation");
 
+    # import all alignments
+    $self->import_alignments(@alignments);
+
 }
 
 1;
