@@ -50,6 +50,10 @@ my $obj = new_ok('AliTV::Alignment::lastz' => [-parameters => "--format=MAF --no
 
 $obj->run(@seq_set);
 
+# sort expected and output
+@output = sort sort_output_expected (@output);
+@{$expected} = sort sort_output_expected (@{$expected});
+
 is_deeply(\@output, $expected, 'Test successful');
 
 done_testing;
