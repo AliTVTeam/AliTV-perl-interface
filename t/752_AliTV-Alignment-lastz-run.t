@@ -53,3 +53,8 @@ $obj->run(@seq_set);
 is_deeply(\@output, $expected, 'Test successful');
 
 done_testing;
+
+sub sort_output_expected
+{
+	return join("-", @{$a}) cmp join("-", @{$b});
+}
