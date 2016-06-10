@@ -18,8 +18,12 @@ WriteMakefile(
 	Bio::TreeIO => 0,           # was 1.006923, but the installed version cannot determined
 	Bio::Tree::TreeI => 0,      # was 1.006923, but the installed version cannot determined
 	Bio::Tree::Node => 0,       # was 1.006923, but the installed version cannot determined
+	Bio::AlignIO    => 0,       # was 1.006923, but the installed version cannot determined
+        IPC::System::Simple => 0,
+        File::Temp => 0,
 	Log::Log4perl => 0,
         Hash::Merge => 0,
+        File::Which => 0,
     }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/AliTV.pm', # retrieve abstract from module

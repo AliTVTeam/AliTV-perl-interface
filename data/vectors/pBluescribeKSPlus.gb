@@ -1,0 +1,141 @@
+LOCUS       SYNBLKSPV               2964 bp    DNA     circular SYN 16-MAR-2000
+DEFINITION  BlueScribe KS Plus cloning vector.
+ACCESSION   L08785
+VERSION     L08785.1  GI:310729
+KEYWORDS    .
+SOURCE      Cloning vector pBlueScribe KS+
+  ORGANISM  Cloning vector pBlueScribe KS+
+            other sequences; artificial sequences; vectors.
+REFERENCE   1  (bases 1 to 2964)
+  AUTHORS   Gilbert,W.
+  TITLE     Obtained from VecBase 3.0
+  JOURNAL   Unpublished
+COMMENT     These data and their annotation were supplied to GenBank by Will
+            Gilbert under the auspices of the GenBank Curator Program.
+            BlueScribe KS Plus - Cloning vector
+            ENTRY BLUEKSP                  #TYPE DNA CIRCULAR
+            TITLE BlueScribe KS Plus - Cloning vector
+            DATE    28-JAN-1987
+               #sequence  02-FEB-1987
+               #sequence  04-MAR-1987
+               #sequence  03-APR-1987
+            ACCESSION VB0078
+            SOURCE    artificial
+            REFERENCE
+               #number 1
+               #authors Fernandez J.M., Short J.M., Renshaw M., Huse W., Sorge
+            J.
+               #journal Gene (1987) in press
+               #citation Sequence data from StrataGene
+               #comment  sequence correction according to Stratagene COMMENT
+               Obtained from StrataGene on floppy disc.
+               Revised 02-FEB-1987 by F. Pfeiffer:
+               1409/10 'AT' to 'TA' to match revised sequence of PBR322
+               Revised 4-MAR-1987 to match sequence of pUC19 on request
+               of Stratagene
+               Polylinker region revised 03-APR-1987 according to Stratagene
+            COMMENT
+               The stand shown corresponds to pUC19c.
+               As in the published sequence of pUC19c, The M13mp19 lacZ region
+               is on the complementary strand.
+            COMMENT
+               This vector contains the f1 origin so that the plus strand
+               can be obtained upon f1 superinfection.
+            KEYWORDS
+            CROSSREFERENCE
+               #parent
+                 VecBase(3):BlueM13p
+               #parent
+                 VecBase(3):pUC19, VecSource(3):PromT7, VecSource(3):PromT3,
+                 VecSource(3):bGalKS, GenBank(50):PF1
+               #brother
+                 VecBase(3):BlueKSm, VecBase(3):BlueSKp
+            PARENT
+               Features of BlueKSp (2964 bp)
+                 residue     source
+                  3- 458  5943-5488 (c) phage f1
+                460- 624   236- 400     pUC19c
+                626- 645     1-  20     T7 promoter
+                653- 760   108-   1 (c) BlueKS-polylinker
+                772- 791    20-   1 (c) T3 promoter
+                795-2964   448-2617     pUC19c
+               Conflict (cfl) and Mutations (mut): none
+            PARENT
+               Features of BlueKSp (2964 bp)
+                 residue     source
+                  3- 458  5943-5488 (c) phage f1
+                460- 624   449- 285 (c) pUC19
+                626- 645     1-  20     T7 promoter
+                653- 760   108-   1 (c) BlueKS-polylinker
+                772- 791    20-   1 (c) T3 promoter
+                795-1031   237-   1 (c) pUC19
+               1032-2964  2686- 754 (c) pUC19
+               Conflict (cfl) and Mutations (mut): none
+            FEATURE
+                     643           start of T7-RNA synthesis
+                     774       (c) start of T3-RNA synthesis
+               1976-2764 789-1 (c) Ap-R; b-lactamase
+            POLYLINKER
+                 KpnI-DraII-ApaI-XhoI-SalI-ClaI-HindIII-EcoRV-EcoRI-PstI-
+                 SmaI-BamHI-SpeI-XbaI-NotI-XmaIII-BstXI-SacII-SacI SELECTION
+               #resistance  Ap
+               #indicator beta-galactosidase
+            SUMMARY  BlueKSp    #length 2964   #checksum 690.
+FEATURES             Location/Qualifiers
+     source          1..2964
+                     /organism="Cloning vector pBlueScribe KS+"
+                     /mol_type="genomic DNA"
+                     /db_xref="taxon:118303"
+ORIGIN      
+        1 ggaaattgta aacgttaata ttttgttaaa attcgcgtta aatttttgtt aaatcagctc
+       61 attttttaac caataggccg aaatcggcaa aatcccttat aaatcaaaag aatagaccga
+      121 gatagggttg agtgttgttc cagtttggaa caagagtcca ctattaaaga acgtggactc
+      181 caacgtcaaa gggcgaaaaa ccgtctatca gggcgatggc ccactacgtg aaccatcacc
+      241 ctaatcaagt tttttggggt cgaggtgccg taaagcacta aatcggaacc ctaaagggag
+      301 cccccgattt agagcttgac ggggaaagcc ggcgaacgtg gcgagaaagg aagggaagaa
+      361 agcgaaagga gcgggcgcta gggcgctggc aagtgtagcg gtcacgctgc gcgtaaccac
+      421 cacacccgcc gcgcttaatg cgccgctaca gggcgcgtcg cgccattcgc cattcaggct
+      481 gcgcaactgt tgggaagggc gatcggtgcg ggcctcttcg ctattacgcc agctggcgaa
+      541 agggggatgt gctgcaaggc gattaagttg ggtaacgcca gggttttccc agtcacgacg
+      601 ttgtaaaacg acggccagtg aattgtaata cgactcacta tagggcgaat tggagctcca
+      661 ccgcggtggc ggccgctcta gaactagtgg atcccccggg ctgcaggaat tcgatatcaa
+      721 gcttatcgat accgtcgacc tcgagggggg gcccggtacc cagcttttgt tccctttagt
+      781 gagggttaat tccgagcttg gcgtaatcat ggtcatagct gtttcctgtg tgaaattgtt
+      841 atccgctcac aattccacac aacatacgag ccggaagcat aaagtgtaaa gcctggggtg
+      901 cctaatgagt gagctaactc acattaattg cgttgcgctc actgcccgct ttccagtcgg
+      961 gaaacctgtc gtgccagctg cattaatgaa tcggccaacg cgcggggaga ggcggtttgc
+     1021 gtattgggcg ctcttccgct tcctcgctca ctgactcgct gcgctcggtc gttcggctgc
+     1081 ggcgagcggt atcagctcac tcaaaggcgg taatacggtt atccacagaa tcaggggata
+     1141 acgcaggaaa gaacatgtga gcaaaaggcc agcaaaaggc caggaaccgt aaaaaggccg
+     1201 cgttgctggc gtttttccat aggctccgcc cccctgacga gcatcacaaa aatcgacgct
+     1261 caagtcagag gtggcgaaac ccgacaggac tataaagata ccaggcgttt ccccctggaa
+     1321 gctccctcgt gcgctctcct gttccgaccc tgccgcttac cggatacctg tccgcctttc
+     1381 tcccttcggg aagcgtggcg ctttctcata gctcacgctg taggtatctc agttcggtgt
+     1441 aggtcgttcg ctccaagctg ggctgtgtgc acgaaccccc cgttcagccc gaccgctgcg
+     1501 ccttatccgg taactatcgt cttgagtcca acccggtaag acacgactta tcgccactgg
+     1561 cagcagccac tggtaacagg attagcagag cgaggtatgt aggcggtgct acagagttct
+     1621 tgaagtggtg gcctaactac ggctacacta gaaggacagt atttggtatc tgcgctctgc
+     1681 tgaagccagt taccttcgga aaaagagttg gtagctcttg atccggcaaa caaaccaccg
+     1741 ctggtagcgg tggttttttt gtttgcaagc agcagattac gcgcagaaaa aaaggatctc
+     1801 aagaagatcc tttgatcttt tctacggggt ctgacgctca gtggaacgaa aactcacgtt
+     1861 aagggatttt ggtcatgaga ttatcaaaaa ggatcttcac ctagatcctt ttaaattaaa
+     1921 aatgaagttt taaatcaatc taaagtatat atgagtaaac ttggtctgac agttaccaat
+     1981 gcttaatcag tgaggcacct atctcagcga tctgtctatt tcgttcatcc atagttgcct
+     2041 gactccccgt cgtgtagata actacgatac gggagggctt accatctggc cccagtgctg
+     2101 caatgatacc gcgagaccca cgctcaccgg ctccagattt atcagcaata aaccagccag
+     2161 ccggaagggc cgagcgcaga agtggtcctg caactttatc cgcctccatc cagtctatta
+     2221 attgttgccg ggaagctaga gtaagtagtt cgccagttaa tagtttgcgc aacgttgttg
+     2281 ccattgctac aggcatcgtg gtgtcacgct cgtcgtttgg tatggcttca ttcagctccg
+     2341 gttcccaacg atcaaggcga gttacatgat cccccatgtt gtgcaaaaaa gcggttagct
+     2401 ccttcggtcc tccgatcgtt gtcagaagta agttggccgc agtgttatca ctcatggtta
+     2461 tggcagcact gcataattct cttactgtca tgccatccgt aagatgcttt tctgtgactg
+     2521 gtgagtactc aaccaagtca ttctgagaat agtgtatgcg gcgaccgagt tgctcttgcc
+     2581 cggcgtcaat acgggataat accgcgccac atagcagaac tttaaaagtg ctcatcattg
+     2641 gaaaacgttc ttcggggcga aaactctcaa ggatcttacc gctgttgaga tccagttcga
+     2701 tgtaacccac tcgtgcaccc aactgatctt cagcatcttt tactttcacc agcgtttctg
+     2761 ggtgagcaaa aacaggaagg caaaatgccg caaaaaaggg aataagggcg acacggaaat
+     2821 gttgaatact catactcttc ctttttcaat attattgaag catttatcag ggttattgtc
+     2881 tcatgagcgg atacatattt gaatgtattt agaaaaataa acaaataggg gttccgcgca
+     2941 catttccccg aaaagtgcca cctg
+//
+

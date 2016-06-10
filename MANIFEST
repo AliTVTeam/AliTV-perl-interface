@@ -64,6 +64,11 @@ t/713_AliTV-Alignment-parameters.t
 t/715_AliTV-Alignment-callback.t
 t/720_AliTV-Alignment-_check.t
 t/730_AliTV-Alignment-run.t
+t/735_AliTV-Alignment-import_alignments.t
+
+t/750_AliTV-Alignment-lastz.t
+t/751_AliTV-Alignment-lastz-_check.t
+t/752_AliTV-Alignment-lastz-run.t
 
 t/999-AliTV-POD-coverage.t
 
@@ -79,6 +84,7 @@ lib/AliTV/Seq.pm
 lib/AliTV/Genome.pm
 
 lib/AliTV/Alignment.pm
+lib/AliTV/Alignment/lastz.pm
 
 # data files are listed here
 data/existing_testfile
@@ -97,6 +103,13 @@ data/multiple_trees.newick
 data/single_genome.yml
 data/two_genomes_nonuniq_names.yml
 data/two_genomes_uniq_names.yml
+
+### Vector set
+data/vectors/M13mp18.fasta
+data/vectors/pBluescribeKSPlus.fasta
+data/vectors/pBR322.fasta
+data/vectors/pUC19.fasta
+data/vectors/vectors.fasta
 
 ### Chloroset
 
