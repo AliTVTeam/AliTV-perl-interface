@@ -18,6 +18,12 @@ install:
     - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=c HARNESS_TIMER=1
     - cpanm --quiet --notest Devel::Cover::Report::Coveralls
     - cpanm --quiet --installdeps .
+    - wget 'http://www.bx.psu.edu/~rsharris/lastz/newer/lastz-1.03.73.tar.gz'
+    - tar xzf lastz-1.03.73.tar.gz
+    - cd lastz-distrib-1.03.73
+    - make
+    - cd ..
+    - export PATH="$PATH":lastz-distrib-1.03.73/src/
 script: 
     - perl Makefile.PL
     - make
