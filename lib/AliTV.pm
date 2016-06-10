@@ -10,6 +10,7 @@ use YAML;
 use Hash::Merge;
 
 use AliTV::Genome;
+use AliTV::Alignment::lastz;
 
 our $VERSION = '0.1';
 
@@ -65,7 +66,9 @@ sub run
     #################################################################
     # Prepare a sequence set for the alignment
 
-    $self->_generate_seq_set();
+    my $aln_obj = AliTV::Alignment::lastz->new(-parameters => "--format=MAF --noytrim --gapped --strand=both --ambiguous=iupac");
+    $aln_obj->run($self->_generate_seq_set());
+
 }
 
 sub file
