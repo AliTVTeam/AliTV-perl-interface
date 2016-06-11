@@ -198,6 +198,11 @@ sub export_to_genome
     {
 	$self->_logdie('Callback needs to be specified!');
     }
+
+    foreach my $entry (@{$self->{_alignments}})
+    {
+	$self->{_callback}->($entry);
+    }
 }
 
 sub _check
