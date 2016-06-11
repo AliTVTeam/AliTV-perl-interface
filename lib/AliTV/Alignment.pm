@@ -188,6 +188,14 @@ sub import_alignments
     }
 }
 
+sub export_to_genome
+{
+    my $self = shift;
+
+    $self->_debug('Exporting alignment output into genomes by callback');
+
+}
+
 sub _check
 {
     my $self = shift;
