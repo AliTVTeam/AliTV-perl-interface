@@ -59,7 +59,7 @@ sub callback
 	{
 	    $self->{_callback} = $callback_ref;
 	} else {
-	    $self->_logdie("Callback need to be a code reference!");
+	    $self->_logdie("Callback needs to be a code reference!");
 	}
     }
 

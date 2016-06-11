@@ -19,7 +19,7 @@ is( $obj->callback(), $expected, 'Expected value is stored when set');
 
 $expected = "Value";
 throws_ok { $obj->callback($expected); }
-	  qr/Callback need to be a code reference!/,
+	  qr/Callback needs to be a code reference!/,
           'Exception if no codereference is provided for callback';
 
 done_testing;
