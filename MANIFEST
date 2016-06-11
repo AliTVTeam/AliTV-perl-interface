@@ -111,6 +111,12 @@ data/vectors/pBR322.fasta
 data/vectors/pUC19.fasta
 data/vectors/vectors.fasta
 
+# reference alignments
+data/vectors/001.maf
+data/vectors/002.maf
+data/vectors/003.maf
+data/vectors/004.maf
+
 ### Chloroset
 
 data/chloroset/input.yml
