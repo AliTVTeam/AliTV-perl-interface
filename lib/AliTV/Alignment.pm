@@ -194,6 +194,10 @@ sub export_to_genome
 
     $self->_debug('Exporting alignment output into genomes by callback');
 
+    unless (defined $self->{_callback})
+    {
+	$self->_logdie('Callback needs to be specified!');
+    }
 }
 
 sub _check
