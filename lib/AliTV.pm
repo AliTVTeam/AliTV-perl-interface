@@ -75,6 +75,10 @@ sub run
     my $aln_obj = AliTV::Alignment::lastz->new(-parameters => "--format=MAF --noytrim --gapped --strand=both --ambiguous=iupac", -callback => sub{ $self->_import_links(@_); } );
     $aln_obj->run($self->_generate_seq_set());
     $aln_obj->export_to_genome();
+
+    my $json_text = $self->get_json();
+
+    return $json_text;
 }
 
 sub get_json
