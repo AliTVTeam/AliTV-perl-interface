@@ -72,6 +72,45 @@ sub run
 
     my $aln_obj = AliTV::Alignment::lastz->new(-parameters => "--format=MAF --noytrim --gapped --strand=both --ambiguous=iupac");
     $aln_obj->run($self->_generate_seq_set());
+}
+
+sub _import_links
+{
+    my $self = shift;
+
+    my ($entry) = @_;
+
+    my @linkdat = ();
+
+    # find the correct sequence
+    foreach my $seq ( @{$entry->{seqs}} )
+    {
+	my $seqname = $seq->{id};
+	my $corr_genome = undef;
+	foreach my $genome ( keys %{$self->{_genomes}} )
+	{
+	    if (exists $self->{_genomes}{$genome}{_seq}{$seqname})
+	    {
+		# genome with sequence with correct name was found
+		# add the feature
+		$corr_genome = $self->{_genomes}{$genome};
+		my $linkfeature_name = sprintf("linkfeature%06d", ++$self->{_linkfeaturecounter});
+		$corr_genome->_store_feature('link', $seqname, $seq->{start}, $seq->{end}, $seq->{strand}, $linkfeature_name);
+		push(@linkdat, {genome => $genome, feature => $linkfeature_name});
+
+		last;
+	    }
+	}
+    }
+
+    # add a new link to the link-list
+    $self->logdie("unable to create features") unless (@linkdat == 2);
+    $self->{_linkcounter}++;
+    my $genome1 = $linkdat[0]{genome};
+    my $genome2 = $linkdat[1]{genome};
+    my $linkname = sprintf("link%06d", $self->{_linkcounter});
+    my $dataset = { source => $linkdat[0]{feature}, identity => $entry->{identity}, target => $linkdat[1]{feature} };
+    $self->{_links}{$genome1}{$genome2}{$linkname} = $dataset;
 
 }
 
