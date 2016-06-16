@@ -116,6 +116,12 @@ sub get_features
 
     my $ret = {};
 
+    # do I have an existing reference
+    if (@_ && ref($_[0]))
+    {
+	$ret = $_[0];
+    }
+
     foreach my $feat (keys %{$self->{_feature}})
     {
 	foreach my $seq_id (keys %{$self->{_feature}{$feat}})
@@ -195,6 +201,12 @@ sub get_chromosomes
 
     # generate a list of sequences part of the genome
     my $ret = {};
+
+    # do I have an existing reference
+    if (@_ && ref($_[0]))
+    {
+	$ret = $_[0];
+    }
 
     foreach my $id (keys %{$self->{_seq}})
     {
