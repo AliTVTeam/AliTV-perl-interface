@@ -12,6 +12,8 @@ use Hash::Merge;
 use AliTV::Genome;
 use AliTV::Alignment::lastz;
 
+use JSON;
+
 our $VERSION = '0.1';
 
 sub _initialize
@@ -73,6 +75,30 @@ sub run
     my $aln_obj = AliTV::Alignment::lastz->new(-parameters => "--format=MAF --noytrim --gapped --strand=both --ambiguous=iupac", -callback => sub{ $self->_import_links(@_); } );
     $aln_obj->run($self->_generate_seq_set());
     $aln_obj->export_to_genome();
+}
+
+sub get_json
+{
+    my $self = shift;
+
+    my %data = ();
+
+    $data{data}{links} = $self->{_links};
+
+    my $features = {};
+    my $chromosomes = {};
+
+    # cycle though all genomes end extract feature and chromosome information
+    foreach my $genome ( values %{$self->{_genomes}} )
+    {
+	$features = $genome->get_features($features);
+	$chromosomes = $genome->get_chromosomes($chromosomes);
+    }
+
+    $data{data}{features} = $features;
+    $data{data}{karyo}{chromosomes} = $chromosomes;
+
+    return to_json(\%data);
 }
 
 sub _import_links
