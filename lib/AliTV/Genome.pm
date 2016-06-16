@@ -136,7 +136,13 @@ sub get_features
 		    ($start, $end) = ($end, $start);
 		}
 
-		push(@{$ret->{$feat}}, { karyo => $seq_id, name => $entry->{name}, start => $start, end => $end });
+		if ($feat eq "link")
+		{
+		    my $link_value = { karyo => $seq_id, start => $start, end => $end };
+		    $ret->{$feat}{$entry->{name}} = $link_value;
+		} else {
+		    push(@{$ret->{$feat}}, { karyo => $seq_id, name => $entry->{name}, start => $start, end => $end });
+		}
 	    }
 	}
     }
