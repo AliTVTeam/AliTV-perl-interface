@@ -23,6 +23,10 @@ sub _initialize
     $self->{_file} = undef;
     $self->{_genomes} = {};
 
+    $self->{_linkcounter} = 0;
+    $self->{_linkfeaturecounter} = 0;
+
+    $self->{_links} = {};
 }
 
 =pod
