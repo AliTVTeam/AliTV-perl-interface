@@ -38,6 +38,8 @@ sub run
     $File::Temp::KEEP_ALL = 1;
     my $dir = File::Temp::tempdir( CLEANUP =>  0 );
 
+    $self->_info("Created temporary folder at '$dir'");
+
     # create a temporary file
     my $db = File::Temp->new(
 	TEMPLATE => 'tempXXXXX',
@@ -60,7 +62,7 @@ sub run
 
     my @alignments = ();
 
-    $self->_debug("Starting alignment generation...");
+    $self->_info("Starting alignment generation...");
 
     foreach my $seq (@seq_set)
     {
@@ -90,12 +92,13 @@ sub run
 	close($aln_file) || $self->_logdie("Unable to close file");
     }
 
-    $self->_debug("Finished alignment generation");
+    $self->_info("Finished alignment generation");
 
     # import all alignments
     $self->import_alignments(@alignments);
 
     # cleanup temporary folder
+    $self->_info("Deleting temporary folder");
     my $removed_count = File::Path::remove_tree($dir);
     $self->_debug("Removed $removed_count temporary files");
 }
