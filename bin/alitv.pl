@@ -5,6 +5,24 @@ use warnings;
 
 use AliTV;
 
+use Log::Log4perl;
+
+# Configuration in a string ...
+my $conf = q(
+    log4perl.category                  = INFO, Logfile, Screen
+
+    log4perl.appender.Logfile          = Log::Log4perl::Appender::File
+    log4perl.appender.Logfile.filename = test.log
+    log4perl.appender.Logfile.layout   = Log::Log4perl::Layout::PatternLayout
+    log4perl.appender.Logfile.layout.ConversionPattern = [%r] %F %L %m%n
+
+    log4perl.appender.Screen         = Log::Log4perl::Appender::Screen
+    log4perl.appender.Screen.stderr  = 0
+    log4perl.appender.Screen.layout = Log::Log4perl::Layout::SimpleLayout
+  );
+
+Log::Log4perl::init( \$conf );
+
 my $yml = "";
 
 if (@ARGV == 1)
