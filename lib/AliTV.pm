@@ -206,6 +206,28 @@ sub get_json
 	};
     }
 
+    $data{filter} = {
+                         'features' => {
+                                         'invisibleFeatures' => {}
+                                       },
+                         'karyo' => {
+                                      'chromosomes' => {},
+                                      'genome_order' => [],
+                                      'order' => []
+                                    },
+                         'links' => {
+                                      'invisibleLinks' => {},
+                                      'maxLinkIdentity' => 100,
+                                      'maxLinkLength' => 160910,
+                                      'minLinkIdentity' => 70,
+                                      'minLinkLength' => 0
+                                    },
+                         'onlyShowAdjacentLinks' => JSON::true,
+                         'showAllChromosomes' => JSON::false,
+                         'showIntraGenomeLinks' => JSON::false,
+                         'skipChromosomesWithoutLinks' => JSON::false,
+                         'skipChromosomesWithoutVisibleLinks' => JSON::false
+    };
 
     return to_json(\%data);
 }
