@@ -11,6 +11,7 @@ use Hash::Merge;
 
 use AliTV::Genome;
 use AliTV::Alignment::lastz;
+use AliTV::Tree;
 
 use JSON;
 
@@ -29,6 +30,8 @@ sub _initialize
     $self->{_linkfeaturecounter} = 0;
 
     $self->{_links} = {};
+
+    $self->{_tree} = undef;
 }
 
 =pod
@@ -76,6 +79,17 @@ sub run
     $aln_obj->run($self->_generate_seq_set());
     $aln_obj->export_to_genome();
 
+    #################################################################
+    #
+    # Import tree
+    #
+    #################################################################
+    if (exists $self->{_yml_import}{tree} && defined $self->{_yml_import}{tree})
+    {
+	my $tree_obj = AliTV::Tree->new(-file => ($self->{_yml_import}{tree}));
+	$self->{_tree} = $tree_obj->tree_2_json_structure();
+    }
+
     my $json_text = $self->get_json();
 
     return $json_text;
@@ -101,6 +115,8 @@ sub get_json
 
     $data{data}{features} = $features;
     $data{data}{karyo}{chromosomes} = $chromosomes;
+
+    $data{data}{tree} = $self->{_tree};
 
     return to_json(\%data);
 }
