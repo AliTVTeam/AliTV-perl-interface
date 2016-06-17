@@ -3,6 +3,21 @@
 use strict;
 use warnings;
 
+use AliTV;
+
+my $yml = "";
+
+if (@ARGV == 1)
+{
+    $yml = shift @ARGV;
+}
+
+my $obj = AliTV->new(-file => $yml);
+
+my $output = $obj->run();
+
+print $output;
+
 =pod
 
 =encoding utf8
