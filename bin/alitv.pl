@@ -7,6 +7,8 @@ use AliTV;
 
 use Log::Log4perl;
 
+use YAML;
+
 # Configuration in a string ...
 my $conf = q(
     log4perl.category                  = INFO, Logfile, Screen
@@ -28,6 +30,22 @@ my $yml = "";
 if (@ARGV == 1)
 {
     $yml = shift @ARGV;
+} elsif (@ARGV > 1)
+{
+    my $config = {
+	genomes => []
+    };
+
+    foreach my $infile (@ARGV)
+    {
+	push(@{$config->{genomes}}, {name => $infile, sequence_files => [ $infile ]});
+    }
+
+    $yml = 'test.yml';
+
+    YAML::DumpFile($yml, $config);
+
+    print "Wrote temporary YAML file '$yml'\n";
 }
 
 my $obj = AliTV->new(-file => $yml);
