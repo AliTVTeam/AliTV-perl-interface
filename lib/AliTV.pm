@@ -31,6 +31,11 @@ sub _initialize
 
     $self->{_links} = {};
 
+    $self->{_links_min_len} = 1000000000; # just a huge value
+    $self->{_links_max_len} = 0;          # just a tiny value
+    $self->{_links_max_id}  = 0;          # just a zero
+    $self->{_links_min_id}  = 100;        # just the maximum
+
     $self->{_tree} = undef;
 }
 
@@ -217,10 +222,10 @@ sub get_json
                                     },
                          'links' => {
                                       'invisibleLinks' => {},
-                                      'maxLinkIdentity' => 100,
-                                      'maxLinkLength' => 160910,
-                                      'minLinkIdentity' => 70,
-                                      'minLinkLength' => 0
+                                      'maxLinkIdentity' => $self->{_links_max_id},
+                                      'maxLinkLength' => $self->{_links_max_len},
+                                      'minLinkIdentity' => $self->{_links_min_id},
+                                      'minLinkLength' => $self->{_links_min_len}
                                     },
                          'onlyShowAdjacentLinks' => JSON::true,
                          'showAllChromosomes' => JSON::false,
@@ -270,6 +275,24 @@ sub _import_links
     my $dataset = { source => $linkdat[0]{feature}, identity => $entry->{identity}, target => $linkdat[1]{feature} };
     $self->{_links}{$genome1}{$genome2}{$linkname} = $dataset;
 
+    # track minimum and maximum link length and identity
+    if ($self->{_links_min_len} > $entry->{len})
+    {
+	$self->{_links_min_len} = $entry->{len};
+    }
+    if ($self->{_links_max_len} < $entry->{len})
+    {
+	$self->{_links_max_len} = $entry->{len};
+    }
+
+    if ($self->{_links_min_id} > $entry->{identity})
+    {
+	$self->{_links_min_id} = $entry->{identity};
+    }
+    if ($self->{_links_max_id} < $entry->{identity})
+    {
+	$self->{_links_max_id} = $entry->{identity};
+    }
 }
 
 sub file
