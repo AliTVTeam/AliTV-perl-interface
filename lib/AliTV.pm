@@ -296,7 +296,7 @@ sub _import_links
     my $genome1 = $linkdat[0]{genome};
     my $genome2 = $linkdat[1]{genome};
     my $linkname = sprintf("link%06d", $self->{_linkcounter});
-    my $dataset = { source => $linkdat[0]{feature}, identity => $entry->{identity}+0, target => $linkdat[1]{feature} };
+    my $dataset = { source => $linkdat[0]{feature}, identity => sprintf("%.2f", $entry->{identity})+0, target => $linkdat[1]{feature} };
     $self->{_links}{$genome1}{$genome2}{$linkname} = $dataset;
 
     # track minimum and maximum link length and identity
