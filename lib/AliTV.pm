@@ -143,7 +143,7 @@ sub get_json
 	                                'buttonWidth' => 90,
 					'canvasHeight' => 900,
 					'canvasWidth' => 900,
-					'fade' => '0.1',
+					'fade' => 0.1,
 					'genomeLabelWidth' => 200,
 					'karyoDistance' => 5000,
 					'karyoHeight' => 30,
@@ -222,10 +222,10 @@ sub get_json
                                     },
                          'links' => {
                                       'invisibleLinks' => {},
-                                      'maxLinkIdentity' => $self->{_links_max_id},
-                                      'maxLinkLength' => $self->{_links_max_len},
-                                      'minLinkIdentity' => $self->{_links_min_id},
-                                      'minLinkLength' => $self->{_links_min_len}
+                                      'maxLinkIdentity' => $self->{_links_max_id}+0,
+                                      'maxLinkLength' => $self->{_links_max_len}+0,
+                                      'minLinkIdentity' => $self->{_links_min_id}+0,
+                                      'minLinkLength' => $self->{_links_min_len}+0
                                     },
                          'onlyShowAdjacentLinks' => JSON::true,
                          'showAllChromosomes' => JSON::false,
@@ -282,7 +282,7 @@ sub _import_links
 		# add the feature
 		$corr_genome = $self->{_genomes}{$genome};
 		my $linkfeature_name = sprintf("linkfeature%06d", ++$self->{_linkfeaturecounter});
-		$corr_genome->_store_feature('link', $seqname, $seq->{start}, $seq->{end}, $seq->{strand}, $linkfeature_name);
+		$corr_genome->_store_feature('link', $seqname, $seq->{start}+0, $seq->{end}+0, $seq->{strand}, $linkfeature_name);
 		push(@linkdat, {genome => $genome, feature => $linkfeature_name});
 
 		last;
@@ -296,26 +296,26 @@ sub _import_links
     my $genome1 = $linkdat[0]{genome};
     my $genome2 = $linkdat[1]{genome};
     my $linkname = sprintf("link%06d", $self->{_linkcounter});
-    my $dataset = { source => $linkdat[0]{feature}, identity => $entry->{identity}, target => $linkdat[1]{feature} };
+    my $dataset = { source => $linkdat[0]{feature}, identity => $entry->{identity}+0, target => $linkdat[1]{feature} };
     $self->{_links}{$genome1}{$genome2}{$linkname} = $dataset;
 
     # track minimum and maximum link length and identity
     if ($self->{_links_min_len} > $entry->{len})
     {
-	$self->{_links_min_len} = $entry->{len};
+	$self->{_links_min_len} = $entry->{len}+0;
     }
     if ($self->{_links_max_len} < $entry->{len})
     {
-	$self->{_links_max_len} = $entry->{len};
+	$self->{_links_max_len} = $entry->{len}+0;
     }
 
     if ($self->{_links_min_id} > $entry->{identity})
     {
-	$self->{_links_min_id} = $entry->{identity};
+	$self->{_links_min_id} = $entry->{identity}+0;
     }
     if ($self->{_links_max_id} < $entry->{identity})
     {
-	$self->{_links_max_id} = $entry->{identity};
+	$self->{_links_max_id} = $entry->{identity}+0;
     }
 }
 
