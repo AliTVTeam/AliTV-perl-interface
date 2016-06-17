@@ -118,6 +118,83 @@ sub get_json
 
     $data{data}{tree} = $self->{_tree};
 
+    $data{conf} = {
+	'circular' => {
+	    'tickSize' => 5
+	},
+
+        'features' => {
+		    'fallbackStyle' => {
+			'color' => '#787878',
+			'form' => 'rect',
+			'height' => 30,
+			'visible' => JSON::false
+		    },
+		    'showAllFeatures' => JSON::false,
+		    'supportedFeatures' => { },
+	 },
+
+	 'graphicalParameters' => {
+	                                'buttonWidth' => 90,
+					'canvasHeight' => 900,
+					'canvasWidth' => 900,
+					'fade' => '0.1',
+					'genomeLabelWidth' => 200,
+					'karyoDistance' => 5000,
+					'karyoHeight' => 30,
+					'linkKaryoDistance' => 20,
+					'tickDistance' => 1000,
+					'tickLabelFrequency' => 10,
+					'treeWidth' => 200
+          },
+          'labels' => {
+	      'chromosome' => {
+		  'showChromosomeLabels' => JSON::false
+	      },
+	      'features' => {
+		  'showFeatureLabels' => JSON::false
+	      },
+	      'genome' => {
+		  'color' => '#000000',
+		  'showGenomeLabels' => JSON::true,
+		  'size' => 25
+	      },
+	      'showAllLabels' => JSON::false,
+	      'ticks' => {
+		  'color' => '#000000',
+		  'showTickLabels' => JSON::true,
+		  'showTicks' => JSON::true,
+		  'size' => 10
+	       }
+            },
+	'layout' => 'linear',
+	'linear' => {
+	    'drawAllLinks' => JSON::false,
+	    'endLineColor' => '#1d91c0',
+	    'hideHalfVisibleLinks' => JSON::false,
+	    'startLineColor' => '#49006a'
+	},
+
+	'maxLinkIdentity' => 100,
+	'maxLinkIdentityColor' => '#1DAD0A',
+	'maxLinkLength' => 5000,
+	'midLinkIdentity' => 85,
+        'midLinkIdentityColor' => '#FFEE05',
+        'minLinkIdentity' => 70,
+        'minLinkIdentityColor' => '#D21414',
+        'minLinkLength' => 100,
+
+	'offset' => {
+	    'distance' => 1000,
+	    'isSet' => JSON::false
+         },
+
+	'tree' => {
+	    'drawTree' => JSON::true,
+	    'orientation' => 'left'
+	}
+    };
+
     return to_json(\%data);
 }
 
