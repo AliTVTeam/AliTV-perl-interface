@@ -221,8 +221,7 @@ sub get_chromosomes
 	$ret->{$uniq_id} = { length => $self->{_seq}{$id}{len}+0,
 			     genome_id => $self->name(),
 			     seq => $self->{_seq}{$id}{seq},
-			     #seq => undef,
-			     #name => $id
+			     name => $id
 	};
     }
 
