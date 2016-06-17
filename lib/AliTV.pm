@@ -211,7 +211,7 @@ sub get_json
 	};
     }
 
-    $data{filter} = {
+    $data{filters} = {
                          'features' => {
                                          'invisibleFeatures' => {}
                                        },
@@ -245,18 +245,18 @@ sub get_json
     # set each chromosome to visible
     foreach my $chromosome (@chromosomelist_sorted)
     {
-	$data{filter}{karyo}{chromosomes}{$chromosome} = {
+	$data{filters}{karyo}{chromosomes}{$chromosome} = {
 	    visible => JSON::true,
 	    reverse => JSON::false
 	};
     }
 
-    $data{filter}{karyo}{order} = \@chromosomelist_sorted;
+    $data{filters}{karyo}{order} = \@chromosomelist_sorted;
 
     # need to define a genome order
     # easy to implement: alphabetically sorted
     my %genomes = map { $data{data}{karyo}{chromosomes}{$_}{genome_id} => 1 } (keys %{$data{data}{karyo}{chromosomes}});
-    $data{filter}{karyo}{genome_order} = [sort keys %genomes];
+    $data{filters}{karyo}{genome_order} = [sort keys %genomes];
 
     return to_json(\%data);
 }
