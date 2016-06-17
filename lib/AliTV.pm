@@ -234,6 +234,30 @@ sub get_json
                          'skipChromosomesWithoutVisibleLinks' => JSON::false
     };
 
+    # adding information about the chromosomes
+    # first sort the chromosomes
+    my @chromosomelist_sorted = sort {
+	$data{data}{karyo}{chromosomes}{$a}{genome_id} cmp $data{data}{karyo}{chromosomes}{$b}{genome_id}
+	||
+	$data{data}{karyo}{chromosomes}{$a}{length} <=> $data{data}{karyo}{chromosomes}{$b}{length}
+    } keys %{$data{data}{karyo}{chromosomes}};
+
+    # set each chromosome to visible
+    foreach my $chromosome (@chromosomelist_sorted)
+    {
+	$data{filter}{karyo}{chromosomes}{$chromosome} = {
+	    visible => JSON::true,
+	    reverse => JSON::false
+	};
+    }
+
+    $data{filter}{karyo}{order} = \@chromosomelist_sorted;
+
+    # need to define a genome order
+    # easy to implement: alphabetically sorted
+    my %genomes = map { $data{data}{karyo}{chromosomes}{$_}{genome_id} => 1 } (keys %{$data{data}{karyo}{chromosomes}});
+    $data{filter}{karyo}{genome_order} = [sort keys %genomes];
+
     return to_json(\%data);
 }
 
