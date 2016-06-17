@@ -218,11 +218,11 @@ sub get_chromosomes
     {
 	my $uniq_id = (exists $self->{_nonuniq_ids}{$id}) ? $self->{_nonuniq_ids}{$id} : $id;
 
-	$ret->{$uniq_id} = { length => $self->{_seq}{$id}{len},
+	$ret->{$uniq_id} = { length => $self->{_seq}{$id}{len}+0,
 			     genome_id => $self->name(),
-			     seq => $self->{_seq}{$id}{seq},
-			     #seq => undef,
-			     name => $id
+			     #seq => $self->{_seq}{$id}{seq},
+			     seq => undef,
+			     #name => $id
 	};
     }
 
