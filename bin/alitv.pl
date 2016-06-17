@@ -24,6 +24,7 @@ my $conf = q(
   );
 
 Log::Log4perl::init( \$conf );
+my $logger = Log::Log4perl->get_logger();
 
 my $yml = "";
 
@@ -45,7 +46,7 @@ if (@ARGV == 1)
 
     YAML::DumpFile($yml, $config);
 
-    print "Wrote temporary YAML file '$yml'\n";
+    $logger->info("Wrote temporary YAML file '$yml'");
 }
 
 my $obj = AliTV->new(-file => $yml);
