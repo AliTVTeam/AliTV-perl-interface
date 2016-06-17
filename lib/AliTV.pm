@@ -195,6 +195,18 @@ sub get_json
 	}
     };
 
+    # add all features but links
+    foreach my $feat (grep {$_ ne 'link'} (keys %{$data{data}{features}}))
+    {
+	$data{conf}{features}{supportedFeatures}{$feat} = {
+	    color => '#808080',
+	    form => 'rect',
+	    height => 30,
+	    visible => JSON::true
+	};
+    }
+
+
     return to_json(\%data);
 }
 
