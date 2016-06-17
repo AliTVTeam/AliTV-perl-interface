@@ -8,6 +8,7 @@ use parent 'AliTV::Alignment';
 use File::Which;
 use IPC::System::Simple qw(capturex systemx);
 use File::Temp qw(:seekable);
+use File::Path;
 
 sub _check
 {
@@ -33,10 +34,15 @@ sub run
 
     # first, we need to create the database file
 
+    # create a temporary folder without cleanup
+    $File::Temp::KEEP_ALL = 1;
+    my $dir = File::Temp::tempdir( CLEANUP =>  0 );
+
     # create a temporary file
     my $db = File::Temp->new(
 	TEMPLATE => 'tempXXXXX',
-	SUFFIX => '.fasta'
+	SUFFIX => '.fasta',
+	DIR => $dir,
 	);
 
     # create the database file
@@ -60,7 +66,8 @@ sub run
     {
 	my $query = File::Temp->new(
 	    TEMPLATE => 'tempXXXXX',
-	    SUFFIX => '.fasta'
+	    SUFFIX => '.fasta',
+	    DIR => $dir,
 	    );
 
 	my $query_obj = Bio::SeqIO->new(-fh => $query, -format => "fasta");
@@ -69,7 +76,8 @@ sub run
 
 	my $aln_file = File::Temp->new(
 	    TEMPLATE => 'tempXXXXX',
-	    SUFFIX => '.maf'
+	    SUFFIX => '.maf',
+	    DIR => $dir,
 	    );
 
 	my $cmd = join(" ", $self->{_cmd}, ($db_file, $query->filename(), "--output=".$aln_file->filename(), split(/ /, $self->{_parameters})));
@@ -77,6 +85,9 @@ sub run
 	systemx($self->{_cmd}, ($db_file, $query->filename(), "--output=".$aln_file->filename(), split(/ /, $self->{_parameters})));
 
 	push(@alignments, $aln_file);
+
+	close($query) || $self->_logdie("Unable to close file");
+	close($aln_file) || $self->_logdie("Unable to close file");
     }
 
     $self->_debug("Finished alignment generation");
@@ -84,6 +95,9 @@ sub run
     # import all alignments
     $self->import_alignments(@alignments);
 
+    # cleanup temporary folder
+    my $removed_count = File::Path::remove_tree($dir);
+    $self->_debug("Removed $removed_count temporary files");
 }
 
 1;
