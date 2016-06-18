@@ -18,3 +18,7 @@ nytprof.out
 *.o
 *.bs
 /_eumm/
+*~
+*.ptkdb
+*.tmp
+*.old
