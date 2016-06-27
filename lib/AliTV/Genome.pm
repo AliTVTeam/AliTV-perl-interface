@@ -136,7 +136,7 @@ sub get_features
 		    ($start, $end) = ($end, $start);
 		}
 
-		if ($feat eq "link")
+		if ($feat eq $self->_link_feature_name())
 		{
 		    my $link_value = { karyo => $seq_id, start => $start+0, end => $end+0 };
 		    $ret->{$feat}{$entry->{name}} = $link_value;

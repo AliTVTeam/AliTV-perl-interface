@@ -199,7 +199,7 @@ sub get_json
     };
 
     # add all features but links
-    foreach my $feat (grep {$_ ne 'link'} (keys %{$data{data}{features}}))
+    foreach my $feat (grep {$_ ne $self->_link_feature_name()} (keys %{$data{data}{features}}))
     {
 	$data{conf}{features}{supportedFeatures}{$feat} = {
 	    color => '#808080',
@@ -280,7 +280,7 @@ sub _import_links
 		# add the feature
 		$corr_genome = $self->{_genomes}{$genome};
 		my $linkfeature_name = sprintf("linkfeature%06d", ++$self->{_linkfeaturecounter});
-		$corr_genome->_store_feature('link', $seqname, $seq->{start}+0, $seq->{end}+0, $seq->{strand}, $linkfeature_name);
+		$corr_genome->_store_feature($self->_link_feature_name(), $seqname, $seq->{start}+0, $seq->{end}+0, $seq->{strand}, $linkfeature_name);
 		push(@linkdat, {genome => $genome, feature => $linkfeature_name});
 
 		last;
