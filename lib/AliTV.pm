@@ -15,8 +15,6 @@ use AliTV::Tree;
 
 use JSON;
 
-our $VERSION = '0.1';
-
 sub _initialize
 {
     my $self = shift;
