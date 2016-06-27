@@ -203,6 +203,15 @@ sub _file_check
     }
 }
 
+# This class method returns the name for link features. This can be
+# used in other classes to avoid inconsistencies with link feature
+# naming
+
+sub _link_feature_name
+{
+    return "link";
+}
+
 1;
 
 =head1 AliTV::Base class
