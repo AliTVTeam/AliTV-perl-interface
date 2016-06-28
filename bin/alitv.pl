@@ -82,17 +82,23 @@ print $output;
 
 =head1 NAME
 
-alitv.pl - generate the required JSON files for AliTV
+AliTV perl interface - generates the required JSON file for AliTV
 
 =head1 SYNOPSIS
 
-alitv.pl options.yml
+    # complex configuration via yml file
+    alitv.pl options.yml
+
+    # OR
+
+    # easy alternative including the generation of a yml file
+    alitv.pl *.fasta
 
 =head1 DESCRIPTION
 
-The script creates the required JSON files to run AliTV. The two
-output files are required to load into the AliTV website to use AliTV
-for the visualization of multiple whole genome alignments.
+The script creates the required JSON file to run AliTV. The output
+file is required to load into the AliTV website to use AliTV for the
+visualization of multiple whole genome alignments.
 
 =head1 AUTHOR
 
