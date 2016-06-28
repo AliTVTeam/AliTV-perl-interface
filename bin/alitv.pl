@@ -5,6 +5,9 @@ use warnings;
 
 use AliTV;
 
+use Getopt::Long;
+use Pod::Usage;
+
 use Log::Log4perl;
 
 use YAML;
@@ -27,6 +30,24 @@ Log::Log4perl::init( \$conf );
 my $logger = Log::Log4perl->get_logger();
 
 my $yml = "";
+
+# print a status message including a version information
+printf STDERR "
+***********************************************************************
+*                                                                     *
+*  AliTV perl interface                                               *
+*                                                                     *
+***********************************************************************
+
+You are using version %s.
+", $AliTV::VERSION;
+
+my $man = 0;
+my $help = 0;
+
+GetOptions('help|?' => \$help, man => \$man) or pod2usage(2);
+pod2usage(1) if ($help || @ARGV== 0);
+pod2usage(-exitval => 0, -verbose => 2) if $man;
 
 if (@ARGV == 1)
 {
