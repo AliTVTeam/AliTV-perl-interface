@@ -109,13 +109,13 @@ Frank FE<246>rster E<lt>foersterfrank@gmx.deE<gt>
 =over 4
 
 =item *
-L<AliTV-Demo-Page|http://bioinf-wuerzburg.github.io/AliTV/d3/AliTV.html>
+L<AliTV-Demo-Page|https://alitvteam.github.io/AliTV/d3/AliTV.html>
 
 =item *
-L<AliTV-Website|http://bioinf-wuerzburg.github.io/AliTV/>
+L<AliTV-Website|https://alitvteam.github.io/AliTV/>
 
 =item *
-L<AliTV-Github-Page|https://github.com/BioInf-Wuerzburg/AliTV>
+L<AliTV-Github-Page|https://github.com/AliTVTeam/AliTV>
 
 
 =back
