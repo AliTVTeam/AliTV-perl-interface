@@ -4,7 +4,7 @@ use ExtUtils::MakeMaker;
 # the contents of the Makefile that is written.
 WriteMakefile(
     NAME              => 'AliTV',
-    VERSION_FROM      => 'lib/AliTV.pm', # finds $VERSION
+    VERSION_FROM      => 'lib/AliTV/Base/Version.pm', # finds $VERSION
     EXE_FILES         => [
 	'bin/alitv.pl'
     ],
