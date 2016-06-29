@@ -84,6 +84,16 @@ sub import_alignments
     {
 	my $in = Bio::AlignIO->new(-file => $infile );
 
+	# this flag will be used to fix the MAF bioperl revcom issue
+	# while not influcencing other alignments
+	# Issue have to be fixed while link import due to I have no access to the length of the input sequences
+	my $need_maf_workaround = 0;
+	if ($in->format() eq "maf")
+	{
+	    $need_maf_workaround = 1;
+	    $self->_info("MAF input file detected... Therefore workaround for revcom issue activated");
+	}
+
 	while ( my $aln = $in->next_aln ) {
 	    # extract our required information
 
@@ -149,6 +159,9 @@ sub import_alignments
 	    }
 
 	    # generate a checksum for the alignment entry to avoid multiple identical entries
+	    # due to the MAF revcomp issue, a filtering here might not
+	    # be sufficient and a re-filtering while link import
+	    # (AliTV::Genome) is necessary
 	    my $md5 = Digest::MD5->new;
 	    foreach my $seq (@seqs)
 	    {
@@ -167,7 +180,8 @@ sub import_alignments
 		score    => $score,
 		len      => $length,
 		md5      => $md5->hexdigest(),
-		seqs     => \@seqs
+		seqs     => \@seqs,
+		maf_revcomp_req => $need_maf_workaround
 	    };
 
 	    # search for an entry with the same hash
