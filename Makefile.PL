@@ -20,6 +20,7 @@ WriteMakefile(
 	Bio::Tree::Node => 0,       # was 1.006923, but the installed version cannot determined
 	Bio::AlignIO    => 0,       # was 1.006923, but the installed version cannot determined
 	JSON            => 0,
+	YAML            => 0,
         IPC::System::Simple => 0,
         File::Temp => 0,
 	Log::Log4perl => 0,
