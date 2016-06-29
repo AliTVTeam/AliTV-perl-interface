@@ -5,6 +5,9 @@ use warnings;
 
 use AliTV;
 
+use Getopt::Long;
+use Pod::Usage;
+
 use Log::Log4perl;
 
 use YAML;
@@ -27,6 +30,24 @@ Log::Log4perl::init( \$conf );
 my $logger = Log::Log4perl->get_logger();
 
 my $yml = "";
+
+# print a status message including a version information
+printf STDERR "
+***********************************************************************
+*                                                                     *
+*  AliTV perl interface                                               *
+*                                                                     *
+***********************************************************************
+
+You are using version %s.
+", $AliTV::VERSION;
+
+my $man = 0;
+my $help = 0;
+
+GetOptions('help|?' => \$help, man => \$man) or pod2usage(2);
+pod2usage(1) if ($help || @ARGV== 0);
+pod2usage(-exitval => 0, -verbose => 2) if $man;
 
 if (@ARGV == 1)
 {
@@ -61,17 +82,23 @@ print $output;
 
 =head1 NAME
 
-alitv.pl - generate the required JSON files for AliTV
+AliTV perl interface - generates the required JSON file for AliTV
 
 =head1 SYNOPSIS
 
-alitv.pl options.yml
+    # complex configuration via yml file
+    alitv.pl options.yml
+
+    # OR
+
+    # easy alternative including the generation of a yml file
+    alitv.pl *.fasta
 
 =head1 DESCRIPTION
 
-The script creates the required JSON files to run AliTV. The two
-output files are required to load into the AliTV website to use AliTV
-for the visualization of multiple whole genome alignments.
+The script creates the required JSON file to run AliTV. The output
+file is required to load into the AliTV website to use AliTV for the
+visualization of multiple whole genome alignments.
 
 =head1 AUTHOR
 
@@ -82,13 +109,13 @@ Frank FE<246>rster E<lt>foersterfrank@gmx.deE<gt>
 =over 4
 
 =item *
-L<AliTV-Demo-Page|http://bioinf-wuerzburg.github.io/AliTV/d3/AliTV.html>
+L<AliTV-Demo-Page|https://alitvteam.github.io/AliTV/d3/AliTV.html>
 
 =item *
-L<AliTV-Website|http://bioinf-wuerzburg.github.io/AliTV/>
+L<AliTV-Website|https://alitvteam.github.io/AliTV/>
 
 =item *
-L<AliTV-Github-Page|https://github.com/BioInf-Wuerzburg/AliTV>
+L<AliTV-Github-Page|https://github.com/AliTVTeam/AliTV>
 
 
 =back
