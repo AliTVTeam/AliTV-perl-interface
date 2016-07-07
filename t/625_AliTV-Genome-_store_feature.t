@@ -83,4 +83,17 @@ is( $name_returned_case_3, $name_case_2,
 is_deeply( $obj->get_features(), $expected_case_2,
     'Identical links are ignored and correct name is returned' );
 
+# now we force a second link at the same position to cause an exception
+my $link001_ref = $obj->{_feature}{link}{ $links{$name_case_1}{karyo} }[0];
+push( @{ $obj->{_feature}{link}{ $links{$name_case_1}{karyo} } },
+    $link001_ref );
+
+throws_ok {
+    $obj->_store_feature( $obj->_link_feature_name(),
+        ( map { $links{$name_case_1}{$_} } (qw(karyo start end strand)) ),
+        $name_case_1 );
+}
+qr/Unexpected number of link features found!/,
+  'Exception if multiple identical links are existing';
+
 done_testing;
