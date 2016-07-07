@@ -122,7 +122,13 @@ sub _store_feature
 
 	if (@found_features)
 	{
-	    $name = $found_features[0]{name};
+	    # we expect a single hit or no hit
+	    if (@found_features == 1)
+	    {
+		$name = $found_features[0]{name};
+	    } else {
+		$self->_logdie("Unexpected number of link features found!");
+	    }
 	}
 
     }
