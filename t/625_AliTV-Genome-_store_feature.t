@@ -62,4 +62,15 @@ is( $name_returned_case_1, $name_case_1,
 is_deeply( $obj->get_features(), $expected_case_1,
     'Links are generated as expected' );
 
+# second link should be added
+my $name_case_2          = "link002";
+my $name_returned_case_2 = $obj->_store_feature( $obj->_link_feature_name(),
+    ( map { $links{$name_case_2}{$_} } (qw(karyo start end strand)) ),
+    $name_case_2 );
+
+is( $name_returned_case_2, $name_case_2,
+    'Correct name was returned for case 2' );
+is_deeply( $obj->get_features(), $expected_case_2,
+    'Reverse links are generated as expected' );
+
 done_testing;
