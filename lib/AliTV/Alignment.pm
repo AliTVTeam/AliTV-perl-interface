@@ -88,7 +88,16 @@ sub import_alignments
 	# while not influcencing other alignments
 	# Issue have to be fixed while link import due to I have no access to the length of the input sequences
 	my $need_maf_workaround = 0;
-	if ($in->format() eq "maf")
+	# we need a fallback for bioperl version not supporting format method of Bio::AlignIO::* modules
+	my $format = undef;
+
+	if ($in->can("format"))
+	{
+	    $format = $in->format();
+	} else {
+	    $format = $in->_guess_format($infile);
+	}
+	if ($format eq "maf")
 	{
 	    $need_maf_workaround = 1;
 	    $self->_info("MAF input file detected... Therefore workaround for revcom issue activated");
