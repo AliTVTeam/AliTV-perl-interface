@@ -105,7 +105,35 @@ sub _store_feature
 
     my ($feature_id, $seq_id, $start, $end, $strand, $name) = @_;
 
-    push(@{$self->{_feature}{$feature_id}{$seq_id}}, { start => $start, end => $end, strand => $strand, name => $name });
+    # if feature_id is a link, we need to check if a link with exactly
+    # the same coordinates exists. In that case, we need to return its
+    # name instead of creating a new link feature
+    my @found_features = ();
+    if ($feature_id eq $self->_link_feature_name())
+    {
+	# search the features for the same coordinates and strand
+	@found_features = grep {(
+	    $_->{start} == $start
+	    &&
+	    $_->{end} == $end
+	    &&
+	    $_->{strand} == $strand
+	    )} (@{$self->{_feature}{$feature_id}{$seq_id}});
+
+	if (@found_features)
+	{
+	    $name = $found_features[0]{name};
+	}
+
+    }
+
+    # push a new feature, if no features are found
+    unless (@found_features)
+    {
+	push(@{$self->{_feature}{$feature_id}{$seq_id}}, { start => $start, end => $end, strand => $strand, name => $name });
+    }
+
+    return $name;
 }
 
 sub get_features
