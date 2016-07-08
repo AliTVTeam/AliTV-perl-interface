@@ -281,6 +281,11 @@ sub file
     $self->_logdie("File should never called for AliTV::Genome");
 }
 
+sub seq_exists
+{
+    my $self = shift;
+}
+
 1;
 __END__
 =pod
