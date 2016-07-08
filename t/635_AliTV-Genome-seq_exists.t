@@ -15,4 +15,16 @@ my %params = (
 
 my $obj = new_ok('AliTV::Genome' => [%params]);
 
+my %expected =  (
+   "Test" => 1,
+   "Test2" => 1,
+   "Test3" => 1,
+   "Test4" => undef
+);
+
+while (my ($name, $exp_result) = each %expected)
+{
+	is($obj->seq_exists($name), $exp_result, "Correct value for sequence name '$name' was returned");
+}
+
 done_testing;
