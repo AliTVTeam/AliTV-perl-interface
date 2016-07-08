@@ -57,6 +57,7 @@ t/610_AliTV-Genome-set_uniq_seq_names.t
 t/615_AliTV-Genome-get_sequences.t
 t/625_AliTV-Genome-_store_feature.t
 t/635_AliTV-Genome-seq_exists.t
+t/645_AliTV-Genome-fix_maf_revcomp.t
 
 t/700_AliTV-Alignment.t
 t/701_AliTV-Alignment-new.t
