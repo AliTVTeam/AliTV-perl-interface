@@ -296,6 +296,17 @@ sub seq_exists
     return $result;
 }
 
+sub fix_maf_revcomp
+{
+    my $self = shift;
+
+    my ($start, $end, $strand, $seq_name) = @_;
+
+    return ($start, $end, $strand, $seq_name);
+
+}
+
+
 1;
 __END__
 =pod
