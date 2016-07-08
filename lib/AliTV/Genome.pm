@@ -284,6 +284,16 @@ sub file
 sub seq_exists
 {
     my $self = shift;
+    my $seq_name = shift;
+
+    my $result = undef;
+
+    if ( exists $self->{_seq}{$seq_name} )
+    {
+	$result = 1;
+    }
+
+    return $result;
 }
 
 1;
