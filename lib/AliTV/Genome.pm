@@ -288,7 +288,7 @@ sub seq_exists
 
     my $result = undef;
 
-    if ( exists $self->{_seq}{$seq_name} )
+    if ( exists $self->{_seq}{$seq_name} || exists $self->{_uniq_ids}{$seq_name} )
     {
 	$result = 1;
     }
