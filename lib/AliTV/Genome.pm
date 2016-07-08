@@ -302,7 +302,7 @@ sub fix_maf_revcomp
 
     my ($start, $end, $strand, $seq_name) = @_;
 
-    return ($start, $end, $strand, $seq_name);
+    return ($start, $end);
 
 }
 
