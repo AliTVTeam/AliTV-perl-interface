@@ -164,8 +164,14 @@ sub get_features
 	    {
 		my ($start, $end, $strand) = ($entry->{start}, $entry->{end}, $entry->{strand});
 
-		# if strand is -1 change start and end koordinate
-		if ($strand == -1)
+		# if strand is +1 we need to have start coordinate < end coordinate
+		if ($strand == 1 && $end < $start)
+		{
+		    ($start, $end) = ($end, $start);
+		}
+
+		# if strand is -1 we need to have start coordinate > end coordinate
+		if ($strand == -1 && $end > $start)
 		{
 		    ($start, $end) = ($end, $start);
 		}
