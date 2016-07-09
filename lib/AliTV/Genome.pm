@@ -317,7 +317,7 @@ sub fix_maf_revcomp
 
 	my $seq_length = $self->{_seq}{$uniq_id}{len};
 
-	($start, $end) = (($seq_length-$start-1), ($seq_length-$end-1));
+	($start, $end) = (($seq_length-$start+1), ($seq_length-$end));
     }
 
     return ($start, $end);
