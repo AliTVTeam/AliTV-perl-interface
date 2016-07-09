@@ -300,9 +300,40 @@ sub _import_links
     $self->{_linkcounter}++;
     my $genome1 = $linkdat[0]{genome};
     my $genome2 = $linkdat[1]{genome};
+
+    # sort the genomes alphabetically
+    if ($genome2 lt $genome1)
+    {
+	($genome1, $genome2) = ($genome2, $genome1);
+    }
+
     my $linkname = sprintf("link%06d", $self->{_linkcounter});
     my $dataset = { source => $linkdat[0]{feature}, identity => sprintf("%.2f", $entry->{identity})+0, target => $linkdat[1]{feature} };
-    $self->{_links}{$genome1}{$genome2}{$linkname} = $dataset;
+    # check if an existing link exists
+    my $link_already_existing = 0;
+    # search the links
+    foreach my $existing_linkname (keys %{$self->{_links}{$genome1}{$genome2}})
+    {
+	my $existing_dataset = $self->{_links}{$genome1}{$genome2}{$existing_linkname};
+	if (
+	    $existing_dataset->{source} eq $dataset->{source}
+	    &&
+	    $existing_dataset->{identity} eq $dataset->{identity}
+	    &&
+	    $existing_dataset->{target} eq $dataset->{target}
+	    )
+	{
+	    $self->_debug("Existing link will be skipped");
+	    $link_already_existing++;
+	}
+
+    }
+
+    # add the new link if not already existing
+    unless ($link_already_existing)
+    {
+	$self->{_links}{$genome1}{$genome2}{$linkname} = $dataset;
+    }
 
     # track minimum and maximum link length and identity
     if ($self->{_links_min_len} > $entry->{len})
