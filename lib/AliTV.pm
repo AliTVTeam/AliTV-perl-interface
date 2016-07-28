@@ -401,8 +401,13 @@ sub _make_and_set_uniq_seq_names
     }
 
     # if the number of keys is equal to the number of total sequences,
-    # they should be uniq
-    if ((keys %seen) == @all_seq_ids)
+    # they should be uniq, but we need to guarantee, that the name
+    # contains only alphanumeric or "word" characters
+    if (
+	((keys %seen) == @all_seq_ids)
+	&&
+	((grep {$_->{name} =~ /\W/} @all_seq_ids) == 0)
+	)
     {
 	# sequence names are uniq and can be used as uniq names
 	@all_seq_ids = map { {name => $_->{name}, genome => $_->{genome}, uniq_name => $_->{name}} } (@all_seq_ids);
