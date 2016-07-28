@@ -94,6 +94,7 @@ data/fasta-input.fasta
 data/fasta-input2.fasta
 data/fasta-input_double_id.fasta
 data/fasta-input3.fasta
+data/fasta-input4.fasta
 
 data/test.gb
 data/test.tsv
@@ -107,6 +108,7 @@ data/single_genome.yml
 data/two_genomes_nonuniq_names.yml
 data/two_genomes_uniq_names.yml
 data/two_genomes_forbidden_names.yml
+data/two_genomes_long_names.yml
 
 ### Vector set
 data/vectors/M13mp18.fasta
