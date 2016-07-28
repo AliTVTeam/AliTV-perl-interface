@@ -38,6 +38,18 @@ $got = get_sequence_ids($obj);
 
 is_deeply($got, $expected, 'Non-unique sequences names are changed');
 
+# Two genomes with sequence names containing non "word" characters
+my $two_genomes_forbidden_names = 'data/two_genomes_forbidden_names.yml';
+$obj = new_ok('AliTV', ["-file" => $two_genomes_forbidden_names]);
+$obj->_import_genomes();
+
+$obj->_make_and_set_uniq_seq_names();
+
+$expected = [sort ("seq0", "seq1", "seq2")];
+$got = get_sequence_ids($obj);
+
+is_deeply($got, $expected, 'Forbidden sequence names are changed');
+
 done_testing;
 
 sub get_sequence_ids
