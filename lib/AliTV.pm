@@ -402,11 +402,14 @@ sub _make_and_set_uniq_seq_names
 
     # if the number of keys is equal to the number of total sequences,
     # they should be uniq, but we need to guarantee, that the name
-    # contains only alphanumeric or "word" characters
+    # contains only alphanumeric or "word" characters and that the
+    # name is not longer than 8 characters
     if (
 	((keys %seen) == @all_seq_ids)
 	&&
 	((grep {$_->{name} =~ /\W/} @all_seq_ids) == 0)
+	&&
+	((grep {length($_->{name}) > 8} @all_seq_ids) == 0)
 	)
     {
 	# sequence names are uniq and can be used as uniq names
