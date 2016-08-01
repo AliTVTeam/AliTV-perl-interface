@@ -59,7 +59,7 @@ sub run
     close($query) || $self->_logdie("Unable to close query file '$query_fn'");
 
     my $num_of_req_alignments = @seq_set+0;
-    $num_of_req_alignments = int($num_of_req_alignments*($num_of_req_alignments-1)/2);
+    $num_of_req_alignments = int($num_of_req_alignments*($num_of_req_alignments+1)/2);
     my @alignments = ();
     $self->_info(sprintf "Starting alignment generation... (%d alignments required)\n", $num_of_req_alignments);
 
