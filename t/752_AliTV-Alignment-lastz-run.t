@@ -43,6 +43,8 @@ my $obj = new_ok('AliTV::Alignment::lastz' => [-parameters => "--format=MAF --no
 
 $obj->run(@seq_set);
 
+is(@{$obj->{_alignments}}+0, @{$expected}+0, 'Number of obtained alignment is correct');
+
 foreach my $aln (@{$obj->{_alignments}})
 {
 	my @fields = (sprintf("%.2f", $aln->{identity})+0, $aln->{len}, $aln->{score}, map { $_->{id}, $_->{start}, $_->{end}, $_->{strand} } (@{$aln->{seqs}}));
