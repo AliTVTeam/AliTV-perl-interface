@@ -51,11 +51,12 @@ foreach my $aln (@{$obj->{_alignments}})
 	push(@output, \@fields);
 }
 
+
 # sort expected and output
 @output = sort sort_output_expected (@output);
 @{$expected} = sort sort_output_expected (@{$expected});
 
-is_deeply(\@output, $expected, 'Test successful');
+is_deeply(\@output, $expected, 'Obtained alignments and expected alignments are equal');
 
 done_testing;
 
