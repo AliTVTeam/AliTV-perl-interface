@@ -61,7 +61,7 @@ sub run
     my $num_of_req_alignments = @seq_set+0;
     $num_of_req_alignments = int($num_of_req_alignments*($num_of_req_alignments+1)/2);
     my @alignments = ();
-    $self->_info(sprintf "Starting alignment generation... (%d alignments required)\n", $num_of_req_alignments);
+    $self->_info(sprintf "Starting alignment generation... (%d alignments required)", $num_of_req_alignments);
 
     foreach my $seq_idx (0..@seq_set-1)
     {
@@ -101,7 +101,7 @@ sub run
 	    systemx(@cmd);
 
 	    push(@alignments, $aln_file);
-	    $self->_info(sprintf "Finished %d. alignment (%d to go; %.2f %% done)\n", (@alignments+0), ($num_of_req_alignments-(@alignments+0)), ((@alignments+0)/$num_of_req_alignments*100));
+	    $self->_info(sprintf "Finished %d. alignment (%d to go; %.2f %% done)", (@alignments+0), ($num_of_req_alignments-(@alignments+0)), ((@alignments+0)/$num_of_req_alignments*100));
 	}
     }
 
