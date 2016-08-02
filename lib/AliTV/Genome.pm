@@ -9,6 +9,12 @@ use parent 'AliTV::Base';
 use Bio::SeqIO;
 use Bio::Seq;
 
+=pod
+
+=head2 Methods
+
+=cut
+
 sub _initialize
 {
     my $self = shift;
@@ -189,6 +195,24 @@ sub get_features
 
     return $ret;
 }
+
+=pod
+
+=head3 C<$obj-E<gt>get_seq_names()>
+
+=head4 I<Parameters>
+
+none
+
+=head4 I<Output>
+
+Returns a list of sequence names part of the genome.
+
+=head4 I<Description>
+
+B<ATTENTION!!!:>The list always contains the original sequence names, even if the list is not unique for the complete set of all genomes.
+
+=cut
 
 sub get_seq_names
 {
