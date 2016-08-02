@@ -29,6 +29,14 @@ foreach my $orig (@expected_orig)
 # a non existing original ID should cause an exception
 throws_ok { $obj->_orig_id_to_uniq_id('non_existing_orig_id'); } qr/Original ID was not found!/, 'Exception caused by a non existing original ID';
 
+# test if non existing uniq names lead to an exception
+$counter = 0;
+my $expected_die_msg = qr/It seems that no unique ids have been generated./;
+foreach my $uniq (@expected_uniq)
+{
+   throws_ok { $obj->_uniq_id_to_orig_id($uniq); } $expected_die_msg, sprintf("Exception caused by unique id %d as expected", ++$counter);
+}
+
 ### generate unique IDs
 $obj->set_uniq_seq_names("TestA" => "Test", "TestB" => "Test2", "TestC" => "Test3");
 
@@ -40,5 +48,11 @@ foreach my $idx (1..@expected_orig)
 
 # a non existing original ID should still cause an exception
 throws_ok { $obj->_orig_id_to_uniq_id('non_existing_orig_id'); } qr/Original ID was not found!/, 'Exception still caused by a non existing original ID';
+
+# test if each unique ID is converted into correct original ID after initialization of unique IDs
+foreach my $idx (1..@expected_uniq)
+{
+   is($obj->_uniq_id_to_orig_id($expected_uniq[$idx-1]), $expected_orig[$idx-1], sprintf("Unique sequence ID %d returned correct original ID", $idx));
+}
 
 done_testing;
