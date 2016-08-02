@@ -234,6 +234,12 @@ sub set_uniq_seq_names
 	{
 	    $self->{_uniq_ids}{$uniq_seq_id} = $seq_id;
 	    $self->{_nonuniq_ids}{$seq_id} = $uniq_seq_id;
+	    if ((exists $self->{_seq}{$uniq_seq_id}) && ($uniq_seq_id ne $seq_id))
+	    {
+		$self->_logdie("The unique ID ('$uniq_seq_id') for the sequence '$seq_id' for the genome '".$self->name()."' already exists!");
+	    } else {
+		$self->{_seq}{$uniq_seq_id} = $self->{_seq}{$seq_id};
+	    }
 	}
    }
 }
