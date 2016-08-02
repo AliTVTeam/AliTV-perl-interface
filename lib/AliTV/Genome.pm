@@ -292,6 +292,21 @@ sub get_chromosomes
     return $ret;
 }
 
+sub _get_seq_ids
+{
+    my $self = shift;
+}
+
+sub _get_uniq_seq_ids
+{
+    my $self = shift;
+}
+
+sub _get_orig_seq_ids
+{
+    my $self = shift;
+}
+
 sub name
 {
     my $self = shift;
