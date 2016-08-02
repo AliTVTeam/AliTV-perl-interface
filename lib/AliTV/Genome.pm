@@ -355,6 +355,16 @@ sub _orig_id_to_uniq_id
 sub _uniq_id_to_orig_id
 {
     my $self = shift;
+
+    my $uniq_id = shift;
+
+    if (exists $self->{_uniq_ids}{$uniq_id})
+    {
+	return $self->{_uniq_ids}{$uniq_id};
+    } else {
+	# should die, if the mapping does not exist
+	$self->_logdie("It seems that no unique ids have been generated.");
+    }
 }
 
 sub name
