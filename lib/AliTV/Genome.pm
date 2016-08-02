@@ -218,8 +218,7 @@ sub get_seq_names
 {
     my $self = shift;
 
-    # return a list of all seq names (which need to be unique anyway)
-    return (keys %{$self->{_seq}});
+    return $self->_get_orig_seq_ids();
 }
 
 sub set_uniq_seq_names
@@ -246,10 +245,9 @@ sub get_sequences
     # generate a list of sequences part of the genome
     my @ret = ();
 
-    foreach my $id (keys %{$self->{_seq}})
+    foreach my $uniq_id ($self->_get_uniq_seq_ids())
     {
-	my $uniq_id = (exists $self->{_nonuniq_ids}{$id}) ? $self->{_nonuniq_ids}{$id} : $id;
-	my $seq = $self->{_seq}{$id}{seq};
+	my $seq = $self->{_seq}{$uniq_id}{seq};
 
 	my $seq_obj = Bio::Seq->new(
 	    -seq => $seq,
@@ -278,7 +276,7 @@ sub get_chromosomes
 	$ret = $_[0];
     }
 
-    foreach my $id (keys %{$self->{_seq}})
+    foreach my $id ($self->_get_orig_seq_ids())
     {
 	my $uniq_id = (exists $self->{_nonuniq_ids}{$id}) ? $self->{_nonuniq_ids}{$id} : $id;
 
