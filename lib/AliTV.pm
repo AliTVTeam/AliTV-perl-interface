@@ -272,16 +272,23 @@ sub _import_links
     {
 	my $seqname = $seq->{id};
 	my $corr_genome = undef;
-	foreach my $genome ( keys %{$self->{_genomes}} )
+
+	foreach my $curr_genome ( values %{$self->{_genomes}} )
 	{
-	    if (exists $self->{_genomes}{$genome}{_seq}{$seqname})
+	    if ($curr_genome->seq_exists($seqname)) #exists $self->{_genomes}{$genome}{_seq}{$seqname})
 	    {
 		# genome with sequence with correct name was found
+
+		# if required we need to fix the MAF rev-comp-issue here
+		if ($entry->{maf_revcomp_req})
+		{
+		    ($seq->{start}, $seq->{end}) = $curr_genome->fix_maf_revcomp($seq->{start}, $seq->{end}, $seq->{strand}, $seqname)
+		}
+
 		# add the feature
-		$corr_genome = $self->{_genomes}{$genome};
 		my $linkfeature_name = sprintf("linkfeature%06d", ++$self->{_linkfeaturecounter});
-		$corr_genome->_store_feature($self->_link_feature_name(), $seqname, $seq->{start}+0, $seq->{end}+0, $seq->{strand}, $linkfeature_name);
-		push(@linkdat, {genome => $genome, feature => $linkfeature_name});
+		my $returned_linkfeature_name = $curr_genome->_store_feature($self->_link_feature_name(), $seqname, $seq->{start}+0, $seq->{end}+0, $seq->{strand}, $linkfeature_name);
+		push(@linkdat, {genome => $curr_genome->name(), feature => $returned_linkfeature_name});
 
 		last;
 	    }
@@ -293,9 +300,40 @@ sub _import_links
     $self->{_linkcounter}++;
     my $genome1 = $linkdat[0]{genome};
     my $genome2 = $linkdat[1]{genome};
+
+    # sort the genomes alphabetically
+    if ($genome2 lt $genome1)
+    {
+	($genome1, $genome2) = ($genome2, $genome1);
+    }
+
     my $linkname = sprintf("link%06d", $self->{_linkcounter});
     my $dataset = { source => $linkdat[0]{feature}, identity => sprintf("%.2f", $entry->{identity})+0, target => $linkdat[1]{feature} };
-    $self->{_links}{$genome1}{$genome2}{$linkname} = $dataset;
+    # check if an existing link exists
+    my $link_already_existing = 0;
+    # search the links
+    foreach my $existing_linkname (keys %{$self->{_links}{$genome1}{$genome2}})
+    {
+	my $existing_dataset = $self->{_links}{$genome1}{$genome2}{$existing_linkname};
+	if (
+	    $existing_dataset->{source} eq $dataset->{source}
+	    &&
+	    $existing_dataset->{identity} eq $dataset->{identity}
+	    &&
+	    $existing_dataset->{target} eq $dataset->{target}
+	    )
+	{
+	    $self->_debug("Existing link will be skipped");
+	    $link_already_existing++;
+	}
+
+    }
+
+    # add the new link if not already existing
+    unless ($link_already_existing)
+    {
+	$self->{_links}{$genome1}{$genome2}{$linkname} = $dataset;
+    }
 
     # track minimum and maximum link length and identity
     if ($self->{_links_min_len} > $entry->{len})
