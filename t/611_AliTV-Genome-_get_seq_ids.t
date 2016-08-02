@@ -26,4 +26,8 @@ my $expected_uniq = [ sort ("TestA", "TestB", "TestC") ];
 my $got_get_uniq_seq_ids = [ sort ($obj->_get_uniq_seq_ids()) ];
 is_deeply($got_get_uniq_seq_ids, $expected_uniq, 'Method _get_uniq_seq_ids() returns expected result');
 
+# followed by the test for the orig seq ids
+my $got_get_orig_seq_ids = [ sort ($obj->_get_orig_seq_ids()) ];
+is_deeply($got_get_orig_seq_ids, $expected_orig, 'Method _get_orig_seq_ids() returns expected result');
+
 done_testing;
