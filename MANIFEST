@@ -55,6 +55,7 @@ t/607_AliTV-Genome-get_features.t
 t/608_AliTV-Genome-get_seq_names.t
 t/610_AliTV-Genome-set_uniq_seq_names.t
 t/611_AliTV-Genome-_get_seq_ids.t
+t/612_AliTV-Genome_orig_to_uniq_and_reverse_mapping.t
 t/615_AliTV-Genome-get_sequences.t
 t/625_AliTV-Genome-_store_feature.t
 t/635_AliTV-Genome-seq_exists.t
