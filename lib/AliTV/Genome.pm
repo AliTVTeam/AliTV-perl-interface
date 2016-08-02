@@ -284,7 +284,7 @@ sub get_chromosomes
 
     foreach my $id ($self->_get_orig_seq_ids())
     {
-	my $uniq_id = (exists $self->{_nonuniq_ids}{$id}) ? $self->{_nonuniq_ids}{$id} : $id;
+	my $uniq_id = $self->_orig_id_to_uniq_id($id);
 
 	$ret->{$uniq_id} = { length => $self->{_seq}{$id}{len}+0,
 			     genome_id => $self->name(),
