@@ -30,4 +30,28 @@ is_deeply($got_get_uniq_seq_ids, $expected_uniq, 'Method _get_uniq_seq_ids() ret
 my $got_get_orig_seq_ids = [ sort ($obj->_get_orig_seq_ids()) ];
 is_deeply($got_get_orig_seq_ids, $expected_orig, 'Method _get_orig_seq_ids() returns expected result');
 
+# last run the different tests for _get_seq_ids
+# for a new object
+my $obj_new = new_ok('AliTV::Genome' => [%params]);
+
+my $expected_die_msg = qr/Use 'uniq' or 'orig' as parameter for the method _get_seq_ids and ensure, that unique names have been generated./;
+
+throws_ok { $obj_new->_get_seq_ids(); } $expected_die_msg, 'Exception if no parameter was given';
+throws_ok { $obj_new->_get_seq_ids('not_uniq_or_orig'); } $expected_die_msg, 'Exception if parameter is not uniq or orig';
+throws_ok { $obj_new->_get_seq_ids('uniq'); } $expected_die_msg, 'Exception if uniq is used without unique sequence names';
+my $got_get_seq_ids_orig = [sort $obj_new->_get_seq_ids('orig')];
+is_deeply($got_get_seq_ids_orig, $expected_orig, 'Method _get_seq_ids("orig") returns expected result without unique sequence names');
+
+# set_uniq_seq_names to initialize unique names
+$obj_new->set_uniq_seq_names("TestA" => "Test", "TestB" => "Test2", "TestC" => "Test3");
+
+throws_ok { $obj_new->_get_seq_ids(); } $expected_die_msg, 'Exception if no parameter was given after initialization';
+throws_ok { $obj_new->_get_seq_ids('not_uniq_or_orig'); } $expected_die_msg, 'Exception if parameter is not uniq or orig after initialization';
+
+my $got_get_seq_ids_uniq_after_initialization = [sort $obj_new->_get_seq_ids('uniq')];
+is_deeply($got_get_seq_ids_uniq_after_initialization, $expected_uniq, 'Method _get_seq_ids("uniq") returns expected result after creation of unique sequence names');
+
+my $got_get_seq_ids_orig_after_initialization = [sort $obj_new->_get_seq_ids('orig')];
+is_deeply($got_get_seq_ids_orig_after_initialization, $expected_orig, 'Method _get_seq_ids("orig") returns expected result after creation of unique sequence names');
+
 done_testing;
