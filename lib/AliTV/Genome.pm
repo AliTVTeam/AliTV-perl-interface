@@ -300,6 +300,8 @@ sub _get_seq_ids
 sub _get_uniq_seq_ids
 {
     my $self = shift;
+
+    return $self->_get_seq_ids("uniq");
 }
 
 sub _get_orig_seq_ids
