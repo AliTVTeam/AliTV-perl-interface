@@ -335,6 +335,16 @@ sub _get_orig_seq_ids
     return $self->_get_seq_ids("orig");
 }
 
+sub _orig_id_to_uniq_id
+{
+    my $self = shift;
+}
+
+sub _uniq_id_to_orig_id
+{
+    my $self = shift;
+}
+
 sub name
 {
     my $self = shift;
