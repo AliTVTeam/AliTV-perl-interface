@@ -338,6 +338,18 @@ sub _get_orig_seq_ids
 sub _orig_id_to_uniq_id
 {
     my $self = shift;
+
+    my $orig_id = shift;
+
+    if (exists $self->{_nonuniq_ids}{$orig_id})
+    {
+	return $self->{_nonuniq_ids}{$orig_id};
+    } elsif (exists $self->{_seq}{$orig_id}) {
+	return $orig_id;
+    } else {
+	# should die, if the mapping does not exist
+	$self->_logdie("Original ID was not found!");
+    }
 }
 
 sub _uniq_id_to_orig_id
