@@ -295,6 +295,26 @@ sub get_chromosomes
 sub _get_seq_ids
 {
     my $self = shift;
+    my $what = shift;
+
+    my @ret = ();
+
+    if ((defined $what) && ($what eq "uniq") && (exists $self->{_uniq_ids}))
+    {
+	@ret = keys %{$self->{_uniq_ids}};
+    } elsif ((defined $what) && ($what eq "orig"))
+    {
+	if (exists $self->{_nonuniq_ids})
+	{
+	    @ret = keys %{$self->{_nonuniq_ids}};
+	} else {
+	    @ret = keys %{$self->{_seq}};
+	}
+    } else {
+	$self->_logdie("Use 'uniq' or 'orig' as parameter for the method _get_seq_ids and ensure, that unique names have been generated.");
+    }
+
+    return @ret;
 }
 
 sub _get_uniq_seq_ids
