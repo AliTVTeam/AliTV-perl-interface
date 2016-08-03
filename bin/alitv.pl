@@ -10,6 +10,8 @@ use Pod::Usage;
 
 use Log::Log4perl;
 
+use File::Temp;
+
 use YAML;
 
 # Configuration in a string ...
@@ -62,7 +64,9 @@ if (@ARGV == 1)
 	push(@{$config->{genomes}}, {name => $infile, sequence_files => [ $infile ]});
     }
 
-    $yml = 'test.yml';
+    my $fh;
+    ($fh, $yml) = File::Temp::tempfile("autogen_XXXXXXX", SUFFIX => ".yml" );
+    close($fh) || die "Unable to close file '$yml': @!\n";
 
     YAML::DumpFile($yml, $config);
 
