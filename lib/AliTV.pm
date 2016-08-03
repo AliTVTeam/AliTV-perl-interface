@@ -537,3 +537,4 @@ alignment:
        - "--noytrim"
        - "--ambiguous=iupac"
        - "--gapped"
+       - "--strand=both"
