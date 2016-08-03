@@ -403,16 +403,25 @@ sub _import_genomes
 
 sub get_default_settings
 {
-    my $self = shift;
-
-    # get the default YAML
-    unless (exists $self->{_default_yml})
-    {
-	$self->{_default_yml} = join("", <DATA>);
-    }
+    my $default_yml_content = '
+---
+# this is the default yml file
+output:
+    data: data.json
+    conf: conf.json
+    filter: filter.json
+alignment:
+    program: lastz
+    parameter:
+       - "--format=maf"
+       - "--noytrim"
+       - "--ambiguous=iupac"
+       - "--gapped"
+       - "--strand=both"
+';
 
     # try to import the default YAML
-    my $default = YAML::Load($self->{_default_yml});
+    my $default = YAML::Load($default_yml_content);
 
     return $default;
 }
@@ -522,19 +531,3 @@ Frank FE<246>ster E<lt>foersterfrank@gmx.deE<gt>
 See the F<LICENCE> file for information about the licence.
 
 =cut
-
-__DATA__
----
-# this is the default yml file
-output:
-    data: data.json
-    conf: conf.json
-    filter: filter.json
-alignment:
-    program: lastz
-    parameter:
-       - "--format=maf"
-       - "--noytrim"
-       - "--ambiguous=iupac"
-       - "--gapped"
-       - "--strand=both"
