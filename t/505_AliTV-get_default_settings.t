@@ -20,8 +20,8 @@ my $expected_yml = join("", <DATA>);
 my $expected = YAML::Load($expected_yml);
 
 is_deeply($obj->{_yml_import}, $expected, 'First parsing of default set works');
-is_deeply($obj->_get_default_settings(), $expected, 'Multiple calls of _get_default_settings() return the same settings 1st attempt');
-is_deeply($obj->_get_default_settings(), $expected, 'Multiple calls of _get_default_settings() return the same settings 2nd attempt');
+is_deeply($obj->get_default_settings(), $expected, 'Multiple calls of get_default_settings() as object method return the same settings 1st attempt');
+is_deeply($obj->get_default_settings(), $expected, 'Multiple calls of get_default_settings() as object method return the same settings 2nd attempt');
 
 done_testing;
 
