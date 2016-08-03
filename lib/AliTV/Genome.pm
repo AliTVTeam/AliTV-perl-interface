@@ -327,12 +327,12 @@ sub _get_seq_ids
 
     my @ret = ();
 
-    if ((defined $what) && ($what eq "uniq") && (exists $self->{_uniq_ids}))
+    if ((defined $what) && ($what eq "uniq") && (exists $self->{_uniq_ids}) && (keys %{$self->{_uniq_ids}}))
     {
 	@ret = keys %{$self->{_uniq_ids}};
     } elsif ((defined $what) && ($what eq "orig"))
     {
-	if (exists $self->{_nonuniq_ids})
+	if (exists $self->{_nonuniq_ids} && (keys %{$self->{_nonuniq_ids}}))
 	{
 	    @ret = keys %{$self->{_nonuniq_ids}};
 	} else {
