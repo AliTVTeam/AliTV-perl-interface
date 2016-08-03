@@ -227,6 +227,15 @@ sub set_uniq_seq_names
 
     my %params = @_;
 
+    # check if the keys are covering the whole sequence set
+    my @uniq_keys = grep {$self->seq_exists($params{$_})} (keys %params);
+    my @expected_seq_number = $self->_get_orig_seq_ids();
+
+    if (@uniq_keys != @expected_seq_number)
+    {
+	$self->_logdie("Unique identifier does not cover all original identifier!");
+    }
+
     while (my ($uniq_seq_id, $seq_id) = each %params)
     {
 	# check if the seq_id exists in $self->{_seq}
