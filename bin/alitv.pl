@@ -54,9 +54,8 @@ if (@ARGV == 1)
     $yml = shift @ARGV;
 } elsif (@ARGV > 1)
 {
-    my $config = {
-	genomes => []
-    };
+    my $config = AliTV::get_default_settings();
+    $config->{genomes} = [];
 
     foreach my $infile (@ARGV)
     {
