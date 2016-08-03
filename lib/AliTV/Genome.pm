@@ -229,13 +229,13 @@ sub set_uniq_seq_names
 
     # check if the keys are covering the whole sequence set
     my @uniq_keys = grep {$self->seq_exists($params{$_})} (keys %params);
-    my @expected_seq_number = $self->_get_orig_seq_ids();
+    my @expected_seq_ids = $self->_get_orig_seq_ids();
 
     # make the original sequence ID covered by unique IDs unique
     my %seen = ();
     foreach (@uniq_keys) { $seen{$params{$_}}++ }
 
-    if ((@uniq_keys != @expected_seq_number) || ((keys %seen) != @expected_seq_number))
+    if ((@uniq_keys != @expected_seq_ids) || ((keys %seen) != @expected_seq_ids))
     {
 	$self->_logdie("Unique identifier does not cover all original identifier!");
     }
