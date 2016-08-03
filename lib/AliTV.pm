@@ -10,7 +10,6 @@ use YAML;
 use Hash::Merge;
 
 use AliTV::Genome;
-use AliTV::Alignment::lastz;
 use AliTV::Tree;
 
 use JSON;
@@ -78,7 +77,15 @@ sub run
     #################################################################
     # Prepare a sequence set for the alignment
 
-    my $aln_obj = AliTV::Alignment::lastz->new(-parameters => "--format=MAF --noytrim --gapped --strand=both --ambiguous=iupac", -callback => sub{ $self->_import_links(@_); } );
+    # determine the module to load from the alignment program
+    my $alignment_module = sprintf('AliTV::Alignment::%s', $self->{_yml_import}{alignment}{program});
+    unless (eval "require $alignment_module") {
+        $self->_logdie("Unable to load alignment module '$alignment_module': $@");
+    }
+
+    my $alignment_parameter = join(" ", @{$self->{_yml_import}{alignment}{parameter}});
+
+    my $aln_obj = "$alignment_module"->new(-parameters => $alignment_parameter, -callback => sub{ $self->_import_links(@_); } );
     $aln_obj->run($self->_generate_seq_set());
     $aln_obj->export_to_genome();
 
