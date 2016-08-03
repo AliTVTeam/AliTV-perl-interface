@@ -80,7 +80,7 @@ sub run
     # determine the module to load from the alignment program
     my $alignment_module = sprintf('AliTV::Alignment::%s', $self->{_yml_import}{alignment}{program});
     unless (eval "require $alignment_module") {
-        $self->_logdie("Unable to load alignment module '$alignment_module': $@");
+        $self->_logdie("Unable to load alignment module '$alignment_module'");
     }
 
     my $alignment_parameter = join(" ", @{$self->{_yml_import}{alignment}{parameter}});
