@@ -21,8 +21,16 @@ my $expected = {
    TestC => { length =>  9, seq => "ACGTTGCGT"  , genome_id => "Test genome", name => "Test3" },
 };
 
-$obj->set_uniq_seq_names("TestA" => "Test", "TestB" => "Test2", "TestC" => "Test3");
+my %uniq_name_assignment = ("TestA" => "Test", "TestB" => "Test2", "TestC" => "Test3");
+$obj->set_uniq_seq_names(%uniq_name_assignment);
+my $got = $obj->get_chromosomes();
 
-is_deeply($obj->get_chromosomes(), $expected, 'Chromosome export as expected');
+is_deeply($got, $expected, 'Chromosome export as expected');
+
+# if number of assigned items is not correct, the call should die
+my %uniq_name_assignment_wrong = ("TestA" => "Test", "TestB" => "Test2");
+throws_ok { $obj->set_uniq_seq_names(%uniq_name_assignment_wrong); } qr/Unique identifier does not cover all original identifier!/, 'Exception caused by the incorrect number of unique sequence ID';
+my %uniq_name_assignment_wrong2 = ("TestA" => "Test", "TestB" => "Test2", "TestD" => "Test4");
+throws_ok { $obj->set_uniq_seq_names(%uniq_name_assignment_wrong2); } qr/Unique identifier does not cover all original identifier!/, 'Exception caused by the incorrect number of unique sequence ID2';
 
 done_testing;
