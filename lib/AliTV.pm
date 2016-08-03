@@ -20,7 +20,7 @@ sub _initialize
     my $self = shift;
 
     # initialize the yml settings using the default config
-    $self->{_yml_import} = $self->_get_default_settings();
+    $self->{_yml_import} = $self->get_default_settings();
     $self->{_file} = undef;
     $self->{_genomes} = {};
 
@@ -364,7 +364,7 @@ sub file
     {
 	$self->{_file} = shift;
 
-	my $default = $self->_get_default_settings();
+	my $default = $self->get_default_settings();
 
 	# try to import the YAML file
 	my $settings = YAML::LoadFile($self->{_file});
@@ -401,7 +401,7 @@ sub _import_genomes
     }
 }
 
-sub _get_default_settings
+sub get_default_settings
 {
     my $self = shift;
 
