@@ -12,8 +12,7 @@ BEGIN { use_ok('AliTV') };
 # added a test which test if multiple calls of get_default_settings()
 # will produce the same result.
 
-# this test is not required as it always has a file method
-can_ok('AliTV', qw(file));
+can_ok('AliTV', qw(get_default_settings));
 
 my $obj = new_ok('AliTV');
 
