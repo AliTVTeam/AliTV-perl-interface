@@ -4,7 +4,7 @@ use 5.010000;
 #use strict;
 #use warnings;
 
-use version 0.77; our $VERSION = version->declare("v0.1.8");
+use version 0.77; our $VERSION = version->declare("v0.1.9");
 
 # The following code is from Bio::Root::Version module and try to
 # handle multiple levels of inheritance and is adopted to work on
