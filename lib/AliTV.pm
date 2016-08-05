@@ -175,7 +175,7 @@ sub get_json
 	    'drawAllLinks' => JSON::false,
 	    'endLineColor' => '#1d91c0',
 	    'hideHalfVisibleLinks' => JSON::false,
-	    'startLineColor' => '#49006a'
+	    'startLineColor' => '#1d91c0'
 	},
 
 	'maxLinkIdentity' => 100,
