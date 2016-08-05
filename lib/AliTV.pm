@@ -10,7 +10,6 @@ use YAML;
 use Hash::Merge;
 
 use AliTV::Genome;
-use AliTV::Alignment::lastz;
 use AliTV::Tree;
 
 use JSON;
@@ -20,7 +19,7 @@ sub _initialize
     my $self = shift;
 
     # initialize the yml settings using the default config
-    $self->{_yml_import} = $self->_get_default_settings();
+    $self->{_yml_import} = $self->get_default_settings();
     $self->{_file} = undef;
     $self->{_genomes} = {};
 
@@ -78,7 +77,15 @@ sub run
     #################################################################
     # Prepare a sequence set for the alignment
 
-    my $aln_obj = AliTV::Alignment::lastz->new(-parameters => "--format=MAF --noytrim --gapped --strand=both --ambiguous=iupac", -callback => sub{ $self->_import_links(@_); } );
+    # determine the module to load from the alignment program
+    my $alignment_module = sprintf('AliTV::Alignment::%s', $self->{_yml_import}{alignment}{program});
+    unless (eval "require $alignment_module") {
+        $self->_logdie("Unable to load alignment module '$alignment_module'");
+    }
+
+    my $alignment_parameter = join(" ", @{$self->{_yml_import}{alignment}{parameter}});
+
+    my $aln_obj = "$alignment_module"->new(-parameters => $alignment_parameter, -callback => sub{ $self->_import_links(@_); } );
     $aln_obj->run($self->_generate_seq_set());
     $aln_obj->export_to_genome();
 
@@ -364,7 +371,7 @@ sub file
     {
 	$self->{_file} = shift;
 
-	my $default = $self->_get_default_settings();
+	my $default = $self->get_default_settings();
 
 	# try to import the YAML file
 	my $settings = YAML::LoadFile($self->{_file});
@@ -401,18 +408,27 @@ sub _import_genomes
     }
 }
 
-sub _get_default_settings
+sub get_default_settings
 {
-    my $self = shift;
-
-    # get the default YAML
-    unless (exists $self->{_default_yml})
-    {
-	$self->{_default_yml} = join("", <DATA>);
-    }
+    my $default_yml_content = '
+---
+# this is the default yml file
+output:
+    data: data.json
+    conf: conf.json
+    filter: filter.json
+alignment:
+    program: lastz
+    parameter:
+       - "--format=maf"
+       - "--noytrim"
+       - "--ambiguous=iupac"
+       - "--gapped"
+       - "--strand=both"
+';
 
     # try to import the default YAML
-    my $default = YAML::Load($self->{_default_yml});
+    my $default = YAML::Load($default_yml_content);
 
     return $default;
 }
@@ -522,18 +538,3 @@ Frank FE<246>ster E<lt>foersterfrank@gmx.deE<gt>
 See the F<LICENCE> file for information about the licence.
 
 =cut
-
-__DATA__
----
-# this is the default yml file
-output:
-    data: data.json
-    conf: conf.json
-    filter: filter.json
-alignment:
-    program: lastz
-    parameter:
-       - "--format=maf"
-       - "--noytrim"
-       - "--ambiguous=iupac"
-       - "--gapped"
