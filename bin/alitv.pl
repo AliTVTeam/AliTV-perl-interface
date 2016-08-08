@@ -18,6 +18,7 @@ my $man = 0;
 my $help = 0;
 
 my ($project, $logfile, $output);
+my $overwrite = 0; # keeping existing files is default
 
 GetOptions(
     'help|?' => \$help,
@@ -25,6 +26,7 @@ GetOptions(
     'project=s' => \$project,
     'logfile=s' => \$logfile,
     'output=s' => \$output,
+    'overwrite|force!' => \$overwrite,
     ) or pod2usage(2);
 
 pod2usage(1) if ($help || @ARGV== 0);
@@ -113,16 +115,42 @@ sub generate_filenames
 	unlink($fn) || die "Unable to delete file '$fn': $!\n";
 
 	$project = $fn;
+
+	if (-e $project.".yml")
+	{
+	    if ($overwrite)
+	    {
+		warn "File '".$project.".yml' exists... But due to overwrite parameter is specified the file will be overwritten!\n";
+	    } else {
+		die "File '".$project.".yml' exists... Unless you specify --overwrite the file will not be overwritten!\n";
+	    }
+	}
+
     }
 
     unless (defined $output)
     {
 	$output = $project.".json";
+
+	if (-e $output)
+	{
+	    if ($overwrite)
+	    {
+		warn "File '$output' exists... But due to overwrite parameter is specified the file will be overwritten!\n";
+	    } else {
+		die "File '$output' exists... Unless you specify --overwrite the file will not be overwritten!\n";
+	    }
+	}
     }
 
     unless (defined $logfile)
     {
 	$logfile = $project.".log";
+
+	if (-e $logfile)
+	{
+	    warn "Log File '$logfile' exists... Log messages will be appended\n";
+	}
     }
 
     return ($project, $output, $logfile);
@@ -182,6 +210,13 @@ set the output filename to C<-> via option C<alitv.pl --output ->.
 
 The name of the log file. If non is provided, the log file name will
 be based on the project name.
+
+=item --overwrite or --force   Overwrite existing project.yml or output.json files
+
+Default behaviour is to keep existing project yml and json files. If
+C<--overwrite> or C<--force> is specified, the files will be
+overwritten. Overwritting can be expicitly disabled by
+C<--no-overwrite> or C<--no-force> parameter.
 
 =back
 
