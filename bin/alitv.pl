@@ -241,20 +241,3 @@ L<AliTV-Github-Page|https://github.com/AliTVTeam/AliTV>
 =back
 
 =cut
-
-__DATA__
-
----
-# this is the default yml file
-output:
-    data: data.json
-    conf: conf.json
-    filter: filter.json
-alignment:
-    program: lastz
-    parameter:
-       - "--format=maf"
-       - "--noytrim"
-       - "--ambiguous=iupac"
-       - "--gapped"
-
