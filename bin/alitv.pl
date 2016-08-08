@@ -11,6 +11,7 @@ use Pod::Usage;
 use Log::Log4perl;
 
 use File::Temp;
+use File::Basename;
 
 use YAML;
 
@@ -31,6 +32,23 @@ GetOptions(
 
 pod2usage(1) if ($help || @ARGV== 0);
 pod2usage(-exitval => 0, -verbose => 2) if $man;
+
+my $yml = "";
+
+# Check if we have a single parameter left, which needs to be a yml file
+if (@ARGV == 1)
+{
+    $yml = shift @ARGV;
+
+    # yml specified, therefor use the ymls basename (without suffix
+    # .yml) as project name
+
+    if ($project)
+    {
+	$project = fileparse($yml, qr/\Q.yml\E/i);
+	warn "YML file specified, therefore the project name was overwritten by '$project'!\n";
+    }
+}
 
 # generate a uniq project name if not specified and a log file name
 # accordingly if also not specified
@@ -54,8 +72,6 @@ my $conf = q(
 Log::Log4perl::init( \$conf );
 my $logger = Log::Log4perl->get_logger();
 
-my $yml = "";
-
 # print a status message including a version information
 printf STDERR "
 ***********************************************************************
@@ -67,10 +83,7 @@ printf STDERR "
 You are using version %s.
 ", $AliTV::VERSION;
 
-if (@ARGV == 1)
-{
-    $yml = shift @ARGV;
-} elsif (@ARGV > 1)
+if (@ARGV > 1)
 {
     my $config = AliTV::get_default_settings();
     $config->{genomes} = [];
