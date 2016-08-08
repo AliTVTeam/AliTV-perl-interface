@@ -107,7 +107,10 @@ sub generate_filenames
     unless (defined $project)
     {
 	my ($fh, $fn) = File::Temp::tempfile("autogen_XXXXXXX");
-	close($fh) || die "Unable to close file '$yml': @!\n";
+	close($fh) || die "Unable to close file '$fn': !!\n";
+
+	# unlink the temporary file
+	unlink($fn) || die "Unable to delete file '$fn': $!\n";
 
 	$project = $fn;
     }
