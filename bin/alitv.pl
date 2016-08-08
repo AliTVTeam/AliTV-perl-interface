@@ -14,7 +14,19 @@ use File::Temp;
 
 use YAML;
 
-# Configuration in a string ...
+my $man = 0;
+my $help = 0;
+
+GetOptions(
+    'help|?' => \$help,
+    man => \$man,
+    ) or pod2usage(2);
+
+pod2usage(1) if ($help || @ARGV== 0);
+pod2usage(-exitval => 0, -verbose => 2) if $man;
+
+
+# Log4Perl configuration
 my $conf = q(
     log4perl.category                  = INFO, Logfile, Screen
 
@@ -43,13 +55,6 @@ printf STDERR "
 
 You are using version %s.
 ", $AliTV::VERSION;
-
-my $man = 0;
-my $help = 0;
-
-GetOptions('help|?' => \$help, man => \$man) or pod2usage(2);
-pod2usage(1) if ($help || @ARGV== 0);
-pod2usage(-exitval => 0, -verbose => 2) if $man;
 
 if (@ARGV == 1)
 {
