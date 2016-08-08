@@ -17,9 +17,12 @@ use YAML;
 my $man = 0;
 my $help = 0;
 
+my ($logfile);
+
 GetOptions(
     'help|?' => \$help,
     man => \$man,
+    'logfile=s' => \$logfile,
     ) or pod2usage(2);
 
 pod2usage(1) if ($help || @ARGV== 0);
@@ -31,7 +34,7 @@ my $conf = q(
     log4perl.category                  = INFO, Logfile, Screen
 
     log4perl.appender.Logfile          = Log::Log4perl::Appender::File
-    log4perl.appender.Logfile.filename = test.log
+    log4perl.appender.Logfile.filename = sub { logfile(); };
     log4perl.appender.Logfile.layout   = Log::Log4perl::Layout::PatternLayout
     log4perl.appender.Logfile.layout.ConversionPattern = [%r] %F %L %m%n
 
@@ -84,6 +87,16 @@ my $output = $obj->run();
 
 print $output;
 
+sub logfile()
+{
+    if (defined $logfile)
+    {
+	return $logfile;
+    } else {
+	return "logfile.log";
+    }
+}
+
 =pod
 
 =encoding utf8
@@ -107,6 +120,16 @@ AliTV perl interface - generates the required JSON file for AliTV
 The script creates the required JSON file to run AliTV. The output
 file is required to load into the AliTV website to use AliTV for the
 visualization of multiple whole genome alignments.
+
+=head1 PARAMETERS
+
+=over 4
+
+=item --logfile   Log file
+
+The name of the log file.
+
+=back
 
 =head1 AUTHOR
 
