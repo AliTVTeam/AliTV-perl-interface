@@ -190,12 +190,12 @@ AliTV perl interface - generates the required JSON file for AliTV
 =head1 SYNOPSIS
 
     # complex configuration via yml file
-    alitv.pl options.yml
+    alitv.pl [OPTIONS] options.yml
 
     # OR
 
     # easy alternative including the generation of a yml file
-    alitv.pl *.fasta
+    alitv.pl [OPTIONS] *.fasta
 
 =head1 DESCRIPTION
 
@@ -203,7 +203,7 @@ The script creates the required JSON file to run AliTV. The output
 file is required to load into the AliTV website to use AliTV for the
 visualization of multiple whole genome alignments.
 
-=head1 PARAMETERS
+=head1 OPTIONS
 
 =over 4
 
@@ -211,7 +211,9 @@ visualization of multiple whole genome alignments.
 
 The name of the project will be the given argument. If this parameter
 was not provided, one project name will be auto generated. This will
-be the base name for the log file, the yml file, and the output file.
+be the base name for the log file, the yml file, and the output
+file. If a YML file is provided, this value will be overwritten by the
+basename of the YML file.
 
 =item --output   Output file
 
@@ -232,6 +234,15 @@ overwritten. Overwritting can be expicitly disabled by
 C<--no-overwrite> or C<--no-force> parameter.
 
 =back
+
+=head1 PARAMETERS
+
+The parameters might be a single YML file or at least to sequence
+files. In case a YML file is specified, the project name will be set
+accordingly to the basename of the YML file (without path information
+and without the .yml suffix). In case of multiple sequence files, a
+YML file will be created based on the default template. The name of
+the file will be given for further runs.
 
 =head1 AUTHOR
 
