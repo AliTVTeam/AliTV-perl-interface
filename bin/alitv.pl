@@ -78,7 +78,9 @@ if (@ARGV == 1)
 	push(@{$config->{genomes}}, {name => $infile, sequence_files => [ $infile ]});
     }
 
-    YAML::DumpFile($project.".yml", $config);
+    $yml = $project.".yml";
+
+    YAML::DumpFile($yml, $config);
 
     $logger->info("Wrote temporary YAML file '$yml'");
 }
