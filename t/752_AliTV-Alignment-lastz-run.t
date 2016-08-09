@@ -41,7 +41,7 @@ can_ok( 'AliTV::Alignment::lastz', qw(run) );
 
 my $obj = new_ok('AliTV::Alignment::lastz' => [-parameters => [qw(--format=MAF --noytrim --gapped --strand=both --ambiguous=iupac)], -callback => sub { push(@output,  \@_); }] );
 
-$obj->run(@seq_set);
+$obj->run(\@seq_set);
 
 is(@{$obj->{_alignments}}+0, @{$expected}+0, 'Number of obtained alignment is correct');
 

@@ -634,7 +634,7 @@ sub _generate_seq_set
     $self->{_seq_set} = \@seqs;
 
     # and return it
-    return @{$self->{_seq_set}};
+    return $self->{_seq_set};
 }
 
 =pod
