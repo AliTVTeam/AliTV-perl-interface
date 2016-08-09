@@ -99,6 +99,7 @@ lib/AliTV/Seq.pm
 lib/AliTV/Genome.pm
 
 lib/AliTV/Alignment.pm
+lib/AliTV/Alignment/importer.pm
 lib/AliTV/Alignment/lastz.pm
 lib/AliTV/Alignment/template.pm
 
