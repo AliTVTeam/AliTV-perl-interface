@@ -33,6 +33,10 @@ sub run
 	$self->_logdie("You need to specify a parameter to call run method");
     }
     my ($seq_set) = @_;
+    unless (ref($seq_set) eq "ARRAY")
+    {
+	$self->_logdie("You need to specify an array reference to call run method");
+    }
 
     $self->_check();
 
