@@ -518,6 +518,7 @@ sub _make_and_set_uniq_seq_names
 	$self->{_genomes}{$genome_id}->set_uniq_seq_names(@set_list);
     }
 
+    $self->_write_mapping_file(\@all_seq_ids);
 }
 
 =pod

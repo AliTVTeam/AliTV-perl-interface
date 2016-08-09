@@ -100,7 +100,7 @@ if (@ARGV > 1)
     $logger->info("Wrote temporary YAML file '$yml'");
 }
 
-my $obj = AliTV->new(-file => $yml);
+my $obj = AliTV->new(-file => $yml, -project => $project);
 
 my $outputfh;
 
