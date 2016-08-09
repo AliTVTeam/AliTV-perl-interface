@@ -546,25 +546,28 @@ sub _write_mapping_file
 	$self->_logdie("Need to call _write_mapping_file() with an array reference as parameter but found other type");
     }
 
-    my $outputfilename = $self->project().".map";
-    if (-e $outputfilename)
+    if ($self->project())
     {
-	$self->_logwarn("The file '$outputfilename' exists. Therefore, a backup will be created named '$outputfilename".'.bak'."' and the old file will overwritten.");
-
-	if (-e $outputfilename.".bak")
+	my $outputfilename = $self->project().".map";
+	if (-e $outputfilename)
 	{
-	    $self->_logdie("Unable to backup the file '$outputfilename' to '$outputfilename".".bak' due to it already exists!");
-	}
-	copy($outputfilename, $outputfilename.".bak") || $self->_logdie("Unable to backup the file '$outputfilename' to '$outputfilename".".bak': $!");
-    }
+	    $self->_logwarn("The file '$outputfilename' exists. Therefore, a backup will be created named '$outputfilename".'.bak'."' and the old file will overwritten.");
 
-    open(FH, ">", $outputfilename) || $self->_logdie("Unable to open file '$outputfilename' for writing: $!");
-    print FH "#", join("\t", qw(genome old_name new_name)), "\n";
-    foreach my $seq (@{$ref_to_seqs})
-    {
-	print FH join("\t", ($seq->{genome}, $seq->{name}, $seq->{uniq_name})), "\n";
+	    if (-e $outputfilename.".bak")
+	    {
+		$self->_logdie("Unable to backup the file '$outputfilename' to '$outputfilename".".bak' due to it already exists!");
+	    }
+	    copy($outputfilename, $outputfilename.".bak") || $self->_logdie("Unable to backup the file '$outputfilename' to '$outputfilename".".bak': $!");
+	}
+
+	open(FH, ">", $outputfilename) || $self->_logdie("Unable to open file '$outputfilename' for writing: $!");
+	print FH "#", join("\t", qw(genome old_name new_name)), "\n";
+	foreach my $seq (@{$ref_to_seqs})
+	{
+	    print FH join("\t", ($seq->{genome}, $seq->{name}, $seq->{uniq_name})), "\n";
+	}
+	close(FH) || $self->_logdie("Unable to open file '$outputfilename' for writing: $!");
     }
-    close(FH) || $self->_logdie("Unable to open file '$outputfilename' for writing: $!");
 }
 
 sub _generate_seq_set
