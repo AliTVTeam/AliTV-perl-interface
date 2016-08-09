@@ -9,4 +9,8 @@ BEGIN { use_ok('AliTV') };
 # this test is not required as it always has a file method
 can_ok('AliTV', qw(_write_mapping_file));
 
+my $obj = new_ok('AliTV');
+
+throws_ok { $obj->_write_mapping_file(); } qr/Need to call _write_mapping_file\(\) with an array reference as parameter/, 'Exception if called without a parameter';
+
 done_testing;
