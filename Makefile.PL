@@ -24,11 +24,13 @@ WriteMakefile(
         IPC::System::Simple => 0,
         File::Temp => 0,
         File::Basename => 0,
+	File::Copy => 0,
 	Log::Log4perl => 0.28,      # required for dynamically determined log file name
         Hash::Merge => 0,
         File::Which => 0,
 	version => 0.77,
 	Storable => 0,
+        Digest::MD5 => 0,
     }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/AliTV.pm', # retrieve abstract from module
