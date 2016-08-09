@@ -227,6 +227,32 @@ sub set_uniq_seq_names
 
     my %params = @_;
 
+    # check if the keys are covering the whole sequence set
+    my @uniq_keys = grep {$self->seq_exists($params{$_})} (keys %params);
+    my @expected_seq_ids = $self->_get_orig_seq_ids();
+
+    # make the original sequence ID covered by unique IDs unique
+    my %seen = ();
+    foreach (@uniq_keys) { $seen{$params{$_}}++ }
+
+    if ((@uniq_keys != @expected_seq_ids) || ((keys %seen) != @expected_seq_ids))
+    {
+	$self->_logdie("Unique identifier does not cover all original identifier!");
+    }
+
+    # clean all assignments
+    $self->{_uniq_ids} = {};
+    $self->{_nonuniq_ids} = {};
+    # and delete entries not belonging to the @expected_seq_ids
+    %seen = (); foreach (@expected_seq_ids) { $seen{$_}++; }
+    foreach my $curr_key (keys %{$self->{_seq}})
+    {
+	unless (exists ($seen{$curr_key}))
+	{
+	    delete $self->{_seq}{$curr_key};
+	}
+    }
+
     while (my ($uniq_seq_id, $seq_id) = each %params)
     {
 	# check if the seq_id exists in $self->{_seq}
@@ -234,10 +260,8 @@ sub set_uniq_seq_names
 	{
 	    $self->{_uniq_ids}{$uniq_seq_id} = $seq_id;
 	    $self->{_nonuniq_ids}{$seq_id} = $uniq_seq_id;
-	    if ((exists $self->{_seq}{$uniq_seq_id}) && ($uniq_seq_id ne $seq_id))
+	    if ($uniq_seq_id ne $seq_id)
 	    {
-		$self->_logdie("The unique ID ('$uniq_seq_id') for the sequence '$seq_id' for the genome '".$self->name()."' already exists!");
-	    } else {
 		$self->{_seq}{$uniq_seq_id} = $self->{_seq}{$seq_id};
 	    }
 	}
@@ -303,12 +327,12 @@ sub _get_seq_ids
 
     my @ret = ();
 
-    if ((defined $what) && ($what eq "uniq") && (exists $self->{_uniq_ids}))
+    if ((defined $what) && ($what eq "uniq") && (exists $self->{_uniq_ids}) && (keys %{$self->{_uniq_ids}}))
     {
 	@ret = keys %{$self->{_uniq_ids}};
     } elsif ((defined $what) && ($what eq "orig"))
     {
-	if (exists $self->{_nonuniq_ids})
+	if (exists $self->{_nonuniq_ids} && (keys %{$self->{_nonuniq_ids}}))
 	{
 	    @ret = keys %{$self->{_nonuniq_ids}};
 	} else {

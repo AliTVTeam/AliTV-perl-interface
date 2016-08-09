@@ -12,6 +12,8 @@ use Hash::Merge;
 use AliTV::Genome;
 use AliTV::Tree;
 
+use File::Copy;
+
 use JSON;
 
 sub _initialize
@@ -516,6 +518,56 @@ sub _make_and_set_uniq_seq_names
 	$self->{_genomes}{$genome_id}->set_uniq_seq_names(@set_list);
     }
 
+    $self->_write_mapping_file(\@all_seq_ids);
+}
+
+=pod
+
+=head2 Method $alitv_obj->_write_mapping_file()
+
+This internal method stores a file containing old and new sequence
+names for the complete sequence set. If the file already exists, it
+will be backed up. If this is not possible an exception will be
+raised.
+
+=cut
+
+sub _write_mapping_file
+{
+    my $self = shift;
+
+    unless (@_)
+    {
+	$self->_logdie("Need to call _write_mapping_file() with an array reference as parameter");
+    }
+    my $ref_to_seqs = shift;
+    unless (ref($ref_to_seqs) eq "ARRAY")
+    {
+	$self->_logdie("Need to call _write_mapping_file() with an array reference as parameter but found other type");
+    }
+
+    if ($self->project())
+    {
+	my $outputfilename = $self->project().".map";
+	if (-e $outputfilename)
+	{
+	    $self->_logwarn("The file '$outputfilename' exists. Therefore, a backup will be created named '$outputfilename".'.bak'."' and the old file will overwritten.");
+
+	    if (-e $outputfilename.".bak")
+	    {
+		$self->_logdie("Unable to backup the file '$outputfilename' to '$outputfilename".".bak' due to it already exists!");
+	    }
+	    copy($outputfilename, $outputfilename.".bak") || $self->_logdie("Unable to backup the file '$outputfilename' to '$outputfilename".".bak': $!");
+	}
+
+	open(FH, ">", $outputfilename) || $self->_logdie("Unable to open file '$outputfilename' for writing: $!");
+	print FH "#", join("\t", qw(genome old_name new_name)), "\n";
+	foreach my $seq (@{$ref_to_seqs})
+	{
+	    print FH join("\t", ($seq->{genome}, $seq->{name}, $seq->{uniq_name})), "\n";
+	}
+	close(FH) || $self->_logdie("Unable to open file '$outputfilename' for writing: $!");
+    }
 }
 
 sub _generate_seq_set
