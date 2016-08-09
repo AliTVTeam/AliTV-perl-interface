@@ -531,6 +531,16 @@ sub _write_mapping_file
     {
 	$self->_logdie("Need to call _write_mapping_file() with an array reference as parameter but found other type");
     }
+
+    my $outputfilename = $self->project().".map";
+
+    open(FH, ">", $outputfilename) || $self->_logdie("Unable to open file '$outputfilename' for writing: $!");
+    print FH "#", join("\t", qw(genome old_name new_name)), "\n";
+    foreach my $seq (@{$ref_to_seqs})
+    {
+	print FH join("\t", ($seq->{genome}, $seq->{name}, $seq->{uniq_name})), "\n";
+    }
+    close(FH) || $self->_logdie("Unable to open file '$outputfilename' for writing: $!");
 }
 
 sub _generate_seq_set
