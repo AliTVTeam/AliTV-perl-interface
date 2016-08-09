@@ -41,6 +41,7 @@ t/503_AliTV-_initialize.t
 t/504_AliTV-file.t
 t/505_AliTV-get_default_settings.t
 t/506_AliTV-project.t
+t/507_AliTV-_write_mapping_file.t
 t/510_AliTV-run_failing.t
 t/510_AliTV-run_working.t
 t/513_AliTV-_import_genomes.t
