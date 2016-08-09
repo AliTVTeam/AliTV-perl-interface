@@ -21,6 +21,8 @@ sub _initialize
     # initialize the yml settings using the default config
     $self->{_yml_import} = $self->get_default_settings();
     $self->{_file} = undef;
+    $self->{_project} = undef;
+
     $self->{_genomes} = {};
 
     $self->{_linkcounter} = 0;
@@ -366,6 +368,7 @@ sub project
 {
     my $self = shift;
 
+    return $self->{_project};
 }
 
 sub file
