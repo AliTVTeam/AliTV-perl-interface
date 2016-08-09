@@ -364,6 +364,17 @@ sub _import_links
     }
 }
 
+=pod
+
+=head2 Method $alitv_obj->project()
+
+This methods returns the name of the current project. If an additional
+parameter is given, this value will be set as new project name. Those
+names are allowed to contain only characters from [A-Za-z0-9_]. In
+case they contain other characters, an exception will be raised.
+
+=cut
+
 sub project
 {
     my $self = shift;
