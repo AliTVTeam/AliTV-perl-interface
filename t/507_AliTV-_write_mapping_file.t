@@ -46,6 +46,25 @@ is($ctx->hexdigest, 'fef31e891cf5cf969ca15e98a9295a4a', 'Expected mapping file c
 
 close($fh) || die "Unable to close expected outputfile '$expected_file': $!\n";
 
-unlink($expected_file) || die "Unable to delete file '$expected_file'\n";
+### Second writing should create another file with suffix .bak
+
+$obj->_write_mapping_file($seqs);
+
+my $expected_bak_file = $expected_file.".bak";
+
+ok(-e $expected_bak_file, 'Backup mapping file was created as expected');
+
+open(my $fh_bak, "<", $expected_bak_file) || die "Unable to open expected backup file '$expected_bak_file': $!\n";
+my $ctx_bak = Digest::MD5->new;
+$ctx_bak->addfile($fh_bak);
+
+is($ctx_bak->hexdigest, 'fef31e891cf5cf969ca15e98a9295a4a', 'Expected backup mapping file content was created');
+
+close($fh_bak) || die "Unable to close expected outputfile '$expected_file': $!\n";
+
+foreach my $file ($expected_file, $expected_bak_file)
+{
+   unlink($file) || die "Unable to delete file '$file'\n";
+}
 
 done_testing;
