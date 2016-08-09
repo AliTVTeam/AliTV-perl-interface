@@ -91,7 +91,7 @@ sub run
         $self->_logdie("Unable to load alignment module '$alignment_module'");
     }
 
-    my $alignment_parameter = join(" ", @{$self->{_yml_import}{alignment}{parameter}});
+    my $alignment_parameter = $self->{_yml_import}{alignment}{parameter};
 
     my $aln_obj = "$alignment_module"->new(-parameters => $alignment_parameter, -callback => sub{ $self->_import_links(@_); } );
     $aln_obj->run($self->_generate_seq_set());

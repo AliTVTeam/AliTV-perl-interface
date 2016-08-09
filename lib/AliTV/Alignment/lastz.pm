@@ -96,7 +96,7 @@ sub run
 	    push(@cmd, $db_fn);
 	    push(@cmd, $query_fn);
 	    push(@cmd, "--output=".$aln_file->filename());
-	    push(@cmd, split(/ /, $self->{_parameters}));
+	    push(@cmd, @{$self->{_parameters}});
 	    $self->_debug(sprintf("Running the aligment program as: '%s'\n", join(" ", @cmd)));
 	    systemx(@cmd);
 

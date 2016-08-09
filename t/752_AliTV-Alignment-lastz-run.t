@@ -39,7 +39,7 @@ BEGIN { use_ok('AliTV::Alignment::lastz') }
 
 can_ok( 'AliTV::Alignment::lastz', qw(run) );
 
-my $obj = new_ok('AliTV::Alignment::lastz' => [-parameters => "--format=MAF --noytrim --gapped --strand=both --ambiguous=iupac", -callback => sub { push(@output,  \@_); }] );
+my $obj = new_ok('AliTV::Alignment::lastz' => [-parameters => [qw(--format=MAF --noytrim --gapped --strand=both --ambiguous=iupac)], -callback => sub { push(@output,  \@_); }] );
 
 $obj->run(@seq_set);
 
