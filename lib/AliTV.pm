@@ -520,6 +520,17 @@ sub _make_and_set_uniq_seq_names
 
 }
 
+=pod
+
+=head2 Method $alitv_obj->_write_mapping_file()
+
+This internal method stores a file containing old and new sequence
+names for the complete sequence set. If the file already exists, it
+will be backed up. If this is not possible an exception will be
+raised.
+
+=cut
+
 sub _write_mapping_file
 {
     my $self = shift;
