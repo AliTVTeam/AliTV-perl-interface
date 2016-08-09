@@ -42,6 +42,7 @@ can_ok( 'AliTV::Alignment::lastz', qw(run) );
 my $obj = new_ok('AliTV::Alignment::lastz' => [-parameters => [qw(--format=MAF --noytrim --gapped --strand=both --ambiguous=iupac)], -callback => sub { push(@output,  \@_); }] );
 
 throws_ok { $obj->run() } qr/You need to specify a parameter to call run method/, 'Exception raised if no parameters are provided for alignment run method';
+throws_ok { $obj->run(1) } qr/You need to specify an array reference to call run method/, 'Exception raised if no array reference is provided for alignment run method';
 
 $obj->run(\@seq_set);
 
