@@ -23,4 +23,7 @@ $obj->project($project_name2);
 
 is($obj->project(), $project_name2, 'project returns the correct project name 2');
 
+my $project_name3 = 'Project 3';
+throws_ok { $obj->project($project_name3); } qr/Only characters from character class \[A-Za-z0-9_\] are allowed in project name/, 'Exception if project name contains forbidden characters';
+
 done_testing;
