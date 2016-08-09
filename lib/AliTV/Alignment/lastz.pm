@@ -28,6 +28,10 @@ sub run
 {
     my $self = shift;
 
+    unless (@_)
+    {
+	$self->_logdie("You need to specify a parameter to call run method");
+    }
     my ($seq_set) = @_;
 
     $self->_check();
