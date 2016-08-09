@@ -21,6 +21,8 @@ sub _initialize
     # initialize the yml settings using the default config
     $self->{_yml_import} = $self->get_default_settings();
     $self->{_file} = undef;
+    $self->{_project} = undef;
+
     $self->{_genomes} = {};
 
     $self->{_linkcounter} = 0;
@@ -360,6 +362,35 @@ sub _import_links
     {
 	$self->{_links_max_id} = $entry->{identity}+0;
     }
+}
+
+=pod
+
+=head2 Method $alitv_obj->project()
+
+This methods returns the name of the current project. If an additional
+parameter is given, this value will be set as new project name. Those
+names are allowed to contain only characters from [A-Za-z0-9_]. In
+case they contain other characters, an exception will be raised.
+
+=cut
+
+sub project
+{
+    my $self = shift;
+
+    # is another parameter given?
+    if (@_)
+    {
+	$self->{_project} = shift;
+
+	if ($self->{_project} =~ /[^A-Za-z0-9_]/)
+	{
+	    $self->_logdie('Only characters from character class [A-Za-z0-9_] are allowed in project name');
+	}
+    }
+
+    return $self->{_project};
 }
 
 sub file
