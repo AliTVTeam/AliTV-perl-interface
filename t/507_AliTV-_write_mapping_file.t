@@ -62,6 +62,11 @@ is($ctx_bak->hexdigest, 'fef31e891cf5cf969ca15e98a9295a4a', 'Expected backup map
 
 close($fh_bak) || die "Unable to close expected outputfile '$expected_file': $!\n";
 
+
+### Third writing should raise an exception
+
+throws_ok { $obj->_write_mapping_file($seqs); } qr/Unable to backup the file 'Test.map' to 'Test.map.bak' due to it already exists!/, 'Exception is raised if backup file cannot be created';
+
 foreach my $file ($expected_file, $expected_bak_file)
 {
    unlink($file) || die "Unable to delete file '$file'\n";
