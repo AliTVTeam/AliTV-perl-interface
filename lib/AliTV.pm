@@ -368,6 +368,13 @@ sub project
 {
     my $self = shift;
 
+    # is another parameter given?
+    if (@_)
+    {
+	$self->{_project} = shift;
+
+    }
+
     return $self->{_project};
 }
 
