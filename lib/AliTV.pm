@@ -526,6 +526,11 @@ sub _write_mapping_file
     {
 	$self->_logdie("Need to call _write_mapping_file() with an array reference as parameter");
     }
+    my $ref_to_seqs = shift;
+    unless (ref($ref_to_seqs) eq "ARRAY")
+    {
+	$self->_logdie("Need to call _write_mapping_file() with an array reference as parameter but found other type");
+    }
 }
 
 sub _generate_seq_set
