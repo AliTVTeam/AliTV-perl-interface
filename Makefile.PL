@@ -28,6 +28,7 @@ WriteMakefile(
 	Log::Log4perl => 0.28,      # required for dynamically determined log file name
         Hash::Merge => 0,
         File::Which => 0,
+        File::Path => 0,
 	version => 0.77,
 	Storable => 0,
         Digest::MD5 => 0,
