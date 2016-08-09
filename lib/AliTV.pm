@@ -373,6 +373,10 @@ sub project
     {
 	$self->{_project} = shift;
 
+	if ($self->{_project} =~ /[^A-Za-z0-9_]/)
+	{
+	    $self->_logdie('Only characters from character class [A-Za-z0-9_] are allowed in project name');
+	}
     }
 
     return $self->{_project};
