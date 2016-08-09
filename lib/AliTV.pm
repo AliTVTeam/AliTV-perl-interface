@@ -521,6 +521,11 @@ sub _make_and_set_uniq_seq_names
 sub _write_mapping_file
 {
     my $self = shift;
+
+    unless (@_)
+    {
+	$self->_logdie("Need to call _write_mapping_file() with an array reference as parameter");
+    }
 }
 
 sub _generate_seq_set
