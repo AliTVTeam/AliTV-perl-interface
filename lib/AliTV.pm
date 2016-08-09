@@ -12,6 +12,8 @@ use Hash::Merge;
 use AliTV::Genome;
 use AliTV::Tree;
 
+use File::Copy;
+
 use JSON;
 
 sub _initialize
@@ -533,6 +535,12 @@ sub _write_mapping_file
     }
 
     my $outputfilename = $self->project().".map";
+    if (-e $outputfilename)
+    {
+	$self->_logwarn("The file '$outputfilename' exists. Therefore, a backup will be created named '$outputfilename".'.bak'."' and the old file will overwritten.");
+
+	copy($outputfilename, $outputfilename.".bak") || $self->_logdie("Unable to backup the file '$outputfilename' to '$outputfilename".".bak': $!");
+    }
 
     open(FH, ">", $outputfilename) || $self->_logdie("Unable to open file '$outputfilename' for writing: $!");
     print FH "#", join("\t", qw(genome old_name new_name)), "\n";

@@ -24,6 +24,7 @@ WriteMakefile(
         IPC::System::Simple => 0,
         File::Temp => 0,
         File::Basename => 0,
+	File::Copy => 0,
 	Log::Log4perl => 0.28,      # required for dynamically determined log file name
         Hash::Merge => 0,
         File::Which => 0,
