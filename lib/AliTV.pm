@@ -518,6 +518,11 @@ sub _make_and_set_uniq_seq_names
 
 }
 
+sub _write_mapping_file
+{
+    my $self = shift;
+}
+
 sub _generate_seq_set
 {
     my $self = shift;
