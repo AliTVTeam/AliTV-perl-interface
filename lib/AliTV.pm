@@ -539,6 +539,10 @@ sub _write_mapping_file
     {
 	$self->_logwarn("The file '$outputfilename' exists. Therefore, a backup will be created named '$outputfilename".'.bak'."' and the old file will overwritten.");
 
+	if (-e $outputfilename.".bak")
+	{
+	    $self->_logdie("Unable to backup the file '$outputfilename' to '$outputfilename".".bak' due to it already exists!");
+	}
 	copy($outputfilename, $outputfilename.".bak") || $self->_logdie("Unable to backup the file '$outputfilename' to '$outputfilename".".bak': $!");
     }
 
