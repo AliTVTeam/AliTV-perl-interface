@@ -11,6 +11,11 @@ can_ok('AliTV', qw(file));
 
 my $obj = new_ok('AliTV');
 
+# test with a non existing yml file should cause an exception
+my $non_existing = 'data/chloroset/input_non_existing.yml';
+throws_ok { $obj = AliTV->new("-file" => $non_existing); } qr/Unable to import the YAML file/, 'Exception is caused by non existing yml file';
+
+# test with a single genome yml
 my $file2import = 'data/single_genome.yml';
 $obj->file($file2import);
 
