@@ -458,6 +458,12 @@ sub file
 	}
 
 	Hash::Merge::set_behavior( 'RIGHT_PRECEDENT' );
+
+	if (exists $settings->{alignment})
+	{
+	    delete $default->{alignment};
+	}
+
 	$self->{_yml_import} = Hash::Merge::merge($default, $settings);
     }
 
