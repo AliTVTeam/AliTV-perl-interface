@@ -450,7 +450,12 @@ sub file
 	my $default = $self->get_default_settings();
 
 	# try to import the YAML file
-	my $settings = YAML::LoadFile($self->{_file});
+	my $settings;
+	eval { $settings = YAML::LoadFile($self->{_file}) };
+	if ($@)
+	{
+	    $self->_logdie("Unable to import the YAML file '".$self->{_file}."': $@");
+	}
 
 	Hash::Merge::set_behavior( 'RIGHT_PRECEDENT' );
 	$self->{_yml_import} = Hash::Merge::merge($default, $settings);
