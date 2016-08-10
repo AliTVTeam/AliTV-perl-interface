@@ -120,6 +120,7 @@ data/tree_c.newick
 data/multiple_trees.newick
 
 data/single_genome.yml
+data/single_genome_with_alignment.yml
 data/two_genomes_nonuniq_names.yml
 data/two_genomes_uniq_names.yml
 data/two_genomes_forbidden_names.yml
