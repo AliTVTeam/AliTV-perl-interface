@@ -101,6 +101,7 @@ sub run
     if (exists $self->{_yml_import}{tree} && defined $self->{_yml_import}{tree})
     {
 	my $tree_obj = AliTV::Tree->new(-file => ($self->{_yml_import}{tree}));
+	$tree_obj->balance_node_depth();
 	$self->{_tree} = $tree_obj->tree_2_json_structure();
     }
 
