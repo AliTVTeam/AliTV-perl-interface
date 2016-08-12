@@ -90,7 +90,7 @@ sub _deep_scan
     if($node->is_Leaf())
     {
 	# we are done --> return a hash ref
-	$return_value = { name => $node->id() };
+	$return_value = {children => [ { name => $node->id() } ] };
     } else {
 	# we have no leaf node, therefore
 	# get a list of all descendents
