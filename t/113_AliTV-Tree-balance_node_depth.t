@@ -18,44 +18,49 @@ chomp(@inputfiles);
 
 # test if the topology of the tree is valid, if qdist is available
 my $qdist_executable = which('qdist');
-my $num_tests = @inputfiles;
+my $num_tests        = @inputfiles;
 SKIP: {
-    skip "Missing qdist program to calculate quartest distance of trees", $num_tests unless ($qdist_executable);
+    skip "Missing qdist program to calculate quartest distance of trees",
+      $num_tests
+      unless ($qdist_executable);
 
-    foreach my $inputfile ( @inputfiles ) {
+    foreach my $inputfile (@inputfiles) {
+
         # generate a temporary files
-        my ($fh, $tree_file) = File::Temp::tempfile();
+        my ( $fh, $tree_file ) = File::Temp::tempfile();
 
         $obj->file($inputfile);
         $obj->balance_node_depth();
 
-	my $tree = $obj->{_tree};
+        my $tree = $obj->{_tree};
 
-	print $fh $tree->as_text('newick');
+        print $fh $tree->as_text('newick');
 
-	my $cmd = join(" ", ($qdist_executable, $inputfile, $tree_file));
+        my $cmd = join( " ", ( $qdist_executable, $inputfile, $tree_file ) );
 
-	my $result = qx($cmd);
+        my $result = qx($cmd);
 
-	# check if result contains zeros for the distances:
-	# data/tree_a.newick : 0 0
-	#    /tmp/e3HIyEiRSF : 0 0
+        # check if result contains zeros for the distances:
+        # data/tree_a.newick : 0 0
+        #    /tmp/e3HIyEiRSF : 0 0
 
-	# delete filenames
-	$result =~ s/^[^:]+:\s*//mg;
-	# delete newlines
-	$result =~ s/\n/ /g;
-	# delete spaces
-	$result =~ s/^\s*|\s*$//g;
+        # delete filenames
+        $result =~ s/^[^:]+:\s*//mg;
 
-	my %qdists = ();
+        # delete newlines
+        $result =~ s/\n/ /g;
 
-	foreach my $qdist (split(/\s+/, $result))
-	{
-	     $qdists{$qdist}++;
-	}
+        # delete spaces
+        $result =~ s/^\s*|\s*$//g;
 
-	ok( (keys %qdists)==1 && exists $qdists{0}, "Tree topology still the same for input tree '$inputfile'");
+        my %qdists = ();
+
+        foreach my $qdist ( split( /\s+/, $result ) ) {
+            $qdists{$qdist}++;
+        }
+
+        ok( ( keys %qdists ) == 1 && exists $qdists{0},
+            "Tree topology still the same for input tree '$inputfile'" );
     }
 }
 
