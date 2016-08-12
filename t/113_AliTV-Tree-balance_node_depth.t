@@ -3,6 +3,8 @@ use warnings;
 
 use Test::More;
 use Test::Exception;
+use File::Which;
+use File::Temp;
 
 BEGIN { use_ok('AliTV::Tree') }
 
@@ -11,27 +13,53 @@ can_ok( 'AliTV::Tree', qw(balance_node_depth) );
 my $obj = new_ok('AliTV::Tree');
 
 # import the expected values from __DATA__ section
-my %expected = ();
-while (<DATA>) {
-    chomp;
-    my ( $file, $expected_structure ) = split( /\s+/, $_, 2 );
-    my $for_eval = '$expected{$file} = ' . $expected_structure . ';';
-    eval $for_eval;
-    die "Error while importing the expected structures: $@" if ($@);
-}
+my @inputfiles = <DATA>;
+chomp(@inputfiles);
 
-TODO: {
-    local $TODO = "Need to implement a comparison feature robinson-foulds-dist?";
-    foreach my $inputfile ( keys %expected ) {
+# test if the topology of the tree is valid, if qdist is available
+my $qdist_executable = which('qdist');
+my $num_tests = @inputfiles;
+SKIP: {
+    skip "Missing qdist program to calculate quartest distance of trees", $num_tests unless ($qdist_executable);
+
+    foreach my $inputfile ( @inputfiles ) {
+        # generate a temporary files
+        my ($fh, $tree_file) = File::Temp::tempfile();
+
         $obj->file($inputfile);
         $obj->balance_node_depth();
-        is_deeply( $obj->tree_2_json_structure(),
-            $expected{$inputfile},
-            'Expected tree strucutre for ' . $inputfile );
+
+	my $tree = $obj->{_tree};
+
+	print $fh $tree->as_text('newick');
+
+	my $cmd = join(" ", ($qdist_executable, $inputfile, $tree_file));
+
+	my $result = qx($cmd);
+
+	# check if result contains zeros for the distances:
+	# data/tree_a.newick : 0 0
+	#    /tmp/e3HIyEiRSF : 0 0
+
+	# delete filenames
+	$result =~ s/^[^:]+:\s*//mg;
+	# delete newlines
+	$result =~ s/\n/ /g;
+	# delete spaces
+	$result =~ s/^\s*|\s*$//g;
+
+	my %qdists = ();
+
+	foreach my $qdist (split(/\s+/, $result))
+	{
+	     $qdists{$qdist}++;
+	}
+
+	ok( (keys %qdists)==1 && exists $qdists{0}, "Tree topology still the same for input tree '$inputfile'");
     }
 }
 
 done_testing;
 
 __DATA__
-data/tree_a.newick {children => [ {children => [ { children => [{name => 'a'}] }] }, {children => [{children => [{name => 'b'}]}, {children => [{name => 'c'}, {name => 'd'}] }]} ]}
+data/tree_a.newick
