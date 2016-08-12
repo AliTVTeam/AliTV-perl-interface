@@ -63,3 +63,5 @@ done_testing;
 
 __DATA__
 data/tree_a.newick
+data/tree_b.newick
+data/tree_c.newick
