@@ -43,3 +43,4 @@ done_testing;
 
 __DATA__
 TreeA ((b,((d,((g,f),e)),c)),a); (a,(b,(c,(d,(e,(f,g))))));
+TreeB ((A,E),((D,(C,(G,H))),(B,F))); ((A,E),((B,F),(D,(C,(G,H)))));
