@@ -249,6 +249,10 @@ sub _order_nodes
 sub get_genome_order
 {
     my $self = shift;
+
+    my $tree = $self->{_orig_tree};
+
+    return [map {$_->id()} $tree->get_leaf_nodes()];
 }
 
 sub check_4_leaf_nodes
