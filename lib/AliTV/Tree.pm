@@ -246,7 +246,10 @@ sub _order_nodes
     }
 }
 
-
+sub get_genome_order
+{
+    my $self = shift;
+}
 
 sub check_4_leaf_nodes
 {
