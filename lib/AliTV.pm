@@ -101,7 +101,12 @@ sub run
     if (exists $self->{_yml_import}{tree} && defined $self->{_yml_import}{tree})
     {
 	my $tree_obj = AliTV::Tree->new(-file => ($self->{_yml_import}{tree}));
+	$tree_obj->ladderize();
+	$tree_obj->balance_node_depth();
 	$self->{_tree} = $tree_obj->tree_2_json_structure();
+
+	# store the order
+	$self->{_tree_genome_order} = $tree_obj->get_genome_order();
     }
 
     my $json_text = $self->get_json();
@@ -263,10 +268,16 @@ sub get_json
     $data{filters}{karyo}{order} = \@chromosomelist_sorted;
 
     # need to define a genome order
-    # easy to implement: alphabetically sorted
-    my %genomes = map { $data{data}{karyo}{chromosomes}{$_}{genome_id} => 1 } (keys %{$data{data}{karyo}{chromosomes}});
-    $data{filters}{karyo}{genome_order} = [sort keys %genomes];
-
+    # easy to implement: alphabetically sorted or if a tree exists use the order from the tree
+    if (exists $self->{_tree_genome_order})
+    {
+	# ordered by the tree
+	$data{filters}{karyo}{genome_order} = $self->{_tree_genome_order};
+    } else {
+	# alphabetically sorted
+	my %genomes = map { $data{data}{karyo}{chromosomes}{$_}{genome_id} => 1 } (keys %{$data{data}{karyo}{chromosomes}});
+	$data{filters}{karyo}{genome_order} = [sort keys %genomes];
+    }
     return to_json(\%data);
 }
 
