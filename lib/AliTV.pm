@@ -268,10 +268,16 @@ sub get_json
     $data{filters}{karyo}{order} = \@chromosomelist_sorted;
 
     # need to define a genome order
-    # easy to implement: alphabetically sorted
-    my %genomes = map { $data{data}{karyo}{chromosomes}{$_}{genome_id} => 1 } (keys %{$data{data}{karyo}{chromosomes}});
-    $data{filters}{karyo}{genome_order} = [sort keys %genomes];
-
+    # easy to implement: alphabetically sorted or if a tree exists use the order from the tree
+    if (exists $self->{_tree_genome_order})
+    {
+	# ordered by the tree
+	$data{filters}{karyo}{genome_order} = $self->{_tree_genome_order};
+    } else {
+	# alphabetically sorted
+	my %genomes = map { $data{data}{karyo}{chromosomes}{$_}{genome_id} => 1 } (keys %{$data{data}{karyo}{chromosomes}});
+	$data{filters}{karyo}{genome_order} = [sort keys %genomes];
+    }
     return to_json(\%data);
 }
 
