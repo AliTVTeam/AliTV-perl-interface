@@ -79,3 +79,20 @@ genomes:
       invertedRepeat:
              - data/chloroset/invertedRepeat.tsv
 tree:   data/chloroset/species.tree
+
+features:
+  invertedRepeat:
+    color: "#e7d3e2"
+    form: arrow
+    height: 30
+    visible: 1
+  ndh:
+    color: "#ff006e"
+    form: rect
+    height: 30
+    visible: 1
+  ycf:
+    color: "#ffaf00"
+    form: rect
+    height: 30
+    visible: 1
