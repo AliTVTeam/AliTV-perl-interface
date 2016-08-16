@@ -28,7 +28,7 @@ while (<DATA>)
 foreach my $current_tree (keys %test_set)
 {
    my $obj = new_ok('AliTV::Tree');
-   lives_ok { $obj->file($test_set{$current_tree}{file}) };
+   lives_ok { $obj->file($test_set{$current_tree}{file}) } "Object can be prepared for set '$current_tree'";
 
    $obj->_ladderize();
 
