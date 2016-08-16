@@ -173,6 +173,12 @@ sub balance_node_depth
 
 }
 
+sub _ladderize
+{
+    my $self = shift;
+
+}
+
 sub check_4_leaf_nodes
 {
     my $self = shift;
