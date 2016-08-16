@@ -173,11 +173,80 @@ sub balance_node_depth
 
 }
 
+sub ladderize
+{
+    my $self = shift;
+
+    $self->_ladderize(1);
+}
+
 sub _ladderize
 {
     my $self = shift;
 
+    my ($up) = @_;
+
+    $self->_make_tree_copy();
+
+    my $tree = $self->{_orig_tree};
+
+    # get the root node
+    my $root_old = $tree->get_root_node();
+    my $root_new;
+
+    if ($root_old->id())
+    {
+	$root_new = Bio::Tree::Node->new(-id => $root_old->id());
+    } else {
+	$root_new = Bio::Tree::Node->new();
+    }
+
+    _order_nodes($root_old, $root_new, $up);
+
+    # create a new tree
+    my $new_tree = Bio::Tree::Tree->new(-root => $root_new);
+
+    $self->{_orig_tree} = $new_tree;
+
 }
+
+sub _order_nodes
+{
+    my ($old, $new, $up) = @_;
+
+    if ($old->is_Leaf())
+    {
+	return $old;
+    } else {
+	my @descendents = $old->each_Descendent();
+
+	# sort the descendents by their descendent_count
+	@descendents = sort {$a->descendent_count() <=> $b->descendent_count() || $a->id() cmp $b->id() || $a->internal_id() <=> $b->internal_id() } (@descendents);
+
+	unless (defined $up && $up)
+	{
+	    @descendents = reverse @descendents;
+	}
+
+	# call order_nodes for each node and delete the node afterwards
+	foreach my $curr_node (@descendents)
+	{
+	    my $node_new;
+	    if ($curr_node->id())
+	    {
+		$node_new = Bio::Tree::Node->new(-id => $curr_node->id());
+	    } else {
+		$node_new = Bio::Tree::Node->new();
+	    }
+
+	    $new->add_Descendent($node_new);
+
+	    _order_nodes($curr_node, $node_new, $up);
+	}
+    }
+}
+
+
 
 sub check_4_leaf_nodes
 {
