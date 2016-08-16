@@ -104,6 +104,9 @@ sub run
 	$tree_obj->ladderize();
 	$tree_obj->balance_node_depth();
 	$self->{_tree} = $tree_obj->tree_2_json_structure();
+
+	# store the order
+	$self->{_tree_genome_order} = $tree_obj->get_genome_order();
     }
 
     my $json_text = $self->get_json();
