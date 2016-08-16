@@ -86,3 +86,8 @@ features:
     form: arrow
     height: 30
     visible: 1
+  ndh:
+    color: "#ff006e"
+    form: rect
+    height: 30
+    visible: 1
