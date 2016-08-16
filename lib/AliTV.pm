@@ -217,12 +217,20 @@ sub get_json
     # add all features but links
     foreach my $feat (grep {$_ ne $self->_link_feature_name()} (keys %{$data{data}{features}}))
     {
-	$data{conf}{features}{supportedFeatures}{$feat} = {
-	    color => '#808080',
-	    form => 'rect',
-	    height => 30,
-	    visible => JSON::true
-	};
+	if (exists $self->{_yml_import}{features}{$feat})
+	{
+	    $data{conf}{features}{supportedFeatures}{$feat}{color} = $self->{_yml_import}{features}{$feat}{color};
+	    $data{conf}{features}{supportedFeatures}{$feat}{form} = $self->{_yml_import}{features}{$feat}{form};
+	    $data{conf}{features}{supportedFeatures}{$feat}{height} = $self->{_yml_import}{features}{$feat}{height};
+	    $data{conf}{features}{supportedFeatures}{$feat}{visible} = ($self->{_yml_import}{features}{$feat}{visible}) ? JSON::true : JSON::false;
+	} else {
+	    $data{conf}{features}{supportedFeatures}{$feat} = {
+		color => '#808080',
+		form => 'rect',
+		height => 30,
+		visible => JSON::true
+	    }
+	}
     }
 
     $data{filters} = {
