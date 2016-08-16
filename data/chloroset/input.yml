@@ -91,3 +91,8 @@ features:
     form: rect
     height: 30
     visible: 1
+  ycf:
+    color: "#ffaf00"
+    form: rect
+    height: 30
+    visible: 1
