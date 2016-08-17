@@ -34,6 +34,8 @@ sub _initialize
 
     $self->{_max_total_seq_length_included_into_json} = 1000000;
 
+    $self->{_ticks_every_num_of_bases} = undef;
+
     $self->{_links_min_len} = 1000000000; # just a huge value
     $self->{_links_max_len} = 0;          # just a tiny value
     $self->{_links_max_id}  = 0;          # just a zero
@@ -150,6 +152,10 @@ sub get_json
 	}
     }
 
+    my $tick_distance = $self->_calculate_tick_distance(\@chromosome_length);
+    $self->ticks_every_num_of_bases($tick_distance);
+    $self->_info(sprintf("Ticks will be drawn every %d basepair", $self->ticks_every_num_of_bases()));
+
     $data{data}{features} = $features;
     $data{data}{karyo}{chromosomes} = $chromosomes;
 
@@ -180,7 +186,7 @@ sub get_json
 					'karyoDistance' => 5000,
 					'karyoHeight' => 30,
 					'linkKaryoDistance' => 20,
-					'tickDistance' => 1000,
+					'tickDistance' => $self->ticks_every_num_of_bases(),
 					'tickLabelFrequency' => 10,
 					'treeWidth' => 200
           },
@@ -647,7 +653,7 @@ produced JSON file.
 
 =head4 I<Description>
 
-B<ATTENTION!!!:>The list always contains the original sequence names, even if the list is not unique for the complete set of all genomes.
+none
 
 =cut
 
@@ -665,6 +671,90 @@ sub maximum_seq_length_in_json
 	$self->{_max_total_seq_length_included_into_json} = $parameter;
     }
     return $self->{_max_total_seq_length_included_into_json};
+}
+
+=pod
+
+=head3 C<$obj-E<gt>ticks_every_num_of_bases()>
+
+=head4 I<Parameters>
+
+If one single integer value is provided, it will be determine how many
+ticks are drawn.
+
+=head4 I<Output>
+
+Returns the current value of the class value.
+
+=head4 I<Description>
+
+none
+
+=cut
+
+sub ticks_every_num_of_bases
+{
+    my $self = shift;
+
+    if (@_)
+    {
+	my $parameter = shift;
+	unless ($parameter =~ /^\d+$/)
+	{
+	    $self->_logdie("Parameter needs to be an unsigned integer value");
+	}
+	$self->{_ticks_every_num_of_bases} = $parameter;
+    }
+    return $self->{_ticks_every_num_of_bases};
+
+}
+
+=pod
+
+=head3 C<$obj-E<gt>_calculate_tick_distance()>
+
+=head4 I<Parameters>
+
+Requires a reference to a list of sequence length.
+
+=head4 I<Output>
+
+Returns the calculated value
+
+=head4 I<Description>
+
+The value for tick distance is calculated as follows: We want to
+achieve at least 20 ticks in the sequence with the median length. The
+number of bases should be a power of ten.
+
+=cut
+
+sub _calculate_tick_distance
+{
+    my $self = shift;
+
+    unless (@_ == 1 && ref($_[0]) eq "ARRAY")
+    {
+	$self->_logdie("Need to provide a reference to an array of integers as parameter");
+    }
+
+    my $list = shift;
+
+    @{$list} = sort {$a <=> $b} @{$list};
+
+    # calculate the median of the chromosome length
+    my $median_chromosome_length;
+    if (@{$list}%2==0)
+    {
+	$median_chromosome_length = ($list->[@{$list}/2-1]+$list->[@{$list}/2])/2;
+    } else {
+	$median_chromosome_length = $list->[@{$list}/2];
+    }
+    # inside the median chromosome, we want to have at least 20 Ticks, but we want to have a power of 10
+    my $ticks_every_num_of_bases = int(log($median_chromosome_length/20)/log(10));
+    $ticks_every_num_of_bases = 10**$ticks_every_num_of_bases;
+
+    return $ticks_every_num_of_bases;
 }
 
 1;
