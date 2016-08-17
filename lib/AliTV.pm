@@ -695,6 +695,31 @@ sub ticks_every_num_of_bases
 
 =pod
 
+=head3 C<$obj-E<gt>_calculate_tick_distance()>
+
+=head4 I<Parameters>
+
+Requires a reference to a list of sequence length.
+
+=head4 I<Output>
+
+Returns the calculated value
+
+=head4 I<Description>
+
+The value for tick distance is calculated as follows: We want to
+achieve at least 20 ticks in the sequence with the median length. The
+number of bases should be a power of ten.
+
+=cut
+
+sub _calculate_tick_distance
+{
+    my $self = shift;
+}
+
+=pod
+
 =head1 NAME
 
 AliTV - Perl class for the alitv script which generates the JSON input for AliTV
