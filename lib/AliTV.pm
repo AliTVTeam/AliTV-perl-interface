@@ -667,8 +667,6 @@ sub maximum_seq_length_in_json
     return $self->{_max_total_seq_length_included_into_json};
 }
 
-1;
-
 =pod
 
 =head3 C<$obj-E<gt>ticks_every_num_of_bases()>
@@ -691,6 +689,18 @@ none
 sub ticks_every_num_of_bases
 {
     my $self = shift;
+
+    if (@_)
+    {
+	my $parameter = shift;
+	unless ($parameter =~ /^\d+$/)
+	{
+	    $self->_logdie("Parameter needs to be an unsigned integer value");
+	}
+	$self->{_ticks_every_num_of_bases} = $parameter;
+    }
+    return $self->{_ticks_every_num_of_bases};
+
 }
 
 =pod
@@ -717,6 +727,8 @@ sub _calculate_tick_distance
 {
     my $self = shift;
 }
+
+1;
 
 =pod
 
