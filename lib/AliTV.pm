@@ -134,6 +134,12 @@ sub get_json
 	$chromosomes = $genome->get_chromosomes($chromosomes);
     }
 
+    # collect the sequence length of all chromosomes
+    my @chromosome_length = sort { $a <=> $b } map {$chromosomes->{$_}{length}} (keys %{$chromosomes});
+    # calculate the complete sequence length
+    my $complete_seq_length = 0;
+    foreach (@chromosome_length) { $complete_seq_length += $_; }
+
     $data{data}{features} = $features;
     $data{data}{karyo}{chromosomes} = $chromosomes;
 
