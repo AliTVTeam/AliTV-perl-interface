@@ -32,6 +32,8 @@ sub _initialize
 
     $self->{_links} = {};
 
+    $self->{_max_total_seq_length_included_into_json} = 1000000;
+
     $self->{_links_min_len} = 1000000000; # just a huge value
     $self->{_links_max_len} = 0;          # just a tiny value
     $self->{_links_max_id}  = 0;          # just a zero
