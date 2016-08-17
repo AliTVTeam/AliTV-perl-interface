@@ -23,6 +23,7 @@ t/112_AliTV-Tree-tree_2_json_structure.t
 t/113_AliTV-Tree-balance_node_depth.t
 t/114_AliTV-Tree-_make_tree_copy.t
 t/115_AliTV-Tree-check_4_leaf_nodes.t
+t/116_AliTV-Tree-_ladderize.t
 t/120_AliTV-Tree-file.t
 
 t/201_AliTV-Seq.t
