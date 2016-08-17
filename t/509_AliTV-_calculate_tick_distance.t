@@ -34,4 +34,20 @@ foreach my $forbidden_value (@forbidden_values)
 	throws_ok { $obj->_calculate_tick_distance($forbidden_value); } qr/Need to provide a reference to an array of integers as parameter/, "Exception if parameter is no reference to an array (used '$forbidden_value' for test)";
 }
 
+my $sets = {};
+$sets->{setA}{input} = [10000, 10000, 10000];        # median 10000, return should be 100
+$sets->{setB}{input} = [1000, 10000, 100000];        # median 10000, return should be 100
+$sets->{setC}{input} = [1000, 10000, 10000, 100000]; # median 10000, return should be 100
+$sets->{setD}{input} = [100, 1000, 1000, 10000];     # median  1000, return should be 10
+
+$sets->{setA}{expected} = 100;
+$sets->{setB}{expected} = 100;
+$sets->{setC}{expected} = 100;
+$sets->{setD}{expected} = 10;
+
+foreach (sort keys %{$sets})
+{
+   is($obj->_calculate_tick_distance($sets->{$_}{input}), $sets->{$_}{expected}, "Correct return result for input set '$_'");
+}
+
 done_testing;
