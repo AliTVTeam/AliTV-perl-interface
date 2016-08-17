@@ -639,7 +639,11 @@ sub maximum_seq_length_in_json
 {
     my $self = shift;
 
-    return 1000000;
+    if (@_)
+    {
+	$self->{_max_total_seq_length_included_into_json} = shift;
+    }
+    return $self->{_max_total_seq_length_included_into_json};
 }
 
 1;
