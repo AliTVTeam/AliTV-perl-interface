@@ -26,4 +26,12 @@ foreach my $value2set (1000, 5000, 100000)
    is($obj->ticks_every_num_of_bases(), $value2set, "Value can be get afterwards (value was $value2set)");
 }
 
+$obj = new_ok('AliTV');
+
+my @forbidden_values = (-1, "A", {}, 0.5);
+foreach my $forbidden_value (@forbidden_values)
+{
+	throws_ok { $obj->_calculate_tick_distance($forbidden_value); } qr/Need to provide a reference to an array of integers as parameter/, "Exception if parameter is no reference to an array (used '$forbidden_value' for test)";
+}
+
 done_testing;
