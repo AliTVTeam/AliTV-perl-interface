@@ -641,7 +641,12 @@ sub maximum_seq_length_in_json
 
     if (@_)
     {
-	$self->{_max_total_seq_length_included_into_json} = shift;
+	my $parameter = shift;
+	unless ($parameter =~ /^\d+$/)
+	{
+	    $self->_logdie("Parameter needs to be an unsigned integer value");
+	}
+	$self->{_max_total_seq_length_included_into_json} = $parameter;
     }
     return $self->{_max_total_seq_length_included_into_json};
 }
