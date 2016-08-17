@@ -636,6 +636,8 @@ B<ATTENTION!!!:>The list always contains the original sequence names, even if th
 sub maximum_seq_length_in_json
 {
     my $self = shift;
+
+    return 1000000;
 }
 
 1;
