@@ -728,6 +728,12 @@ number of bases should be a power of ten.
 sub _calculate_tick_distance
 {
     my $self = shift;
+
+    unless (@_ == 1 && ref($_[0]) eq "ARRAY")
+    {
+	$self->_logdie("Need to provide a reference to an array of integers as parameter");
+    }
+
 }
 
 1;
