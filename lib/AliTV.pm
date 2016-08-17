@@ -647,7 +647,7 @@ produced JSON file.
 
 =head4 I<Description>
 
-B<ATTENTION!!!:>The list always contains the original sequence names, even if the list is not unique for the complete set of all genomes.
+none
 
 =cut
 
