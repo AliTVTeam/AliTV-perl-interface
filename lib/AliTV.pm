@@ -613,6 +613,31 @@ sub _generate_seq_set
     return @{$self->{_seq_set}};
 }
 
+=pod
+
+=head3 C<$obj-E<gt>maximum_seq_length_in_json()>
+
+=head4 I<Parameters>
+
+If one single integer value is provided, it will be used as threshold
+for the maximal sequence length inside the produced JSON file.
+
+=head4 I<Output>
+
+Returns the current value of the maximal sequence length inside the
+produced JSON file.
+
+=head4 I<Description>
+
+B<ATTENTION!!!:>The list always contains the original sequence names, even if the list is not unique for the complete set of all genomes.
+
+=cut
+
+sub maximum_seq_length_in_json
+{
+    my $self = shift;
+}
+
 1;
 
 =pod
