@@ -140,6 +140,16 @@ sub get_json
     my $complete_seq_length = 0;
     foreach (@chromosome_length) { $complete_seq_length += $_; }
 
+    # if the sequence length is longer than (default) 1 Mb, skip all sequence information from the JSON file
+    if ($complete_seq_length > $self->maximum_seq_length_in_json())
+    {
+	$self->_info(sprintf("Number of bases (%d) is longer than the maximum allowed (%d), therefore sequences will be excluded from JSON file", $complete_seq_length, $self->maximum_seq_length_in_json()));
+	foreach (keys %{$chromosomes})
+	{
+	    $chromosomes->{$_}{seq} = "";
+	}
+    }
+
     $data{data}{features} = $features;
     $data{data}{karyo}{chromosomes} = $chromosomes;
 
