@@ -671,6 +671,30 @@ sub maximum_seq_length_in_json
 
 =pod
 
+=head3 C<$obj-E<gt>ticks_every_num_of_bases()>
+
+=head4 I<Parameters>
+
+If one single integer value is provided, it will be determine how many
+ticks are drawn.
+
+=head4 I<Output>
+
+Returns the current value of the class value.
+
+=head4 I<Description>
+
+none
+
+=cut
+
+sub ticks_every_num_of_bases
+{
+    my $self = shift;
+}
+
+=pod
+
 =head1 NAME
 
 AliTV - Perl class for the alitv script which generates the JSON input for AliTV
