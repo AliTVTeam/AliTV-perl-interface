@@ -32,6 +32,8 @@ sub _initialize
 
     $self->{_links} = {};
 
+    $self->{_max_total_seq_length_included_into_json} = 1000000;
+
     $self->{_links_min_len} = 1000000000; # just a huge value
     $self->{_links_max_len} = 0;          # just a tiny value
     $self->{_links_max_id}  = 0;          # just a zero
@@ -130,6 +132,22 @@ sub get_json
     {
 	$features = $genome->get_features($features);
 	$chromosomes = $genome->get_chromosomes($chromosomes);
+    }
+
+    # collect the sequence length of all chromosomes
+    my @chromosome_length = sort { $a <=> $b } map {$chromosomes->{$_}{length}} (keys %{$chromosomes});
+    # calculate the complete sequence length
+    my $complete_seq_length = 0;
+    foreach (@chromosome_length) { $complete_seq_length += $_; }
+
+    # if the sequence length is longer than (default) 1 Mb, skip all sequence information from the JSON file
+    if ($complete_seq_length > $self->maximum_seq_length_in_json())
+    {
+	$self->_info(sprintf("Number of bases (%d) is longer than the maximum allowed (%d), therefore sequences will be excluded from JSON file", $complete_seq_length, $self->maximum_seq_length_in_json()));
+	foreach (keys %{$chromosomes})
+	{
+	    $chromosomes->{$_}{seq} = "";
+	}
     }
 
     $data{data}{features} = $features;
@@ -611,6 +629,42 @@ sub _generate_seq_set
 
     # and return it
     return @{$self->{_seq_set}};
+}
+
+=pod
+
+=head3 C<$obj-E<gt>maximum_seq_length_in_json()>
+
+=head4 I<Parameters>
+
+If one single integer value is provided, it will be used as threshold
+for the maximal sequence length inside the produced JSON file.
+
+=head4 I<Output>
+
+Returns the current value of the maximal sequence length inside the
+produced JSON file.
+
+=head4 I<Description>
+
+B<ATTENTION!!!:>The list always contains the original sequence names, even if the list is not unique for the complete set of all genomes.
+
+=cut
+
+sub maximum_seq_length_in_json
+{
+    my $self = shift;
+
+    if (@_)
+    {
+	my $parameter = shift;
+	unless ($parameter =~ /^\d+$/)
+	{
+	    $self->_logdie("Parameter needs to be an unsigned integer value");
+	}
+	$self->{_max_total_seq_length_included_into_json} = $parameter;
+    }
+    return $self->{_max_total_seq_length_included_into_json};
 }
 
 1;
