@@ -152,6 +152,10 @@ sub get_json
 	}
     }
 
+    my $tick_distance = $self->_calculate_tick_distance(\@chromosome_length);
+    $self->ticks_every_num_of_bases($tick_distance);
+    $self->_info(sprintf("Ticks will be drawn every %d basepair", $self->ticks_every_num_of_bases()));
+
     $data{data}{features} = $features;
     $data{data}{karyo}{chromosomes} = $chromosomes;
 
@@ -182,7 +186,7 @@ sub get_json
 					'karyoDistance' => 5000,
 					'karyoHeight' => 30,
 					'linkKaryoDistance' => 20,
-					'tickDistance' => 1000,
+					'tickDistance' => $self->ticks_every_num_of_bases(),
 					'tickLabelFrequency' => 10,
 					'treeWidth' => 200
           },
