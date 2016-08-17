@@ -10,6 +10,12 @@ can_ok('AliTV', qw(maximum_seq_length_in_json));
 
 my $obj = new_ok('AliTV');
 
+my @forbidden_values = (-1, "A", {}, [], 0.5);
+foreach my $forbidden_value (@forbidden_values)
+{
+	throws_ok { $obj->maximum_seq_length_in_json($forbidden_value); } qr/Parameter needs to be an unsigned integer value/, "Exception if parameter is no unsigned integer value (used '$forbidden_value' for test)";
+}
+
 lives_ok { $obj->maximum_seq_length_in_json(12345); } 'No exception if parameter is an unsigned integer value';
 
 # recreate our object
