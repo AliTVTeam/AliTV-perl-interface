@@ -705,7 +705,7 @@ sub ticks_every_num_of_bases
 	}
 	$self->{_ticks_every_num_of_bases} = $parameter;
     }
-    return $self->{_ticks_every_num_of_bases};
+    return defined $self->{_ticks_every_num_of_bases} ? int($self->{_ticks_every_num_of_bases}) : undef;
 
 }
 
