@@ -35,15 +35,15 @@ foreach my $forbidden_value (@forbidden_values)
 }
 
 my $sets = {};
-$sets->{setA}{input} = [10000, 10000, 10000];        # median 10000, return should be 100
-$sets->{setB}{input} = [1000, 10000, 100000];        # median 10000, return should be 100
-$sets->{setC}{input} = [1000, 10000, 10000, 100000]; # median 10000, return should be 100
-$sets->{setD}{input} = [100, 1000, 1000, 10000];     # median  1000, return should be 10
+$sets->{setA}{input} = [10000, 10000, 10000];        # largest  10000, return should be 100
+$sets->{setB}{input} = [1000, 10000, 100000];        # largest 100000, return should be 1000
+$sets->{setC}{input} = [1000, 10000, 10000, 100000]; # largest 100000, return should be 1000
+$sets->{setD}{input} = [100, 1000, 1000, 10000];     # largest  10000, return should be 100
 
 $sets->{setA}{expected} = 100;
-$sets->{setB}{expected} = 100;
-$sets->{setC}{expected} = 100;
-$sets->{setD}{expected} = 10;
+$sets->{setB}{expected} = 1000;
+$sets->{setC}{expected} = 1000;
+$sets->{setD}{expected} = 100;
 
 foreach (sort keys %{$sets})
 {

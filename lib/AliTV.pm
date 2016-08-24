@@ -742,16 +742,11 @@ sub _calculate_tick_distance
 
     @{$list} = sort {$a <=> $b} @{$list};
 
-    # calculate the median of the chromosome length
-    my $median_chromosome_length;
-    if (@{$list}%2==0)
-    {
-	$median_chromosome_length = ($list->[@{$list}/2-1]+$list->[@{$list}/2])/2;
-    } else {
-	$median_chromosome_length = $list->[@{$list}/2];
-    }
+    # calculate the length of the longest chromosome
+    my $longest_chromosome_length = $list->[@{$list}-1];
+
     # inside the median chromosome, we want to have at least 20 Ticks, but we want to have a power of 10
-    my $ticks_every_num_of_bases = int(log($median_chromosome_length/20)/log(10));
+    my $ticks_every_num_of_bases = int(log($longest_chromosome_length/20)/log(10));
     $ticks_every_num_of_bases = 10**$ticks_every_num_of_bases;
 
     return $ticks_every_num_of_bases;
