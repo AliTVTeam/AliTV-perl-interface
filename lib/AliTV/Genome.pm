@@ -187,7 +187,10 @@ sub get_features
 		    my $link_value = { karyo => $seq_id, start => $start+0, end => $end+0 };
 		    $ret->{$feat}{$entry->{name}} = $link_value;
 		} else {
-		    push(@{$ret->{$feat}}, { karyo => $seq_id, name => $entry->{name}, start => $start+0, end => $end+0 });
+		    # as sequences might have renamed we need to map the seq_id to the unique sequence id
+		    my $mapped_seq_id = $self->_orig_id_to_uniq_id($seq_id);
+
+		    push(@{$ret->{$feat}}, { karyo => $mapped_seq_id, name => $entry->{name}, start => $start+0, end => $end+0 });
 		}
 	    }
 	}
