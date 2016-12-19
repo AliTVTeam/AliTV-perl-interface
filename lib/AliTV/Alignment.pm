@@ -42,7 +42,14 @@ sub sequence_set
 
     if (@_)
     {
-	$self->{_sequence_set} = shift;
+	my $seq_set = shift;
+
+	unless (ref($seq_set) eq "ARRAY")
+	{
+	    $self->_logdie("You need to specify an array reference to call sequence_set method");
+	}
+
+	$self->{_sequence_set} = $seq_set;
     }
 
     return $self->{_sequence_set};
