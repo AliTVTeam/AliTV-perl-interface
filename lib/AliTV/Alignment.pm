@@ -18,6 +18,7 @@ sub _initialize
     $self->{_parameters} = undef;
     $self->{_program} = undef;
     $self->{_alignments} = [];
+    $self->{_sequence_set} = [];
 
     return;
 }
@@ -38,6 +39,8 @@ sub program
 sub sequence_set
 {
     my $self = shift;
+
+    return $self->{_sequence_set};
 }
 
 sub parameters
