@@ -35,6 +35,11 @@ sub program
 
 }
 
+sub sequence_set
+{
+    my $self = shift;
+}
+
 sub parameters
 {
     my $self = shift;
