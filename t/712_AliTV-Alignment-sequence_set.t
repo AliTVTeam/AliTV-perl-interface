@@ -30,4 +30,6 @@ is_deeply($obj->sequence_set(), $expected_default, 'Default value is an empty ar
 is_deeply( $obj->sequence_set(\@seq_set), $expected, 'Expected value is retured when set');
 is_deeply( $obj->sequence_set(), $expected, 'Expected value is stored when set');
 
+throws_ok { $obj->sequence_set(@seq_set) } qr/You need to specify an array reference to call sequence_set method/, 'Exception raised if no array reference is provided for alignment sequence_set method';
+
 done_testing;
