@@ -40,6 +40,11 @@ sub sequence_set
 {
     my $self = shift;
 
+    if (@_)
+    {
+	$self->{_sequence_set} = shift;
+    }
+
     return $self->{_sequence_set};
 }
 
