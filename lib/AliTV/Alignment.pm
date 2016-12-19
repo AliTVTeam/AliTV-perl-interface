@@ -262,6 +262,11 @@ sub file
     $self->_logdie("File should never called for AliTV::Alignment");
 }
 
+sub _check_if_maf_fix_is_required
+{
+    my $self = shift;
+}
+
 1;
 
 =head1 AliTV::Alignment
