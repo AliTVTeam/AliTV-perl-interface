@@ -63,12 +63,12 @@ sub run
     my $query_fn = $query->filename();
     close($query) || $self->_logdie("Unable to close query file '$query_fn'");
 
-    my $num_of_req_alignments = @{$seq_set}+0;
+    my $num_seq = @{$self->sequence_set()}+0;
+    my $num_of_req_alignments = $num_seq;
     $num_of_req_alignments = int($num_of_req_alignments*($num_of_req_alignments+1)/2);
     my @alignments = ();
     $self->_info(sprintf "Starting alignment generation... (%d alignments required)", $num_of_req_alignments);
 
-    my $num_seq = @{$self->sequence_set()}+0;
     for(my $seq_idx = 0; $seq_idx < $num_seq; $seq_idx++)
     {
 	# create the query file

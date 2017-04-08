@@ -131,8 +131,13 @@ sub import_alignments
 	}
 	if ($format eq "maf")
 	{
-	    $need_maf_workaround = 1;
-	    $self->_info("MAF input file detected... Therefore workaround for revcom issue activated");
+	    $need_maf_workaround = $self->_check_if_maf_fix_is_required;
+	    if ($need_maf_workaround)
+	    {
+		$self->_info("MAF input file and buggy BioPerl detected... Therefore, workaround for revcom issue activated");
+	    } else {
+		$self->_info("MAF input file detected, but Bioperl is bugfree... Therefore, workaround for revcom issue is not activated");
+	    }
 	}
 
 	while ( my $aln = $in->next_aln ) {
@@ -159,15 +164,20 @@ sub import_alignments
 		my $seq_id = $seq->id();
 		$seq_id =~ s/^db_//;
 
-		push(@seqs,
-		     {
-			 id     => $seq_id,
-			 start  => $seq->start(),
-			 end    => $seq->end(),
-			 strand => $seq->strand(),
-			 seq    => $seq->seq()
-		     }
-		    );
+		my $aligned_seq_segment = {
+		    id     => $seq_id,
+		    start  => $seq->start(),
+		    end    => $seq->end(),
+		    strand => $seq->strand(),
+		    seq    => $seq->seq()
+		};
+
+		if ($need_maf_workaround)
+		{
+		    $self->_fix_maf_revcomp($aligned_seq_segment);
+		}
+
+		push(@seqs, $aligned_seq_segment);
 	    }
 
 	    # sort the seqs by id followed by start and end postion, strand and seq itself
@@ -221,8 +231,7 @@ sub import_alignments
 		score    => $score,
 		len      => $length,
 		md5      => $md5->hexdigest(),
-		seqs     => \@seqs,
-		maf_revcomp_req => $need_maf_workaround
+		seqs     => \@seqs
 	    };
 
 	    # search for an entry with the same hash
@@ -334,6 +343,31 @@ s reverse_complement            4455 1500 - 10000 ATTTGTAGCCGCTAGACGATTACGCGGTGC
 	# unexpected condition
 	$self->_logdie("Condition unexpected for MAF import");
     }
+}
+
+sub _fix_maf_revcomp
+{
+    my $self = shift;
+
+    my $alignment_segment = shift;
+
+    if ($alignment_segment->{strand} == 1)
+    {
+	# nothing to do
+    } elsif ($alignment_segment->{strand} == -1)
+    {
+	unless (exists $self->{_sequence_set_index}{$alignment_segment->{id}})
+	{
+	    $self->_logdie("Unable to identify sequence in sequence set by name '$alignment_segment->{id}'");
+	}
+
+	my $seq = $self->sequence_set()->[$self->{_sequence_set_index}{$alignment_segment->{id}}];
+	my $seq_len = $seq->length();
+
+	($alignment_segment->{start}, $alignment_segment->{end}) = (($seq_len-$alignment_segment->{start}+1), ($seq_len-$alignment_segment->{end}));
+    }
+
+    return ($alignment_segment->{start}, $alignment_segment->{end});
 }
 
 1;
