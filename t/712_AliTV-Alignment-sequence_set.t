@@ -32,4 +32,13 @@ is_deeply( $obj->sequence_set(), $expected, 'Expected value is stored when set')
 
 throws_ok { $obj->sequence_set(@seq_set) } qr/You need to specify an array reference to call sequence_set method/, 'Exception raised if no array reference is provided for alignment sequence_set method';
 
+my $expected_index = {};
+
+for(my $i = 0; $i < @seq_set; $i++)
+{
+    $expected_index->{$seq_set[$i]->display_id()} = $i;
+}
+
+is_deeply( $obj->{_sequence_set_index}, $expected_index, 'Index was created as expected');
+
 done_testing;
