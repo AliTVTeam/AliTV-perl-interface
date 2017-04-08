@@ -428,29 +428,6 @@ sub seq_exists
     return $result;
 }
 
-sub fix_maf_revcomp
-{
-    my $self = shift;
-
-    my ($start, $end, $strand, $seq_name) = @_;
-
-    if ($strand == 1)
-    {
-	# nothing to do
-    } elsif ($strand == -1)
-    {
-	my $uniq_id = (exists $self->{_nonuniq_ids}{$seq_name}) ? $self->{_nonuniq_ids}{$seq_name} : $seq_name;
-
-	my $seq_length = $self->{_seq}{$uniq_id}{len};
-
-	($start, $end) = (($seq_length-$start+1), ($seq_length-$end));
-    }
-
-    return ($start, $end);
-
-}
-
-
 1;
 __END__
 =pod

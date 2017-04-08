@@ -332,13 +332,6 @@ sub _import_links
 	    if ($curr_genome->seq_exists($seqname)) #exists $self->{_genomes}{$genome}{_seq}{$seqname})
 	    {
 		# genome with sequence with correct name was found
-
-		# if required we need to fix the MAF rev-comp-issue here
-		if ($entry->{maf_revcomp_req})
-		{
-		    ($seq->{start}, $seq->{end}) = $curr_genome->fix_maf_revcomp($seq->{start}, $seq->{end}, $seq->{strand}, $seqname)
-		}
-
 		# add the feature
 		my $linkfeature_name = sprintf("linkfeature%06d", ++$self->{_linkfeaturecounter});
 		my $returned_linkfeature_name = $curr_genome->_store_feature($self->_link_feature_name(), $seqname, $seq->{start}+0, $seq->{end}+0, $seq->{strand}, $linkfeature_name);
