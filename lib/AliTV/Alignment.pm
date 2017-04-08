@@ -49,6 +49,19 @@ sub sequence_set
 
 	$self->{_sequence_set} = shift;
 
+	# generate sequence index
+	for(my $i = 0; $i < @{$self->{_sequence_set}}+0; $i++)
+	{
+	    my $seq = $self->{_sequence_set}[$i];
+	    my $name = $i;
+	    if ($seq->can("display_id") && $seq->display_id() ne "")
+	    {
+		$name = $seq->display_id();
+	    } else {
+		$self->_info("Unable to call display_id() or display_id() returns an empty string");
+	    }
+	    $self->{_sequence_set_index}{$name} = $i;
+	}
     }
 
     return $self->{_sequence_set};
