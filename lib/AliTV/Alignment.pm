@@ -156,7 +156,7 @@ sub import_alignments
 	    }
 
 	    # get the score and the identidy
-	    my ($length, $score, $identity) = ($aln->length(), $aln->score(), $aln->percentage_identity());
+	    my ($length, $score, $identity) = ($aln->length(), $aln->score(), 0);
 
 	    # get the sequences and extract the sequence information
 	    # id
@@ -183,6 +183,30 @@ sub import_alignments
 		}
 
 		push(@seqs, $aligned_seq_segment);
+	    }
+
+	    # calculate percentage identity
+	    if (@seqs > 2)
+	    {
+		# for multiple alignment, just let bioperl do the job
+		$identity = $aln->percentage_identity();
+	    } elsif (@seqs == 2) {
+		# for two sequences lets do it ourself
+		my @seqa = split(//, lc($seqs[0]{seq}));
+		my @seqb = split(//, lc($seqs[1]{seq}));
+
+		my ($match, $mismatch) = (0, 0);
+		for(my $i=0; $i<@seqa; $i++)
+		{
+		    if ($seqa[$i] eq $seqb[$i])
+		    {
+			$match++;
+		    } else {
+			$mismatch++;
+		    }
+		}
+
+		$identity = $match/(@seqa+0)*100;
 	    }
 
 	    # sort the seqs by id followed by start and end postion, strand and seq itself
