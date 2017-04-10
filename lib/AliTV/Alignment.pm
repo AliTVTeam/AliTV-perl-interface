@@ -195,18 +195,25 @@ sub import_alignments
 		my @seqa = split(//, lc($seqs[0]{seq}));
 		my @seqb = split(//, lc($seqs[1]{seq}));
 
+		my $cigar = "";
 		my ($match, $mismatch) = (0, 0);
 		for(my $i=0; $i<@seqa; $i++)
 		{
-		    if ($seqa[$i] eq $seqb[$i])
+		    if ($seqa[$i] eq "-")
 		    {
+			$cigar .= "I";
+		    } elsif ($seqb[$i] eq "-") {
+			$cigar .= "D";
+		    } elsif ($seqa[$i] eq $seqb[$i]) {
+			$cigar .= "=";
 			$match++;
 		    } else {
+			$cigar .= "X";
 			$mismatch++;
 		    }
 		}
 
-		$identity = $match/(@seqa+0)*100;
+		$identity = $match/($match+$mismatch)*100;
 	    }
 
 	    # sort the seqs by id followed by start and end postion, strand and seq itself
