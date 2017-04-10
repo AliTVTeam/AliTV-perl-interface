@@ -15,9 +15,10 @@ sub _initialize
     my $self = shift;
 
     $self->{_callback} = undef;
-    $self->{_parameters} = undef;
+    $self->{_parameters} = [];
     $self->{_program} = undef;
     $self->{_alignments} = [];
+    $self->{_sequence_set} = [];
 
     return;
 }
@@ -35,13 +36,49 @@ sub program
 
 }
 
+sub sequence_set
+{
+    my $self = shift;
+
+    if (@_)
+    {
+	unless (ref($_[0]) eq "ARRAY")
+	{
+	    $self->_logdie("You need to specify an array reference to call sequence_set method");
+	}
+
+	$self->{_sequence_set} = shift;
+
+	# generate sequence index
+	for(my $i = 0; $i < @{$self->{_sequence_set}}+0; $i++)
+	{
+	    my $seq = $self->{_sequence_set}[$i];
+	    my $name = $i;
+	    if ($seq->can("display_id") && $seq->display_id() ne "")
+	    {
+		$name = $seq->display_id();
+	    } else {
+		$self->_info("Unable to call display_id() or display_id() returns an empty string");
+	    }
+	    $self->{_sequence_set_index}{$name} = $i;
+	}
+    }
+
+    return $self->{_sequence_set};
+}
+
 sub parameters
 {
     my $self = shift;
 
     if (@_)
     {
-	$self->{_parameters} = shift;
+	if (@_ == 1 && ref($_[0]) eq "ARRAY")
+	{
+	    $self->{_parameters} = shift;
+	} else {
+	    $self->{_parameters} = \@_;
+	}
     }
 
     return $self->{_parameters};
@@ -99,8 +136,13 @@ sub import_alignments
 	}
 	if ($format eq "maf")
 	{
-	    $need_maf_workaround = 1;
-	    $self->_info("MAF input file detected... Therefore workaround for revcom issue activated");
+	    $need_maf_workaround = $self->_check_if_maf_fix_is_required;
+	    if ($need_maf_workaround)
+	    {
+		$self->_info("MAF input file and buggy BioPerl detected... Therefore, workaround for revcom issue activated");
+	    } else {
+		$self->_info("MAF input file detected, but Bioperl is bugfree... Therefore, workaround for revcom issue is not activated");
+	    }
 	}
 
 	while ( my $aln = $in->next_aln ) {
@@ -114,7 +156,7 @@ sub import_alignments
 	    }
 
 	    # get the score and the identidy
-	    my ($length, $score, $identity) = ($aln->length(), $aln->score(), $aln->percentage_identity());
+	    my ($length, $score, $identity) = ($aln->length(), $aln->score(), 0);
 
 	    # get the sequences and extract the sequence information
 	    # id
@@ -127,15 +169,51 @@ sub import_alignments
 		my $seq_id = $seq->id();
 		$seq_id =~ s/^db_//;
 
-		push(@seqs,
-		     {
-			 id     => $seq_id,
-			 start  => $seq->start(),
-			 end    => $seq->end(),
-			 strand => $seq->strand(),
-			 seq    => $seq->seq()
-		     }
-		    );
+		my $aligned_seq_segment = {
+		    id     => $seq_id,
+		    start  => $seq->start(),
+		    end    => $seq->end(),
+		    strand => $seq->strand(),
+		    seq    => $seq->seq()
+		};
+
+		if ($need_maf_workaround)
+		{
+		    $self->_fix_maf_revcomp($aligned_seq_segment);
+		}
+
+		push(@seqs, $aligned_seq_segment);
+	    }
+
+	    # calculate percentage identity
+	    if (@seqs > 2)
+	    {
+		# for multiple alignment, just let bioperl do the job
+		$identity = $aln->percentage_identity();
+	    } elsif (@seqs == 2) {
+		# for two sequences lets do it ourself
+		my @seqa = split(//, lc($seqs[0]{seq}));
+		my @seqb = split(//, lc($seqs[1]{seq}));
+
+		my $cigar = "";
+		my ($match, $mismatch) = (0, 0);
+		for(my $i=0; $i<@seqa; $i++)
+		{
+		    if ($seqa[$i] eq "-")
+		    {
+			$cigar .= "I";
+		    } elsif ($seqb[$i] eq "-") {
+			$cigar .= "D";
+		    } elsif ($seqa[$i] eq $seqb[$i]) {
+			$cigar .= "=";
+			$match++;
+		    } else {
+			$cigar .= "X";
+			$mismatch++;
+		    }
+		}
+
+		$identity = $match/($match+$mismatch)*100;
 	    }
 
 	    # sort the seqs by id followed by start and end postion, strand and seq itself
@@ -189,8 +267,7 @@ sub import_alignments
 		score    => $score,
 		len      => $length,
 		md5      => $md5->hexdigest(),
-		seqs     => \@seqs,
-		maf_revcomp_req => $need_maf_workaround
+		seqs     => \@seqs
 	    };
 
 	    # search for an entry with the same hash
@@ -240,6 +317,95 @@ sub file
     my $self = shift;
 
     $self->_logdie("File should never called for AliTV::Alignment");
+}
+
+sub _check_if_maf_fix_is_required
+{
+    my $self = shift;
+
+    my $input='##maf version=1 scoring=lastz.v1.03.73
+# lastz.v1.03.73 --format=maf --noytrim --ambiguous=iupac --gapped --strand=both
+#
+# hsp_threshold      = 3000
+# gapped_threshold   = 3000
+# x_drop             = 910
+# y_drop             = 9400
+# gap_open_penalty   = 400
+# gap_extend_penalty = 30
+#        A    C    G    T
+#   A   91 -114  -31 -123
+#   C -114  100 -125  -31
+#   G  -31 -125  100 -114
+#   T -123  -31 -114   91
+a score=143511
+s normal_motif_at_4455_len_1500 4455 1500 + 10000 ATTTGTAGCCGCTAGACGATTACGCGGTGCGTGCGTACCCGGGGATCTCAGCGTCCGGTTCCGGCGTGCAGTGCTGTCTCGCAGTAAGTGCATAAGACACTTATGTGTGCGGCAACCAGACGAAGAACACAAGGTGACACCGTCGTTTGTAGCATCTTTTCTGGCAATGTTGCGCTCGGCACCGAGGTGAGACCCACTACGCTGATCGTCGTAAAAGTACTGCGCAAACTGTCCGTGGGTTAATCCAAGCGTTGATTGGATATAATCCCGTTATAACAGAAAATACGGTCACTCCCGGTTAGATGTACTCTCTAGGCAAGCTTGCACCTAAAGTAATCCTGGCTCCCGGTAGTTCCGCAAAGTTCTTGGATCGGCGTTGACCCGCCCTTCGATTGATCCGTTAGGATTCACAAGTCTATTAACCCCTTGTGTACTATACGTTGCGAGTCTATAACAGACTCGCGTTCGGGTCGGAATTCCGCTAAGAGCCTCCGGTCACATACGAACATACTATGGTGGGATTGCGGCCAGCATGGACGGGAGAAGGCTAAGATTTGCGTTACATTATGCCTCCTCACGTTGTATTAGTACCGTCACCCGCCCATAGCTGAGTACTGCCTAGACTGACTCGACGGGCCGAGGCCCCTACCAAAAGTACCGTTGCGCCGCAAGTCGATACCTGGGTACGCAGGGTGGGGCGTACGGAAGCTCATTCTGAATTTCCAAGACACTTGCGCACACCCCCAGCCGCGTTTACAGCCGCGGTCTGGCAGTCGCGCGTCAATGGGCCTCTATATAATACGGCGGCGTATTCATGGCACGGATTGATATTCCCTTACCGAAGTGCCCGTGGCTAGAATGTCGCACCAAAAGATGTTGAAACACATTGAGCATCGACTCACAATTACCACGTTAGAGTAACCACTTGTGAGCGGGGGTTGTCCCCATCCCTATATCAGCGCTAGTAAGGAACAACGGCACCATCTCACAAGTTCGCCTGCAGATCTTACGGACCCTAAGATAGCATTTCGCTATCTAGCTCATACAGTATTACCAGGCGTTACCTTGTGTTTGGGAGACAGAGGCCTAATATGAGTCTGTCTTACTCACGAGGACTAACCCATGACTTATACAGAATATGCGTCTGCATAACAAGTTCGACTCAGGGGTCCGCGCCGGTTACACCTAACCCTACACATCAATATCGTATTGGGTTCGGTCGTCGTAGCGTAGGCTTTGGCTTGGCCGCGCAATCATCGTCAGTTCGCTCCCCGTCGTGAGATAGCTTTTCAATTTCGTGTTTGATGATATTAGATATCCGCGGGCAGTTTGCGTTAAAGTCCTGCCGAAGCGTCCACTGCAAGCCTGCCCCGATCCAAGATTTAGCTAAATGCCTAGACAGCCGTAGCGAGTACGTTCGCTCAAACGGTCCCCGACTAGGGGGTGCTTTGCAATGAGGGACTTAGCGGAACTTATCGTGCGTGGCGTCTACGTACACAC
+s reverse_complement            4455 1500 - 10000 ATTTGTAGCCGCTAGACGATTACGCGGTGCGTGCGTACCCGGGGATCTCAGCGTCCGGTTCCGGCGTGCAGTGCTGTCTCGCAGTAAGTGCATAAGACACTTATGTGTGCGGCAACCAGACGAAGAACACAAGGTGACACCGTCGTTTGTAGCATCTTTTCTGGCAATGTTGCGCTCGGCACCGAGGTGAGACCCACTACGCTGATCGTCGTAAAAGTACTGCGCAAACTGTCCGTGGGTTAATCCAAGCGTTGATTGGATATAATCCCGTTATAACAGAAAATACGGTCACTCCCGGTTAGATGTACTCTCTAGGCAAGCTTGCACCTAAAGTAATCCTGGCTCCCGGTAGTTCCGCAAAGTTCTTGGATCGGCGTTGACCCGCCCTTCGATTGATCCGTTAGGATTCACAAGTCTATTAACCCCTTGTGTACTATACGTTGCGAGTCTATAACAGACTCGCGTTCGGGTCGGAATTCCGCTAAGAGCCTCCGGTCACATACGAACATACTATGGTGGGATTGCGGCCAGCATGGACGGGAGAAGGCTAAGATTTGCGTTACATTATGCCTCCTCACGTTGTATTAGTACCGTCACCCGCCCATAGCTGAGTACTGCCTAGACTGACTCGACGGGCCGAGGCCCCTACCAAAAGTACCGTTGCGCCGCAAGTCGATACCTGGGTACGCAGGGTGGGGCGTACGGAAGCTCATTCTGAATTTCCAAGACACTTGCGCACACCCCCAGCCGCGTTTACAGCCGCGGTCTGGCAGTCGCGCGTCAATGGGCCTCTATATAATACGGCGGCGTATTCATGGCACGGATTGATATTCCCTTACCGAAGTGCCCGTGGCTAGAATGTCGCACCAAAAGATGTTGAAACACATTGAGCATCGACTCACAATTACCACGTTAGAGTAACCACTTGTGAGCGGGGGTTGTCCCCATCCCTATATCAGCGCTAGTAAGGAACAACGGCACCATCTCACAAGTTCGCCTGCAGATCTTACGGACCCTAAGATAGCATTTCGCTATCTAGCTCATACAGTATTACCAGGCGTTACCTTGTGTTTGGGAGACAGAGGCCTAATATGAGTCTGTCTTACTCACGAGGACTAACCCATGACTTATACAGAATATGCGTCTGCATAACAAGTTCGACTCAGGGGTCCGCGCCGGTTACACCTAACCCTACACATCAATATCGTATTGGGTTCGGTCGTCGTAGCGTAGGCTTTGGCTTGGCCGCGCAATCATCGTCAGTTCGCTCCCCGTCGTGAGATAGCTTTTCAATTTCGTGTTTGATGATATTAGATATCCGCGGGCAGTTTGCGTTAAAGTCCTGCCGAAGCGTCCACTGCAAGCCTGCCCCGATCCAAGATTTAGCTAAATGCCTAGACAGCCGTAGCGAGTACGTTCGCTCAAACGGTCCCCGACTAGGGGGTGCTTTGCAATGAGGGACTTAGCGGAACTTATCGTGCGTGGCGTCTACGTACACAC
+';
+
+    open(my $fh, "<", \$input) || $self->_logdie("Unable to create filehandle");
+    my $in = Bio::AlignIO->new(-fh => $fh, -format => 'maf' );
+
+    # input contains one alignment
+    my $aln = $in->next_aln();
+
+    unless (defined $aln)
+    {
+	$self->_logdie("Unable to get the alignment");
+    }
+
+    my @seqs = ();
+    foreach my $seq ($aln->each_seq)
+    {
+	push(@seqs, $seq->start());
+    }
+
+
+    close($fh) || $self->_logdie("Unable to close filehandle");
+
+    @seqs = sort { $a <=> $b } @seqs;
+
+    # if the bug still exists, the two start coordinates should be 4456
+    if ($seqs[0] == 4456 && $seqs[1] == 4456)
+    {
+	# bug still exists
+	# Workaround needed
+	return 1;
+    } elsif ($seqs[0] == 4046 && $seqs[1] == 4456)
+    {
+	# bug solved
+	# No workaround needed
+	return 0;
+    } else {
+	# unexpected condition
+	$self->_logdie("Condition unexpected for MAF import");
+    }
+}
+
+sub _fix_maf_revcomp
+{
+    my $self = shift;
+
+    my $alignment_segment = shift;
+
+    if ($alignment_segment->{strand} == 1)
+    {
+	# nothing to do
+    } elsif ($alignment_segment->{strand} == -1)
+    {
+	unless (exists $self->{_sequence_set_index}{$alignment_segment->{id}})
+	{
+	    $self->_logdie("Unable to identify sequence in sequence set by name '$alignment_segment->{id}'");
+	}
+
+	my $seq = $self->sequence_set()->[$self->{_sequence_set_index}{$alignment_segment->{id}}];
+	my $seq_len = $seq->length();
+
+	my ($start, $end) = sort {$a <=> $b} ($alignment_segment->{start}, $alignment_segment->{end});
+
+	($alignment_segment->{start}, $alignment_segment->{end}) = sort {$a <=> $b} (($seq_len-$start+1), ($seq_len-$end+1));
+    }
+
+    return ($alignment_segment->{start}, $alignment_segment->{end});
 }
 
 1;

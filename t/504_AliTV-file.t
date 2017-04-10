@@ -11,6 +11,11 @@ can_ok('AliTV', qw(file));
 
 my $obj = new_ok('AliTV');
 
+# test with a non existing yml file should cause an exception
+my $non_existing = 'data/chloroset/input_non_existing.yml';
+throws_ok { $obj = AliTV->new("-file" => $non_existing); } qr/Unable to import the YAML file/, 'Exception is caused by non existing yml file';
+
+# test with a single genome yml
 my $file2import = 'data/single_genome.yml';
 $obj->file($file2import);
 
@@ -18,6 +23,31 @@ is($obj->file(), $file2import, 'file returns the correct filename');
 
 # test if the config hash contains a key genomes
 ok(exists $obj->{_yml_import} && $obj->{_yml_import}{genomes}, 'Import of YAML seems to work');
+
+# is there the default program (lastz) and a couple of default
+# alignment parameters inside the yml import?
+ok(exists $obj->{_yml_import}{alignment}, '(Default) alignment key was imported from default YAML');
+ok(exists $obj->{_yml_import}{alignment}{program}, '(Default) alignment::program key was imported from default YAML');
+is($obj->{_yml_import}{alignment}{program}, 'lastz', '(Default) alignment::program is lastz as expected');
+ok(exists $obj->{_yml_import}{alignment}{parameter}, '(Default) alignment::parameter key was imported from default YAML');
+is(@{$obj->{_yml_import}{alignment}{parameter}}+0, 5, '(Default) alignment::parameters number is as expected');
+
+# test with a single genome yml but additional alignment section
+my $file2import_with_alignment = 'data/single_genome_with_alignment.yml';
+$obj->file($file2import_with_alignment);
+
+is($obj->file(), $file2import_with_alignment, 'file returns the correct filename (with alignment section)');
+
+# test if the config hash contains a key genomes
+ok(exists $obj->{_yml_import} && $obj->{_yml_import}{genomes}, 'Import of YAML seems to work (with alignment section)');
+
+# is there the new program (importer) and a pair of new
+# alignment parameters inside the yml import?
+ok(exists $obj->{_yml_import}{alignment}, '(Default) alignment key was imported from default YAML (with alignment section)');
+ok(exists $obj->{_yml_import}{alignment}{program}, '(Default) alignment::program key was imported from default YAML (with alignment section)');
+is($obj->{_yml_import}{alignment}{program}, 'importer', '(Default) alignment::program is importer as expected (with alignment section)');
+ok(exists $obj->{_yml_import}{alignment}{parameter}, '(Default) alignment::parameter key was imported from default YAML (with alignment section)');
+is(@{$obj->{_yml_import}{alignment}{parameter}}+0, 2, '(Default) alignment::parameters number is as expected (with alignment section)');
 
 # test with a new config
 my $chloroset = 'data/chloroset/input.yml';

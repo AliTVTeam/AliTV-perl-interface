@@ -1,0 +1,110 @@
+---
+genomes: 
+   -
+    name: Lindenbergia_philippensis
+    sequence_files:
+      - data/chloroset/Lindenbergia_philippensis.fasta
+    feature_files:
+      ndh: 
+             - data/chloroset/ndh.tsv
+      ycf:
+             - data/chloroset/ycf.tsv
+      invertedRepeat:
+             - data/chloroset/invertedRepeat.tsv
+   - 
+     name: Cistanche_phelypaea
+     sequence_files:
+      - data/chloroset/Cistanche_phelypaea.fasta
+     feature_files:
+      ndh: 
+             - data/chloroset/ndh.tsv
+      ycf:
+             - data/chloroset/ycf.tsv
+      invertedRepeat:
+             - data/chloroset/invertedRepeat.tsv
+   -
+     name: Epifagus_virginiana
+     sequence_files:
+      - data/chloroset/Epifagus_virginiana.fasta
+     feature_files:
+      ndh: 
+             - data/chloroset/ndh.tsv
+      ycf:
+             - data/chloroset/ycf.tsv
+      invertedRepeat:
+             - data/chloroset/invertedRepeat.tsv
+   - 
+     name: Orobanche_gracilis
+     sequence_files:
+      - data/chloroset/Orobanche_gracilis.fasta
+     feature_files:
+      ndh: 
+             - data/chloroset/ndh.tsv
+      ycf:
+             - data/chloroset/ycf.tsv
+      invertedRepeat:
+             - data/chloroset/invertedRepeat.tsv
+   -
+     name: Nicotiana_tabacum
+     sequence_files:
+      - data/chloroset/Nicotiana_tabacumA.fasta
+      - data/chloroset/Nicotiana_tabacumB.fasta
+     feature_files:
+      ndh: 
+             - data/chloroset/ndh.tsv
+      ycf:
+             - data/chloroset/ycf.tsv
+      invertedRepeat:
+             - data/chloroset/invertedRepeat.tsv
+   - 
+     name: Olea_europaea
+     sequence_files:
+      - data/chloroset/Olea_europaea.fasta
+     feature_files:
+      ndh: 
+             - data/chloroset/ndh.tsv
+      ycf:
+             - data/chloroset/ycf.tsv
+      invertedRepeat:
+             - data/chloroset/invertedRepeat.tsv
+   - 
+     name: Schwalbea_americana
+     sequence_files:
+      - data/chloroset/Schwalbea_americana.fasta
+     feature_files:
+      ndh: 
+             - data/chloroset/ndh.tsv
+      ycf:
+             - data/chloroset/ycf.tsv
+      invertedRepeat:
+             - data/chloroset/invertedRepeat.tsv
+tree:   data/chloroset/species.tree
+
+alignment:
+    program: importer
+    parameter:
+       - "data/chloroset/pregenerated_maf/tempLdMGL.maf"
+       - "data/chloroset/pregenerated_maf/tempiUqZk.maf"
+       - "data/chloroset/pregenerated_maf/tempRBBMe.maf"
+       - "data/chloroset/pregenerated_maf/tempqPXZ7.maf"
+       - "data/chloroset/pregenerated_maf/tempsYXwN.maf"
+       - "data/chloroset/pregenerated_maf/tempTSbMa.maf"
+       - "data/chloroset/pregenerated_maf/temp9PSge.maf"
+       - "data/chloroset/pregenerated_maf/tempzWY0h.maf"
+
+features:
+  invertedRepeat:
+    color: "#e7d3e2"
+    form: arrow
+    height: 30
+    visible: 1
+  ndh:
+    color: "#ff006e"
+    form: rect
+    height: 30
+    visible: 1
+  ycf:
+    color: "#ffaf00"
+    form: rect
+    height: 30
+    visible: 1
