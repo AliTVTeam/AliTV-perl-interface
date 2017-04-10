@@ -19,7 +19,7 @@ sub run
     $self->_check();
 
     # the alignment files are specified as alignment parameters
-    my @alignments = @{$self->{_parameters}};
+    my @alignments = @{$self->parameters()};
 
     # import all alignments
     $self->import_alignments(@alignments);

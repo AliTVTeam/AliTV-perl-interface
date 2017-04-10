@@ -15,7 +15,7 @@ sub _initialize
     my $self = shift;
 
     $self->{_callback} = undef;
-    $self->{_parameters} = undef;
+    $self->{_parameters} = [];
     $self->{_program} = undef;
     $self->{_alignments} = [];
     $self->{_sequence_set} = [];
