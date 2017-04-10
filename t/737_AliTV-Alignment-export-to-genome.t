@@ -69,9 +69,6 @@ $obj->import_alignments(@input_files);
 
 $obj->export_to_genome();
 
-TODO: {
-    local $TODO = "Need to recalculate the expected values";
-    is_deeply(\%output, $expected, 'Callback works');
-};
+is_deeply(\%output, $expected, 'Callback works');
 
 done_testing;
