@@ -537,21 +537,44 @@ sub _make_and_set_uniq_seq_names
     # if the number of keys is equal to the number of total sequences,
     # they should be uniq, but we need to guarantee, that the name
     # contains only alphanumeric or "word" characters and that the
-    # name is not longer than 8 characters
-    if (
-	((keys %seen) == @all_seq_ids)
-	&&
-	((grep {$_->{name} =~ /\W/} @all_seq_ids) == 0)
-	&&
-	((grep {length($_->{name}) > 8} @all_seq_ids) == 0)
-	)
+    # name is not longer than $max_seq_length characters
+    my $max_seq_length = 8;
+    my $uniq_names = ((keys %seen) == @all_seq_ids);
+    my $only_word_characters = ((grep {$_->{name} =~ /\W/} @all_seq_ids) == 0);
+    my $comply_maximum_id_length = ((grep {length($_->{name}) > $max_seq_length} @all_seq_ids) == 0);
+
+    if ( $uniq_names && $only_word_characters && $comply_maximum_id_length)
     {
 	# sequence names are uniq and can be used as uniq names
 	@all_seq_ids = map { {name => $_->{name}, genome => $_->{genome}, uniq_name => $_->{name}} } (@all_seq_ids);
+    } elsif (! $uniq_names) {
+	$self->_info("Sequence names are not unique and will be replaced by unique sequence names\n");
+    } elsif (! $only_word_characters) {
+	$self->_info(
+	    sprintf("Sequence names contain non-word-characters and will be replaced by unique sequence names. Failing sequence names are: %s\n",
+		    join(", ",
+			 map {"'$_->{name}'"}
+			   grep {$_->{name} =~ /\W/} @all_seq_ids
+		    )
+	    )
+	);
+    } elsif (! $comply_maximum_id_length) {
+	$self->_info(
+	    sprintf("Sequence names are longer then maximum allowed length (%d characters) and will be replaced by unique sequence names. Failing sequence names are: %s\n",
+		    $max_seq_length,
+		    join(", ",
+			 map {"'$_->{name}'"}
+			   grep {length($_->{name}) > $max_seq_length} @all_seq_ids
+		    )
+	    )
+	    );
     } else {
-	# sequences names are not uniq! Therefore, generate new
-	# sequence names
+	$self->_logdie("Should never be reached");
+    }
 
+    # sequences names are not uniq! Therefore, generate new names
+    unless ( $uniq_names && $only_word_characters && $comply_maximum_id_length)
+    {
 	my $counter = 0;
 
 	@all_seq_ids = map { {name => $_->{name}, genome => $_->{genome}, uniq_name => "seq".$counter++ } } (@all_seq_ids);
