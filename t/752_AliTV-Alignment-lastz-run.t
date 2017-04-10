@@ -58,10 +58,7 @@ foreach my $aln (@{$obj->{_alignments}})
 @output = sort sort_output_expected (@output);
 @{$expected} = sort sort_output_expected (@{$expected});
 
-TODO: {
-    local $TODO = "Need to recalculate the expected values";
-    is_deeply(\@output, $expected, 'Obtained alignments and expected alignments are equal');
-};
+is_deeply(\@output, $expected, 'Obtained alignments and expected alignments are equal');
 
 done_testing;
 
