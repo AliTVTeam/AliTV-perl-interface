@@ -13,6 +13,16 @@ sub _check
 sub run
 {
     my $self = shift;
+
+    $self->sequence_set(@_);
+
+    $self->_check();
+
+    # the alignment files are specified as alignment parameters
+    my @alignments = @{$self->{_parameters}};
+
+    # import all alignments
+    $self->import_alignments(@alignments);
 }
 
 1;
