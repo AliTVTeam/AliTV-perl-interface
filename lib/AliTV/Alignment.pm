@@ -73,7 +73,12 @@ sub parameters
 
     if (@_)
     {
-	$self->{_parameters} = shift;
+	if (@_ == 1 && ref($_[0]) eq "ARRAY")
+	{
+	    $self->{_parameters} = shift;
+	} else {
+	    $self->{_parameters} = \@_;
+	}
     }
 
     return $self->{_parameters};
