@@ -24,7 +24,8 @@ my @expected = (
    ["Test3", "ACGTTGCGT"]
 );
 @expected = sort sort_seqs (@expected);
-my @got = map {[$_->id(), $_->seq()]} $obj->_generate_seq_set();
+my $got_seq_set = $obj->_generate_seq_set();
+my @got = map {[$_->id(), $_->seq()]} @{$got_seq_set};
 
 is_deeply(\@got, \@expected, 'Sequence set with unique sequence names as expected');
 
@@ -45,7 +46,8 @@ $obj->_generate_seq_set();
    ["seq5", "ACGTTGCGT"]
 );
 @expected = sort sort_seqs (@expected);
-@got = map {[$_->id(), $_->seq()]} $obj->_generate_seq_set();
+my $seq_set = $obj->_generate_seq_set();
+@got = map {[$_->id(), $_->seq()]} @{$seq_set};
 
 is_deeply(\@got, \@expected, 'Sequence set with non-unique sequence names as expected');
 

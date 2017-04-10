@@ -72,7 +72,9 @@ t/701_AliTV-Alignment-new.t
 t/703_AliTV-Alignment-_initialize.t
 t/707_AliTV-Alignment-file.t
 t/711_AliTV-Alignment-program.t
+t/712_AliTV-Alignment-sequence_set.t
 t/713_AliTV-Alignment-parameters.t
+t/714_AliTV-Alignment-_check_if_maf_fix_is_required.t
 t/715_AliTV-Alignment-callback.t
 t/720_AliTV-Alignment-_check.t
 t/730_AliTV-Alignment-run.t
@@ -82,6 +84,8 @@ t/737_AliTV-Alignment-export-to-genome.t
 t/750_AliTV-Alignment-lastz.t
 t/751_AliTV-Alignment-lastz-_check.t
 t/752_AliTV-Alignment-lastz-run.t
+
+t/760_AliTV-Alignment-importer.t
 
 t/999-AliTV-POD-coverage.t
 
@@ -97,7 +101,9 @@ lib/AliTV/Seq.pm
 lib/AliTV/Genome.pm
 
 lib/AliTV/Alignment.pm
+lib/AliTV/Alignment/importer.pm
 lib/AliTV/Alignment/lastz.pm
+lib/AliTV/Alignment/template.pm
 
 # data files are listed here
 data/existing_testfile
@@ -116,6 +122,7 @@ data/tree_c.newick
 data/multiple_trees.newick
 
 data/single_genome.yml
+data/single_genome_with_alignment.yml
 data/two_genomes_nonuniq_names.yml
 data/two_genomes_uniq_names.yml
 data/two_genomes_forbidden_names.yml
@@ -134,6 +141,15 @@ data/vectors/001.maf
 data/vectors/002.maf
 data/vectors/003.maf
 data/vectors/004.maf
+
+# reference alignments with unique sequence names
+data/vectors/001_uniq.maf
+data/vectors/002_uniq.maf
+data/vectors/003_uniq.maf
+data/vectors/004_uniq.maf
+
+# yml settings for the importer
+data/vectors/importer.yml
 
 ### Chloroset
 

@@ -28,7 +28,12 @@ sub run
 {
     my $self = shift;
 
-    my @seq_set = @_;
+    unless (@_)
+    {
+	$self->_logdie("You need to specify a parameter to call run method");
+    }
+
+    $self->sequence_set(@_);
 
     $self->_check();
 
@@ -58,26 +63,27 @@ sub run
     my $query_fn = $query->filename();
     close($query) || $self->_logdie("Unable to close query file '$query_fn'");
 
-    my $num_of_req_alignments = @seq_set+0;
+    my $num_seq = @{$self->sequence_set()}+0;
+    my $num_of_req_alignments = $num_seq;
     $num_of_req_alignments = int($num_of_req_alignments*($num_of_req_alignments+1)/2);
     my @alignments = ();
     $self->_info(sprintf "Starting alignment generation... (%d alignments required)", $num_of_req_alignments);
 
-    foreach my $seq_idx (0..@seq_set-1)
+    for(my $seq_idx = 0; $seq_idx < $num_seq; $seq_idx++)
     {
 	# create the query file
 	my $query_obj = Bio::SeqIO->new(-file => ">".$query_fn, -format => "fasta") || $self->_logdie("Unable to reopen the query file");
-	my $seq = $seq_set[$seq_idx];
+	my $seq = $self->sequence_set()->[$seq_idx];
 	$query_obj->write_seq($seq);
 
 	# go through the sequence set and align against all sequences left
-	foreach my $db_seq_idx (($seq_idx)..(@seq_set-1))
+	for(my $db_seq_idx = $seq_idx; $db_seq_idx < $num_seq; $db_seq_idx++)
 	{
 	    # create the database file
 	    my $db_obj = Bio::SeqIO->new(-file => ">".$db_fn, -format => "fasta") || $self->_logdie("Unable to reopen the database file");
 
 	    # get the current seq file and rename the sequence
-	    my $seq = $seq_set[$db_seq_idx];
+	    my $seq = $self->sequence_set()->[$db_seq_idx];
 	    my $seq_renamed = $seq->clone();
 
 	    $seq_renamed->id("db_".$seq->id());
@@ -96,7 +102,7 @@ sub run
 	    push(@cmd, $db_fn);
 	    push(@cmd, $query_fn);
 	    push(@cmd, "--output=".$aln_file->filename());
-	    push(@cmd, split(/ /, $self->{_parameters}));
+	    push(@cmd, @{$self->{_parameters}});
 	    $self->_debug(sprintf("Running the aligment program as: '%s'\n", join(" ", @cmd)));
 	    systemx(@cmd);
 

@@ -1,0 +1,29 @@
+---
+genomes: 
+   -
+    name: M13mp18
+    sequence_files:
+      - data/vectors/M13mp18.fasta
+
+   -
+    name: pBluescribeKSPlus
+    sequence_files:
+      - data/vectors/pBluescribeKSPlus.fasta
+
+   -
+    name: pBR322
+    sequence_files:
+      - data/vectors/pBR322.fasta
+
+   -
+    name: pUC19
+    sequence_files:
+      - data/vectors/pUC19.fasta
+
+alignment:
+    program: importer
+    parameter:
+       - "data/vectors/001_uniq.maf"
+       - "data/vectors/002_uniq.maf"
+       - "data/vectors/003_uniq.maf"
+       - "data/vectors/004_uniq.maf"
