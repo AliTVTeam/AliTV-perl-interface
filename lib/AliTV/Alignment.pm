@@ -364,7 +364,9 @@ sub _fix_maf_revcomp
 	my $seq = $self->sequence_set()->[$self->{_sequence_set_index}{$alignment_segment->{id}}];
 	my $seq_len = $seq->length();
 
-	($alignment_segment->{start}, $alignment_segment->{end}) = (($seq_len-$alignment_segment->{start}+1), ($seq_len-$alignment_segment->{end}));
+	my ($start, $end) = sort {$a <=> $b} ($alignment_segment->{start}, $alignment_segment->{end});
+
+	($alignment_segment->{start}, $alignment_segment->{end}) = sort {$a <=> $b} (($seq_len-$start+1), ($seq_len-$end+1));
     }
 
     return ($alignment_segment->{start}, $alignment_segment->{end});
