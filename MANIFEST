@@ -142,6 +142,15 @@ data/vectors/002.maf
 data/vectors/003.maf
 data/vectors/004.maf
 
+# reference alignments with unique sequence names
+data/vectors/001_uniq.maf
+data/vectors/002_uniq.maf
+data/vectors/003_uniq.maf
+data/vectors/004_uniq.maf
+
+# yml settings for the importer
+data/vectors/importer.yml
+
 ### Chloroset
 
 data/chloroset/input.yml
