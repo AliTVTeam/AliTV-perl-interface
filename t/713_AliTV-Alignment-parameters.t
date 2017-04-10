@@ -10,11 +10,19 @@ can_ok('AliTV::Alignment', qw(parameters));
 
 my $obj = new_ok('AliTV::Alignment');
 
-ok(! defined $obj->parameters(), 'Default value is not defined');
+is_deeply($obj->parameters(), [], 'Default value is an empty array');
 
-my $expected = "Value";
+my @values = ("ValueA", "ValueB", 15);
 
-is( $obj->parameters($expected), $expected, 'Expected value is retured when set');
-is( $obj->parameters(), $expected, 'Expected value is stored when set');
+my $expected = [$values[0]];
+
+is_deeply( $obj->parameters(@{$expected}), $expected, 'Expected value is retured when set');
+is_deeply( $obj->parameters(), $expected, 'Expected value is stored when set');
+
+is_deeply( $obj->parameters(@values), \@values, 'Expected values are retured when set as array');
+is_deeply( $obj->parameters(), \@values, 'Expected values are stored when set as array');
+
+is_deeply( $obj->parameters(\@values), \@values, 'Expected values are retured when set as array reference');
+is_deeply( $obj->parameters(), \@values, 'Expected values are stored when set as array reference');
 
 done_testing;
