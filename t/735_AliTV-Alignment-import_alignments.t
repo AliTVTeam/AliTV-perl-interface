@@ -67,10 +67,7 @@ foreach my $aln (@{$obj->{_alignments}})
 @output = sort sort_output_expected (@output);
 @{$expected} = sort sort_output_expected (@{$expected});
 
-TODO: {
-    local $TODO = "Need to recalculate the expected values";
-    is_deeply(\@output, $expected, 'Test successful');
-};
+is_deeply(\@output, $expected, 'Returned matrix matches the expected values');
 
 done_testing;
 
