@@ -8,11 +8,16 @@ use Getopt::Long;
 
 my $inputfile = "-";
 my $outputfile = "-";
-my $filtersettings = {};
+my $filtersettings = {
+    maxLinkIdentity => undef,
+    minLinkIdentity => undef,
+};
 
 GetOptions(
     'input=s' => \$inputfile,
-    'output=s' => \$outputfile
+    'output=s' => \$outputfile,
+    'min-link-identity=f' => \$filtersettings->{minLinkIdentity},
+    'max-link-identity=f' => \$filtersettings->{maxLinkIdentity},
     );
 
 my $infh;
@@ -29,6 +34,14 @@ if ($outputfile eq "-" || $outputfile eq "")
     $outfh = *STDOUT;
 } else {
     open($outfh, ">", $outputfile) || die "Unable to open file '$outputfile' for writing: $!";
+}
+
+foreach my $id_value (qw(minLinkIdentity maxLinkIdentity))
+{
+    if (defined $filtersettings->{$id_value} && $filtersettings->{$id_value} <= 1.0)
+    {
+	$filtersettings->{$id_value} = $filtersettings->{$id_value}*100;
+    }
 }
 
 my $json;
@@ -111,6 +124,14 @@ might be switched on by C<--input ->.
 
 The name of the output file. Default value is output to STDOUT which
 might be switched on by C<--output ->.
+
+=item C<--min-link-identity>/C<--max-lin-identity>   Minimum/Maximum identity for Links
+
+Specifies the minimal or maximum identity value for links. A float is
+expected. Numbers greater than 1 will be handled as percentage values,
+values up to 1.0 will be multiplied by 100 due to a fraction instead
+of a percentage value is assumed.
+
 
 =back
 
