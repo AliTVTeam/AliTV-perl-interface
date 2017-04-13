@@ -85,6 +85,7 @@ die "Seems to be no AliTV json" unless (exists $json->{data}{links} && ref($json
 
 die "Seems to be no AliTV json" unless (exists $json->{filters});
 die "Seems to be no AliTV json" unless (exists $json->{filters}{links});
+die "Seems to be no AliTV json" unless (exists $json->{filters}{links}{invisibleLinks} && ref($json->{filters}{links}{invisibleLinks}) eq "HASH");
 
 foreach my $expected_key (qw(maxLinkIdentity minLinkIdentity maxLinkLength minLinkLength))
 {
@@ -214,7 +215,7 @@ sub filter
 		    (defined $settings->{maxLinkLength} && $settings->{maxLinkLength} < $link_len)
 		    ||
 		    # Link is hidden
-		    (exists $json->{filters}{links}{invisibleLinks} && ref($json->{filters}{links}{invisibleLinks}) eq "HASH" && exists $json->{filters}{links}{invisibleLinks}{$link})
+		    (exists $json->{filters}{links}{invisibleLinks}{$link})
 		    )
 		{
 		    # decrement the feature counter and if reached 0 delete the feature
