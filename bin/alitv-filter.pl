@@ -63,6 +63,21 @@ while (<$infh>)
 
 $json = decode_json $indat;
 
+# perform simple validity check of json
+die "Seems to be no AliTV json" unless (exists $json->{data});
+die "Seems to be no AliTV json" unless (exists $json->{data}{features});
+die "Seems to be no AliTV json" unless (exists $json->{data}{features}{link});
+
+die "Seems to be no AliTV json" unless (exists $json->{data}{links} && ref($json->{data}{links}) eq "HASH");
+
+die "Seems to be no AliTV json" unless (exists $json->{filters});
+die "Seems to be no AliTV json" unless (exists $json->{filters}{links});
+
+foreach my $expected_key (qw(maxLinkIdentity minLinkIdentity maxLinkLength minLinkLength))
+{
+    die "Seems to be no AliTV json" unless (exists $json->{filters}{links}{$expected_key});
+}
+
 # write welcome message and used settings
 $filtersettings = welcome_and_settings($json, $filtersettings);
 
