@@ -30,6 +30,17 @@ if ($outputfile eq "-" || $outputfile eq "")
     open($outfh, ">", $outputfile) || die "Unable to open file '$outputfile' for writing: $!";
 }
 
+my $json;
+
+# read input file and parse JSON
+my $indat = "";
+while (<$infh>)
+{
+    $indat .= $_;
+}
+
+$json = decode_json $indat;
+
 =pod
 
 =encoding utf8
