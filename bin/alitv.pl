@@ -3,6 +3,9 @@
 use strict;
 use warnings;
 
+use FindBin::Real;
+use lib FindBin::Real::Bin() . '/../lib';
+
 use AliTV;
 
 use Getopt::Long;
