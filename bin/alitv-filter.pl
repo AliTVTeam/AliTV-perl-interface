@@ -217,6 +217,15 @@ sub filter
 	}
     }
 
+    # finally write the new filter values inside the json
+    foreach my $parameter (qw(maxLinkIdentity minLinkIdentity maxLinkLength minLinkLength))
+    {
+	if (defined $settings->{$parameter})
+	{
+	    $json->{filters}{links}{maxLinkIdentity} = $settings->{$parameter};
+	}
+    }
+
     return $json;
 }
 
