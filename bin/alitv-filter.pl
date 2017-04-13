@@ -222,7 +222,7 @@ sub filter
     {
 	if (defined $settings->{$parameter})
 	{
-	    $json->{filters}{links}{maxLinkIdentity} = $settings->{$parameter};
+	    $json->{filters}{links}{$parameter} = $settings->{$parameter};
 	}
     }
 
