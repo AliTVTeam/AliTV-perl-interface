@@ -11,6 +11,8 @@ my $outputfile = "-";
 my $filtersettings = {
     maxLinkIdentity => undef,
     minLinkIdentity => undef,
+    maxLinkLength => undef,
+    minLinkLength => undef,
 };
 
 GetOptions(
@@ -18,6 +20,8 @@ GetOptions(
     'output=s' => \$outputfile,
     'min-link-identity=f' => \$filtersettings->{minLinkIdentity},
     'max-link-identity=f' => \$filtersettings->{maxLinkIdentity},
+    'max-link-length=i' => \$filtersettings->{maxLinkLength},
+    'min-link-length=i' => \$filtersettings->{minLinkLength},
     );
 
 my $infh;
@@ -131,6 +135,11 @@ Specifies the minimal or maximum identity value for links. A float is
 expected. Numbers greater than 1 will be handled as percentage values,
 values up to 1.0 will be multiplied by 100 due to a fraction instead
 of a percentage value is assumed.
+
+=item C<--min-link-length>/C<--max-link-length>   Minimum/Maximum length for Links
+
+Specifies the minimal or maximum length for links. A integer is
+expected and specifies the length in nucleotids.
 
 
 =back
