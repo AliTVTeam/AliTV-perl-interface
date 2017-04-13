@@ -11,6 +11,11 @@ use AliTV;
 use JSON;
 use Getopt::Long;
 
+use Pod::Usage;
+
+my $man = 0;
+my $help = 0;
+
 my $inputfile = "-";
 my $outputfile = "-";
 my $filtersettings = {
@@ -22,6 +27,8 @@ my $filtersettings = {
 my $ignore_json_settings = 0;
 
 GetOptions(
+    'help|?' => \$help,
+    'man' => \$man,
     'input=s' => \$inputfile,
     'output=s' => \$outputfile,
     'min-link-identity=f' => \$filtersettings->{minLinkIdentity},
@@ -29,7 +36,10 @@ GetOptions(
     'max-link-length=i' => \$filtersettings->{maxLinkLength},
     'min-link-length=i' => \$filtersettings->{minLinkLength},
     'ignore-json!' => \$ignore_json_settings
-    );
+    ) or pod2usage(2);
+
+pod2usage(1) if ($help);
+pod2usage(-exitval => 0, -verbose => 2) if $man;
 
 my $infh;
 if ($inputfile eq "-" || $inputfile eq "")
@@ -261,6 +271,10 @@ The script filters AliTV JSON files for postprocessing.
 =head1 OPTIONS
 
 =over 4
+
+=item C<--help|?|man>  Help
+
+Shows description of this programs, its usage, and its parameters/options.
 
 =item --input  Input file
 
