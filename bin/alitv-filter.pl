@@ -3,6 +3,9 @@
 use warnings;
 use strict;
 
+use FindBin::Real;
+use lib FindBin::Real::Bin() . '/../lib';
+
 use AliTV;
 
 use JSON;
