@@ -212,6 +212,9 @@ sub filter
 		    ||
 		    # Link to large
 		    (defined $settings->{maxLinkLength} && $settings->{maxLinkLength} < $link_len)
+		    ||
+		    # Link is hidden
+		    (exists $json->{filters}{links}{invisibleLinks} && ref($json->{filters}{links}{invisibleLinks}) eq "HASH" && exists $json->{filters}{links}{invisibleLinks}{$link})
 		    )
 		{
 		    # decrement the feature counter and if reached 0 delete the feature
