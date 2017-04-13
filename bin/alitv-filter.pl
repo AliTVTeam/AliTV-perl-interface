@@ -45,6 +45,9 @@ $json = decode_json $indat;
 # write welcome message and used settings
 $filtersettings = welcome_and_settings($json, $filtersettings);
 
+# filter with settings
+$json = filter($json, $filtersettings);
+
 # finally write output JSON
 print $outfh encode_json $json;
 
@@ -52,6 +55,12 @@ sub welcome_and_settings
 {
     my ($json, $settings) = @_;
     return $settings;
+}
+
+sub filter
+{
+    my ($json, $settings) = @_;
+    return $json;
 }
 
 =pod
