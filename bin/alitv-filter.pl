@@ -82,6 +82,33 @@ sub welcome_and_settings
     $json_settings->{minLinkIdentity} = $json->{filters}{links}{minLinkIdentity};
     $json_settings->{minLinkLength} = $json->{filters}{links}{minLinkLength};
 
+    # combine json and command line settings if required
+    unless ($ignore_json_settings)
+    {
+	foreach my $setting (qw(maxLinkIdentity maxLinkLength minLinkIdentity minLinkLength))
+	{
+	    # does the command line value is speciefied?
+	    if (defined ($settings->{$setting}))
+	    {
+		# sort values by size, smaller first
+		my @sorted_values = sort {$a <=> $b} ($settings->{$setting}, $json_settings->{$setting});
+
+		# max or min value?
+		if ($setting =~ /^min/)
+		{
+		    @sorted_values = reverse @sorted_values;
+		}
+
+		# store the value in final filter_setting
+		$settings->{$setting} = shift @sorted_values;
+
+	    } else {
+		# just use the value from JSON
+		$settings->{$setting} = $json_settings->{$setting};
+	    }
+	}
+    }
+
     return $settings;
 }
 
