@@ -173,3 +173,4 @@ data/chloroset/species.tree
 
 # script files are listed here
 bin/alitv.pl
+bin/alitv-filter.pl
