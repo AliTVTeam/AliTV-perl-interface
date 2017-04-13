@@ -41,6 +41,9 @@ while (<$infh>)
 
 $json = decode_json $indat;
 
+# finally write output JSON
+print $outfh encode_json $json;
+
 =pod
 
 =encoding utf8
