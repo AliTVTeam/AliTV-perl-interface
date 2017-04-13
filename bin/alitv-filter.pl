@@ -83,6 +83,9 @@ die "Seems to be no AliTV json" unless (exists $json->{data}{features}{link});
 
 die "Seems to be no AliTV json" unless (exists $json->{data}{links} && ref($json->{data}{links}) eq "HASH");
 
+die "Seems to be no AliTV json" unless (exists $json->{data}{karyo});
+die "Seems to be no AliTV json" unless (exists $json->{data}{karyo}{chromosomes} && ref($json->{data}{karyo}{chromosomes}) eq "HASH");
+
 die "Seems to be no AliTV json" unless (exists $json->{filters});
 die "Seems to be no AliTV json" unless (exists $json->{filters}{links});
 die "Seems to be no AliTV json" unless (exists $json->{filters}{links}{invisibleLinks} && ref($json->{filters}{links}{invisibleLinks}) eq "HASH");
