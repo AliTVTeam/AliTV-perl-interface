@@ -14,6 +14,7 @@ my $filtersettings = {
     maxLinkLength => undef,
     minLinkLength => undef,
 };
+my $ignore_json_settings = 0;
 
 GetOptions(
     'input=s' => \$inputfile,
@@ -22,6 +23,7 @@ GetOptions(
     'max-link-identity=f' => \$filtersettings->{maxLinkIdentity},
     'max-link-length=i' => \$filtersettings->{maxLinkLength},
     'min-link-length=i' => \$filtersettings->{minLinkLength},
+    'ignore-json!' => \$ignore_json_settings
     );
 
 my $infh;
@@ -141,6 +143,11 @@ of a percentage value is assumed.
 Specifies the minimal or maximum length for links. A integer is
 expected and specifies the length in nucleotids.
 
+=item C<--ignore-json> Ignore settings in JSON file
+
+Speciefies if the current settings from the JSON should be ignored,
+otherwise a combination of the limits inside the JSON file and the
+command line parameters will be used for filtering.
 
 =back
 
