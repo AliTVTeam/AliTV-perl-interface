@@ -246,7 +246,7 @@ AliTV filter - filters AliTV JSON files for postprocessing
     # the command line settings
     alitv-filter.pl --input in.json --output out2.json --min-link-length 10000 --min-link-identity 90%
 
-    # Filter input file based the command line settings and ignoring 
+    # Filter input file based the command line settings and ignoring
     # JSON settings
     alitv-filter.pl --input in.json --output out3.json --ignore-json --min-link-length 10000 --min-link-identity 90%
 
