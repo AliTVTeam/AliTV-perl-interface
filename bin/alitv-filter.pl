@@ -23,6 +23,8 @@ my $filtersettings = {
     minLinkIdentity => undef,
     maxLinkLength => undef,
     minLinkLength => undef,
+    minSeqLength => undef,
+    maxSeqLength => undef,
 };
 my $ignore_json_settings = 0;
 
@@ -35,6 +37,8 @@ GetOptions(
     'max-link-identity=f' => \$filtersettings->{maxLinkIdentity},
     'max-link-length=i' => \$filtersettings->{maxLinkLength},
     'min-link-length=i' => \$filtersettings->{minLinkLength},
+    'max-seq-length=i' => \$filtersettings->{maxSeqLength},
+    'min-seq-length=i' => \$filtersettings->{minSeqLength},
     'ignore-json!' => \$ignore_json_settings
     ) or pod2usage(2);
 
@@ -303,6 +307,11 @@ of a percentage value is assumed.
 =item C<--min-link-length>/C<--max-link-length>   Minimum/Maximum length for Links
 
 Specifies the minimal or maximum length for links. A integer is
+expected and specifies the length in nucleotids.
+
+=item C<--min-seq-length>/C<--max-seq-length>   Minimum/Maximum length for chromosomes
+
+Specifies the minimal or maximum length for chromosomes. A integer is
 expected and specifies the length in nucleotids.
 
 =item C<--ignore-json> Ignore settings in JSON file
