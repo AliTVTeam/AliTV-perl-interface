@@ -3,6 +3,8 @@
 use warnings;
 use strict;
 
+use AliTV;
+
 use JSON;
 use Getopt::Long;
 
@@ -106,6 +108,25 @@ sub welcome_and_settings
 		# just use the value from JSON
 		$settings->{$setting} = $json_settings->{$setting};
 	    }
+	}
+    }
+
+    print STDERR "
+***********************************************************************
+*                                                                     *
+*  AliTV filter script                                                *
+*                                                                     *
+***********************************************************************
+
+You are using version $AliTV::VERSION
+
+Used paramter for filtering:\n";
+
+    foreach my $key (keys %{$settings})
+    {
+	if (defined $settings->{$key})
+	{
+	    printf STDERR "\t'%s':\t%s\n", $key, $settings->{$key};
 	}
     }
 
