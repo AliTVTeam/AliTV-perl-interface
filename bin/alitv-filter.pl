@@ -173,6 +173,24 @@ sub filter
 {
     my ($json, $settings) = @_;
 
+    # got through the chromosomes and check for their length
+    my %deleted_chromosomes = ();
+
+    foreach my $chromosome (keys %{$json->{data}{karyo}{chromosomes}})
+    {
+	if (
+	    # Chromosome to short
+	    (defined $settings->{minSeqLength} && $settings->{minSeqLength} > $json->{data}{karyo}{chromosomes}{$chromosome}{length})
+	    ||
+	    # Chromosome to long
+	    (defined $settings->{maxSeqLength} && $settings->{maxSeqLength} < $json->{data}{karyo}{chromosomes}{$chromosome}{length})
+	    )
+	{
+	    $deleted_chromosomes{$chromosome}++;
+	    delete $json->{data}{karyo}{chromosomes}{$chromosome};
+	}
+    }
+
     # build a list of link features and how many times they are used
     my %features = ();
     foreach my $first_karyo (keys %{$json->{data}{links}})
@@ -190,7 +208,6 @@ sub filter
 	}
     }
 
-
     # go through the links and check for identity and length
     foreach my $first_karyo (keys %{$json->{data}{links}})
     {
@@ -201,10 +218,17 @@ sub filter
 		my $source = $json->{data}{links}{$first_karyo}{$second_karyo}{$link}{source};
 		my $target = $json->{data}{links}{$first_karyo}{$second_karyo}{$link}{target};
 
-		die "Missing feature $source" unless (exists $json->{data}{features}{link}{$source});
-		my $link_source_len = abs($json->{data}{features}{link}{$source}{start}-$json->{data}{features}{link}{$source}{end});
-		die "Missing feature $target" unless (exists $json->{data}{features}{link}{$target});
-		my $link_target_len = abs($json->{data}{features}{link}{$target}{start}-$json->{data}{features}{link}{$target}{end});
+		my ($link_source_len, $link_target_len) = (0, 0);
+
+		if (exists $json->{data}{features}{link}{$source})
+		{
+		    $link_source_len = abs($json->{data}{features}{link}{$source}{start}-$json->{data}{features}{link}{$source}{end});
+		}
+
+		if (exists $json->{data}{features}{link}{$target})
+		{
+		    $link_target_len = abs($json->{data}{features}{link}{$target}{start}-$json->{data}{features}{link}{$target}{end});
+		}
 
 		my $link_len = ($link_source_len <= $link_target_len) ? $link_source_len : $link_target_len;
 
@@ -223,15 +247,26 @@ sub filter
 		    ||
 		    # Link is hidden
 		    (exists $json->{filters}{links}{invisibleLinks}{$link})
+		    ||
+		    # Source chromosome deleted
+		    (! exists $json->{data}{karyo}{chromosomes}{$json->{data}{features}{link}{$source}{karyo}})
+		    ||
+		    # Target chromosome deleted
+		    (! exists $json->{data}{karyo}{chromosomes}{$json->{data}{features}{link}{$target}{karyo}})
 		    )
 		{
 		    # decrement the feature counter and if reached 0 delete the feature
 		    foreach my $type ($source,$target)
 		    {
-			$features{$type}--;
-			if ($features{$type} == 0)
+			$features{$type}-- unless ($features{$type} == 0);
+
+			# Get the chromosome to check if it still exists
+			my $chromosome = $json->{data}{features}{link}{$type}{karyo};
+
+			if (($features{$type} == 0) || (! exists $json->{data}{karyo}{chromosomes}{$chromosome}))
 			{
 			    delete $json->{data}{features}{link}{$type};
+			    $features{$type} = 0;
 			}
 		    }
 
