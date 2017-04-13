@@ -151,6 +151,72 @@ Used paramter for filtering:\n";
 sub filter
 {
     my ($json, $settings) = @_;
+
+    # build a list of link features and how many times they are used
+    my %features = ();
+    foreach my $first_karyo (keys %{$json->{data}{links}})
+    {
+	foreach my $second_karyo (keys %{$json->{data}{links}{$first_karyo}})
+	{
+	    foreach my $link (keys %{$json->{data}{links}{$first_karyo}{$second_karyo}})
+	    {
+		my $source = $json->{data}{links}{$first_karyo}{$second_karyo}{$link}{source};
+		my $target = $json->{data}{links}{$first_karyo}{$second_karyo}{$link}{target};
+
+		$features{$source}++;
+		$features{$target}++;
+	    }
+	}
+    }
+
+
+    # go through the links and check for identity and length
+    foreach my $first_karyo (keys %{$json->{data}{links}})
+    {
+	foreach my $second_karyo (keys %{$json->{data}{links}{$first_karyo}})
+	{
+	    foreach my $link (keys %{$json->{data}{links}{$first_karyo}{$second_karyo}})
+	    {
+		my $source = $json->{data}{links}{$first_karyo}{$second_karyo}{$link}{source};
+		my $target = $json->{data}{links}{$first_karyo}{$second_karyo}{$link}{target};
+
+		die "Missing feature $source" unless (exists $json->{data}{features}{link}{$source});
+		my $link_source_len = abs($json->{data}{features}{link}{$source}{start}-$json->{data}{features}{link}{$source}{end});
+		die "Missing feature $target" unless (exists $json->{data}{features}{link}{$target});
+		my $link_target_len = abs($json->{data}{features}{link}{$target}{start}-$json->{data}{features}{link}{$target}{end});
+
+		my $link_len = ($link_source_len <= $link_target_len) ? $link_source_len : $link_target_len;
+
+		if (
+		    # Identity to small
+		    (defined $settings->{minLinkIdentity} && $settings->{minLinkIdentity} > $json->{data}{links}{$first_karyo}{$second_karyo}{$link}{identity})
+		    ||
+		    # Identity to large
+		    (defined $settings->{maxLinkIdentity} && $settings->{maxLinkIdentity} < $json->{data}{links}{$first_karyo}{$second_karyo}{$link}{identity})
+		    ||
+		    # Link to small
+		    (defined $settings->{minLinkLength} && $settings->{minLinkLength} > $link_len)
+		    ||
+		    # Link to large
+		    (defined $settings->{maxLinkLength} && $settings->{maxLinkLength} < $link_len)
+		    )
+		{
+		    # decrement the feature counter and if reached 0 delete the feature
+		    foreach my $type ($source,$target)
+		    {
+			$features{$type}--;
+			if ($features{$type} == 0)
+			{
+			    delete $json->{data}{features}{link}{$type};
+			}
+		    }
+
+		    delete $json->{data}{links}{$first_karyo}{$second_karyo}{$link};
+		}
+	    }
+	}
+    }
+
     return $json;
 }
 
