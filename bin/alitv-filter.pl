@@ -8,6 +8,7 @@ use Getopt::Long;
 
 my $inputfile = "-";
 my $outputfile = "-";
+my $filtersettings = {};
 
 GetOptions(
     'input=s' => \$inputfile,
