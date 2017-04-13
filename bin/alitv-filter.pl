@@ -54,6 +54,15 @@ print $outfh encode_json $json;
 sub welcome_and_settings
 {
     my ($json, $settings) = @_;
+
+    # get the settings from the JSON
+    my $json_settings = {};
+
+    $json_settings->{maxLinkIdentity} = $json->{filters}{links}{maxLinkIdentity};
+    $json_settings->{maxLinkLength} = $json->{filters}{links}{maxLinkLength};
+    $json_settings->{minLinkIdentity} = $json->{filters}{links}{minLinkIdentity};
+    $json_settings->{minLinkLength} = $json->{filters}{links}{minLinkLength};
+
     return $settings;
 }
 
