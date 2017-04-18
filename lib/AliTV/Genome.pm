@@ -162,7 +162,7 @@ sub _store_feature
 
     my ($feature_id, $seq_id, $start, $end, $strand, $name) = @_;
 
-    $seq_id = $self->_orig_id_to_uniq_id($seq_id);
+    #$seq_id = $self->_orig_id_to_uniq_id($seq_id);
     # ignore features for non existing sequences
     return unless ($self->seq_exists($seq_id));
 
