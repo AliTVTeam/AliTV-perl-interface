@@ -97,8 +97,6 @@ sub _initialize
 
 			my ($seq_id, $start, $end, $strand, $name) = split(/\t/, $_);
 
-			# ignore features for non existing sequences
-			next unless (exists $self->{_seq}{$seq_id});
 			$self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
 		    }
 		    close(FH) || $self->_logdie("Unable to close file '$curr_file': $!");
@@ -149,8 +147,6 @@ sub _initialize
 			    $name = "no name specified";
 			}
 
-			# ignore features for non existing sequences
-			next unless (exists $self->{_seq}{$seq_id});
 			$self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
 		    }
 		}
@@ -165,6 +161,9 @@ sub _store_feature
     my $self = shift;
 
     my ($feature_id, $seq_id, $start, $end, $strand, $name) = @_;
+
+    # ignore features for non existing sequences
+    return unless ($self->seq_exists($seq_id));
 
     # if feature_id is a link, we need to check if a link with exactly
     # the same coordinates exists. In that case, we need to return its
