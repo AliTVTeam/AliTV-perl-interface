@@ -55,4 +55,21 @@ my $expected_with_gff = {
 
 is_deeply($obj_with_gff->get_features(), $expected_with_gff, 'Feature export as expected after GFF import');
 
+my %params_with_gb = (
+    name => 'Test genome',
+    sequence_files => ['data/test_feature.gb'],
+    feature_files => { gene => ['data/test_feature.gb']},
+    );
+
+my $obj_with_gb = new_ok('AliTV::Genome' => [%params_with_gb]);
+
+my $expected_with_gb = {
+    gene  => [
+	{ name => "tet", end => 1276, start => 86, karyo => "SYNPBR322" },
+	{ name => "bla", end => 3293, start => 4153, karyo => "SYNPBR322" }
+	]
+};
+
+is_deeply($obj_with_gb->get_features(), $expected_with_gb, 'Feature export as expected after GB import');
+
 done_testing;
