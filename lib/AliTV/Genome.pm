@@ -85,20 +85,54 @@ sub _initialize
 	    my @files2import = @{$params{feature_files}{$feature_id}};
 	    foreach my $curr_file (@files2import)
 	    {
-		# currently I only support tsv files
-		open(FH, "<", $curr_file) || $self->_logdie("Unable to open file '$curr_file': $!");
-		while (<FH>)
+		# guess file format based on file suffix
+		if ($curr_file =~ /.tsv$/) {
+		    # own tsv format
+		    open(FH, "<", $curr_file) || $self->_logdie("Unable to open file '$curr_file': $!");
+		    while (<FH>)
+		    {
+			chomp;
+
+			my ($seq_id, $start, $end, $strand, $name) = split(/\t/, $_);
+
+			# ignore features for non existing sequences
+			next unless (exists $self->{_seq}{$seq_id});
+			$self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
+		    }
+		    close(FH) || $self->_logdie("Unable to close file '$curr_file': $!");
+		} elsif ($curr_file =~ /.(?:bed|gff|gtf|interpro|ptt)$/)
 		{
-		    chomp;
+		    # can be handled by Bio::FeatureIO
+		    require Bio::FeatureIO;
 
-		    my ($seq_id, $start, $end, $strand, $name) = split(/\t/, $_);
+		    my $in  = Bio::FeatureIO->new(-file => $curr_file);
+		    while ( my $feature = $in->next_feature() ) {
+			if ($feature_id eq $feature->primary_tag())
+			{
+			    my $seq_id = $feature->seq_id();
+			    my $start = $feature->start();
+			    my $end = $feature->end();
+			    my $strand = $feature->strand();
+			    my $name = "";
+			    foreach my $tag (qw(gene Name ID))
+			    {
+				if ($feature->has_tag($tag))
+				{
+				    $name = join("_", $feature->get_tag_values($tag));
+				    last;
+				}
+			    }
+			    if ($name eq "")
+			    {
+				$name = "no name specified";
+			    }
 
-		    # ignore features for non existing sequences
-
-		    next unless (exists $self->{_seq}{$seq_id});
-		    $self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
+			    # ignore features for non existing sequences
+			    next unless (exists $self->{_seq}{$seq_id});
+			    $self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
+			}
+		    }
 		}
-		close(FH) || $self->_logdie("Unable to close file '$curr_file': $!");
 	    }
 	}
     }
