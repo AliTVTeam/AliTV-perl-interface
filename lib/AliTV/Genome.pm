@@ -85,6 +85,8 @@ sub _initialize
 	    my @files2import = @{$params{feature_files}{$feature_id}};
 	    foreach my $curr_file (@files2import)
 	    {
+		my @features = ();
+
 		# guess file format based on file suffix
 		if ($curr_file =~ /.tsv$/) {
 		    # own tsv format
@@ -100,75 +102,57 @@ sub _initialize
 			$self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
 		    }
 		    close(FH) || $self->_logdie("Unable to close file '$curr_file': $!");
-		} elsif ($curr_file =~ /.(?:bed|gff|gtf|interpro|ptt)$/)
-		{
-		    # can be handled by Bio::FeatureIO
-		    require Bio::FeatureIO;
-
-		    my $in  = Bio::FeatureIO->new(-file => $curr_file);
-		    while ( my $feature = $in->next_feature() ) {
-			if ($feature_id eq $feature->primary_tag())
-			{
-			    my $seq_id = $feature->seq_id();
-			    my $start = $feature->start();
-			    my $end = $feature->end();
-			    my $strand = $feature->strand();
-			    my $name = "";
-			    foreach my $tag (qw(gene Name ID))
-			    {
-				if ($feature->has_tag($tag))
-				{
-				    $name = join("_", $feature->get_tag_values($tag));
-				    last;
-				}
-			    }
-			    if ($name eq "")
-			    {
-				$name = "no name specified";
-			    }
-
-			    # ignore features for non existing sequences
-			    next unless (exists $self->{_seq}{$seq_id});
-			    $self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
-			}
-		    }
 		} else {
-		    # might be handled by BioSeqIO itself
-		    require Bio::SeqIO;
 
-		    my $fileio = Bio::SeqIO->new(-file => $curr_file);
-
-		    while (my $seq_obj = $fileio->next_seq())
+		    if ($curr_file =~ /.(?:bed|gff|gtf|interpro|ptt)$/)
 		    {
-			foreach my $feature ($seq_obj->get_all_SeqFeatures())
-			{
-			    if ($feature_id eq $feature->primary_tag())
-			    {
-				my $seq_id = $feature->seq_id();
-				my $start = $feature->start();
-				my $end = $feature->end();
-				my $strand = $feature->strand();
-				my $name = "";
-				foreach my $tag (qw(gene Name ID))
-				{
-				    if ($feature->has_tag($tag))
-				    {
-					$name = join("_", $feature->get_tag_values($tag));
-					last;
-				    }
-				}
-				if ($name eq "")
-				{
-				    $name = "no name specified";
-				}
+			# can be handled by Bio::FeatureIO
+			require Bio::FeatureIO;
 
-				# ignore features for non existing sequences
-				next unless (exists $self->{_seq}{$seq_id});
-				$self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
-			    }
+			my $in  = Bio::FeatureIO->new(-file => $curr_file);
+			while ( my $feature = $in->next_feature() ) {
+			    push(@features, $feature);
+			}
+
+		    } else {
+			# might be handled by BioSeqIO itself
+			require Bio::SeqIO;
+
+			my $fileio = Bio::SeqIO->new(-file => $curr_file);
+
+			while (my $seq_obj = $fileio->next_seq())
+			{
+			    push(@features, $seq_obj->get_all_SeqFeatures());
 			}
 		    }
+		}
 
+		foreach my $feature (@features)
+		{
+		    if ($feature_id eq $feature->primary_tag())
+		    {
+			my $seq_id = $feature->seq_id();
+			my $start = $feature->start();
+			my $end = $feature->end();
+			my $strand = $feature->strand();
+			my $name = "";
+			foreach my $tag (qw(gene Name ID))
+			{
+			    if ($feature->has_tag($tag))
+			    {
+				$name = join("_", $feature->get_tag_values($tag));
+				last;
+			    }
+			}
+			if ($name eq "")
+			{
+			    $name = "no name specified";
+			}
+
+			# ignore features for non existing sequences
+			next unless (exists $self->{_seq}{$seq_id});
+			$self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
+		    }
 		}
 	    }
 	}
