@@ -430,7 +430,7 @@ sub _orig_id_to_uniq_id
 	return $orig_id;
     } else {
 	# should die, if the mapping does not exist
-	$self->_logdie("Original ID was not found!");
+	$self->_logdie("Original ID '$orig_id' was not found in genome named '".$self->name()."'!");
     }
 }
 
