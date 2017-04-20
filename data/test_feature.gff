@@ -1,0 +1,122 @@
+##gff-version 3
+SYNPBR322	Genbank	region	1	4361	.	.	.	ID=SYNPBR322;Alias=K00005,L08654,M10282,M10283,M10286,M10356,M10784,M10785,M10786,M33694,V01119;Note=Cloning%20vector%20pBR322%2C%20complete%20sequence.
+SYNPBR322	Genbank	region	1	4361	.	+	.	ID=Cloning%20vector%20pBR322;tissue_lib=ATCC%2031344%2C%20ATCC%2037017;db_xref=taxon%3A47470;mol_type=other%20DNA;focus=_no_value
+SYNPBR322	Genbank	region	1	1762	.	+	.	ID=Plasmid%20pSC101;mol_type=other%20DNA;db_xref=taxon%3A2625
+SYNPBR322	Genbank	misc_binding	24	27	.	+	.	ID=echinomycin
+SYNPBR322	Genbank	regulatory	27	33	.	-	.	ID=promoter;note=promoter%20P1%20%286%29
+SYNPBR322	Genbank	misc_binding	39	42	.	+	.	ID=echinomycin
+SYNPBR322	Genbank	regulatory	43	49	.	+	.	ID=promoter;note=promoter%20P2%20%286%29
+SYNPBR322	Genbank	misc_binding	53	56	.	+	.	ID=echinomycin
+SYNPBR322	Genbank	misc_binding	67	70	.	+	.	ID=echinomycin
+SYNPBR322	Genbank	misc_binding	80	83	.	+	.	ID=echinomycin
+SYNPBR322	Genbank	gene	86	1276	.	+	.	ID=tet
+SYNPBR322	Genbank	CDS	86	1276	.	+	.	Parent=tet.t00;translation=MKSNNALIVILGTVTLDAVGIGLVMPVLPGLLRDIVHSDSIASHYGVLLALYALMQFLCAPVLGALSDRFGRRPVLLASLLGATIDYAIMATTPVLWILYAGRIVAGITGATGAVAGAYIADITDGEDRARHFGLMSACFGVGMVAGPVAGGLLGAISLHAPFLAAAVLNGLNLLLGCFLMQESHKGERRPMPLRAFNPVSSFRWARGMTIVAALMTVFFIMQLVGQVPAALWVIFGEDRFRWSATMIGLSLAVFGILHALAQAFVTGPATKRFGEKQAIIAGMAADALGYVLLAFATRGWMAFPIMILLASGGIGMPALQAMLSRQVDDDHQGQLQGSLAALTSLTSITGPLIVTAIYAASASTWNGLAWIVGAALYLVCLPALRRGAWSRATST;protein_id=AAB59735.1;product=tetracycline%20resistance%20protein;db_xref=GI%3A208959;transl_table=11;codon_start=1
+SYNPBR322	Genbank	misc_binding	411	414	.	+	.	ID=tet;bound_moiety=echinomycin
+SYNPBR322	Genbank	misc_difference	426	426	.	+	.	ID=tet;replace=;note=conflict;citation=%5B11%5D
+SYNPBR322	Genbank	misc_binding	469	472	.	+	.	ID=tet;bound_moiety=echinomycin
+SYNPBR322	Genbank	old_sequence	526	528	.	+	.	ID=tet;citation=%5B17%5D
+SYNPBR322	Genbank	repeat_region	1515	1519	.	-	.	ID=direct;note=gamma-delta%20insertion%20target%20sequence
+SYNPBR322	Genbank	repeat_region	1788	1792	.	-	.	ID=direct;note=gamma-delta%20insertion%20target%20sequence
+SYNPBR322	Genbank	misc_difference	1891	1892	.	+	.	ID=att;note=conflict;citation=%5B23%5D
+SYNPBR322	Genbank	old_sequence	1892	1893	.	+	.	ID=%5B22%5D;citation=%5B2%5D
+SYNPBR322	Genbank	regulatory	1905	1910	.	+	.	ID=ribosome_binding_site
+SYNPBR322	Genbank	regulatory	1905	1909	.	+	.	ID=ribosome_binding_site;note=Shine-Dalgarno%20sequence
+SYNPBR322	Genbank	misc_difference	1913	1914	.	+	.	ID=caa;note=conflict;citation=%5B23%5D
+SYNPBR322	Genbank	old_sequence	1914	1915	.	+	.	ID=%5B17%5D
+SYNPBR322	Genbank	CDS	1915	2106	.	+	.	Parent=AAB59736.1.t00;product=ROP%20protein;codon_start=1;transl_table=11;db_xref=GI%3A456436;translation=MTKQEKTALNMARFIRSQTLTLLEKLNELDADEQADICESLHDHADELYRSCLARFGDDGENL
+SYNPBR322	Genbank	repeat_region	2245	2249	.	-	.	ID=direct;note=gamma-delta%20insertion%20target%20sequence
+SYNPBR322	Genbank	misc_binding	2439	2447	.	+	.	ID=dnaA
+SYNPBR322	Genbank	rep_origin	2535	2535	.	+	.	ID=Misc
+SYNPBR322	Genbank	old_sequence	2729	2730	.	+	.	ID=at;citation=%5B2%5D,%5B17%5D;note=revision%20according%20to%20%2817%29
+SYNPBR322	Genbank	old_sequence	2729	2729	.	+	.	ID=%5B17%5D
+SYNPBR322	Genbank	old_sequence	2730	2730	.	+	.	ID=t;note=revision%20according%20to%20%2816%29;citation=%5B2%5D,%5B16%5D,%5B17%5D
+SYNPBR322	Genbank	mobile_element	3148	4361	.	+	.	ID=transposon%3ATn3
+SYNPBR322	Genbank	repeat_region	3148	3185	.	+	.	ID=inverted;note=corresponds%20to%20one%20of%20the%2038bp%20repeats%20found%20in%20Tn3%20%28bp%201-38%20and%20complement%20%284920-4957%29%29
+SYNPBR322	Genbank	gene	3293	4153	.	-	.	ID=bla
+SYNPBR322	Genbank	CDS	3293	4153	.	-	.	Parent=bla.t00;translation=MSIQHFRVALIPFFAAFCLPVFAHPETLVKVKDAEDQLGARVGYIELDLNSGKILESFRPEERFPMMSTFKVLLCGAVLSRVDAGQEQLGRRIHYSQNDLVEYSPVTEKHLTDGMTVRELCSAAITMSDNTAANLLLTTIGGPKELTAFLHNMGDHVTRLDRWEPELNEAIPNDERDTTMPAAMATTLRKLLTGELLTLASRQQLIDWMEADKVAGPLLRSALPAGWFIADKSGAGERGSRGIIAALGPDGKPSRIVVIYTTGSQATMDERNRQIAEIGASLIKHW;note=E-286;product=beta-lactamase;protein_id=AAB59737.1;transl_table=11;codon_start=1;db_xref=GI%3A455370
+SYNPBR322	Genbank	sig_peptide	4085	4153	.	-	.	ID=bla
+SYNPBR322	Genbank	mat_peptide	3296	4084	.	-	.	ID=bla;product=beta-lactamase
+SYNPBR322	Genbank	regulatory	4161	4165	.	-	.	ID=ribosome_binding_site;note=Shine-Dalgarno%20sequence
+SYNPBR322	Genbank	regulatory	4188	4194	.	-	.	ID=promoter;note=promoter%20P3%20%286%29
+SYNPBR322	Genbank	misc_binding	4268	4271	.	-	.	ID=echinomycin
+SYNPBR322	Genbank	misc_binding	4280	4283	.	-	.	ID=echinomycin
+SYNPBR322	Genbank	misc_binding	4285	4288	.	-	.	ID=echinomycin
+SYNPBR322	Genbank	misc_binding	4296	4299	.	-	.	ID=echinomycin
+SYNPBR322	Genbank	misc_binding	4311	4314	.	-	.	ID=echinomycin
+SYNPBR322	Genbank	misc_binding	4317	4320	.	-	.	ID=echinomycin
+SYNPBR322	Genbank	misc_binding	4331	4334	.	-	.	ID=echinomycin
+>SYNPBR322
+ttctcatgtttgacagcttatcatcgataagctttaatgcggtagtttatcacagttaaa
+ttgctaacgcagtcaggcaccgtgtatgaaatctaacaatgcgctcatcgtcatcctcgg
+caccgtcaccctggatgctgtaggcataggcttggttatgccggtactgccgggcctctt
+gcgggatatcgtccattccgacagcatcgccagtcactatggcgtgctgctagcgctata
+tgcgttgatgcaatttctatgcgcacccgttctcggagcactgtccgaccgctttggccg
+ccgcccagtcctgctcgcttcgctacttggagccactatcgactacgcgatcatggcgac
+cacacccgtcctgtggatcctctacgccggacgcatcgtggccggcatcaccggcgccac
+aggtgcggttgctggcgcctatatcgccgacatcaccgatggggaagatcgggctcgcca
+cttcgggctcatgagcgcttgtttcggcgtgggtatggtggcaggccccgtggccggggg
+actgttgggcgccatctccttgcatgcaccattccttgcggcggcggtgctcaacggcct
+caacctactactgggctgcttcctaatgcaggagtcgcataagggagagcgtcgaccgat
+gcccttgagagccttcaacccagtcagctccttccggtgggcgcggggcatgactatcgt
+cgccgcacttatgactgtcttctttatcatgcaactcgtaggacaggtgccggcagcgct
+ctgggtcattttcggcgaggaccgctttcgctggagcgcgacgatgatcggcctgtcgct
+tgcggtattcggaatcttgcacgccctcgctcaagccttcgtcactggtcccgccaccaa
+acgtttcggcgagaagcaggccattatcgccggcatggcggccgacgcgctgggctacgt
+cttgctggcgttcgcgacgcgaggctggatggccttccccattatgattcttctcgcttc
+cggcggcatcgggatgcccgcgttgcaggccatgctgtccaggcaggtagatgacgacca
+tcagggacagcttcaaggatcgctcgcggctcttaccagcctaacttcgatcactggacc
+gctgatcgtcacggcgatttatgccgcctcggcgagcacatggaacgggttggcatggat
+tgtaggcgccgccctataccttgtctgcctccccgcgttgcgtcgcggtgcatggagccg
+ggccacctcgacctgaatggaagccggcggcacctcgctaacggattcaccactccaaga
+attggagccaatcaattcttgcggagaactgtgaatgcgcaaaccaacccttggcagaac
+atatccatcgcgtccgccatctccagcagccgcacgcggcgcatctcgggcagcgttggg
+tcctggccacgggtgcgcatgatcgtgctcctgtcgttgaggacccggctaggctggcgg
+ggttgccttactggttagcagaatgaatcaccgatacgcgagcgaacgtgaagcgactgc
+tgctgcaaaacgtctgcgacctgagcaacaacatgaatggtcttcggtttccgtgtttcg
+taaagtctggaaacgcggaagtcagcgccctgcaccattatgttccggatctgcatcgca
+ggatgctgctggctaccctgtggaacacctacatctgtattaacgaagcgctggcattga
+ccctgagtgatttttctctggtcccgccgcatccataccgccagttgtttaccctcacaa
+cgttccagtaaccgggcatgttcatcatcagtaacccgtatcgtgagcatcctctctcgt
+ttcatcggtatcattacccccatgaacagaaatcccccttacacggaggcatcagtgacc
+aaacaggaaaaaaccgcccttaacatggcccgctttatcagaagccagacattaacgctt
+ctggagaaactcaacgagctggacgcggatgaacaggcagacatctgtgaatcgcttcac
+gaccacgctgatgagctttaccgcagctgcctcgcgcgtttcggtgatgacggtgaaaac
+ctctgacacatgcagctcccggagacggtcacagcttgtctgtaagcggatgccgggagc
+agacaagcccgtcagggcgcgtcagcgggtgttggcgggtgtcggggcgcagccatgacc
+cagtcacgtagcgatagcggagtgtatactggcttaactatgcggcatcagagcagattg
+tactgagagtgcaccatatgcggtgtgaaataccgcacagatgcgtaaggagaaaatacc
+gcatcaggcgctcttccgcttcctcgctcactgactcgctgcgctcggtcgttcggctgc
+ggcgagcggtatcagctcactcaaaggcggtaatacggttatccacagaatcaggggata
+acgcaggaaagaacatgtgagcaaaaggccagcaaaaggccaggaaccgtaaaaaggccg
+cgttgctggcgtttttccataggctccgcccccctgacgagcatcacaaaaatcgacgct
+caagtcagaggtggcgaaacccgacaggactataaagataccaggcgtttccccctggaa
+gctccctcgtgcgctctcctgttccgaccctgccgcttaccggatacctgtccgcctttc
+tcccttcgggaagcgtggcgctttctcatagctcacgctgtaggtatctcagttcggtgt
+aggtcgttcgctccaagctgggctgtgtgcacgaaccccccgttcagcccgaccgctgcg
+ccttatccggtaactatcgtcttgagtccaacccggtaagacacgacttatcgccactgg
+cagcagccactggtaacaggattagcagagcgaggtatgtaggcggtgctacagagttct
+tgaagtggtggcctaactacggctacactagaaggacagtatttggtatctgcgctctgc
+tgaagccagttaccttcggaaaaagagttggtagctcttgatccggcaaacaaaccaccg
+ctggtagcggtggtttttttgtttgcaagcagcagattacgcgcagaaaaaaaggatctc
+aagaagatcctttgatcttttctacggggtctgacgctcagtggaacgaaaactcacgtt
+aagggattttggtcatgagattatcaaaaaggatcttcacctagatccttttaaattaaa
+aatgaagttttaaatcaatctaaagtatatatgagtaaacttggtctgacagttaccaat
+gcttaatcagtgaggcacctatctcagcgatctgtctatttcgttcatccatagttgcct
+gactccccgtcgtgtagataactacgatacgggagggcttaccatctggccccagtgctg
+caatgataccgcgagacccacgctcaccggctccagatttatcagcaataaaccagccag
+ccggaagggccgagcgcagaagtggtcctgcaactttatccgcctccatccagtctatta
+attgttgccgggaagctagagtaagtagttcgccagttaatagtttgcgcaacgttgttg
+ccattgctgcaggcatcgtggtgtcacgctcgtcgtttggtatggcttcattcagctccg
+gttcccaacgatcaaggcgagttacatgatcccccatgttgtgcaaaaaagcggttagct
+ccttcggtcctccgatcgttgtcagaagtaagttggccgcagtgttatcactcatggtta
+tggcagcactgcataattctcttactgtcatgccatccgtaagatgcttttctgtgactg
+gtgagtactcaaccaagtcattctgagaatagtgtatgcggcgaccgagttgctcttgcc
+cggcgtcaacacgggataataccgcgccacatagcagaactttaaaagtgctcatcattg
+gaaaacgttcttcggggcgaaaactctcaaggatcttaccgctgttgagatccagttcga
+tgtaacccactcgtgcacccaactgatcttcagcatcttttactttcaccagcgtttctg
+ggtgagcaaaaacaggaaggcaaaatgccgcaaaaaagggaataagggcgacacggaaat
+gttgaatactcatactcttcctttttcaatattattgaagcatttatcagggttattgtc
+tcatgagcggatacatatttgaatgtatttagaaaaataaacaaataggggttccgcgca
+catttccccgaaaagtgccacctgacgtctaagaaaccattattatcatgacattaacct
+ataaaaataggcgtatcacgaggccctttcgtcttcaagaa
+

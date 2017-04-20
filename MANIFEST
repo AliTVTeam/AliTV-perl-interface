@@ -114,6 +114,9 @@ data/fasta-input4.fasta
 
 data/test.gb
 data/test.tsv
+data/test_feature.gb
+data/test_feature.gff
+data/test_feature.tsv
 
 data/tree_a.newick
 data/tree_b.newick

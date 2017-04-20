@@ -85,20 +85,71 @@ sub _initialize
 	    my @files2import = @{$params{feature_files}{$feature_id}};
 	    foreach my $curr_file (@files2import)
 	    {
-		# currently I only support tsv files
-		open(FH, "<", $curr_file) || $self->_logdie("Unable to open file '$curr_file': $!");
-		while (<FH>)
-		{
-		    chomp;
+		my @features = ();
 
-		    my ($seq_id, $start, $end, $strand, $name) = split(/\t/, $_);
+		# guess file format based on file suffix
+		if ($curr_file =~ /.tsv$/) {
+		    # own tsv format
+		    open(FH, "<", $curr_file) || $self->_logdie("Unable to open file '$curr_file': $!");
+		    while (<FH>)
+		    {
+			chomp;
 
-		    # ignore features for non existing sequences
+			my ($seq_id, $start, $end, $strand, $name) = split(/\t/, $_);
 
-		    next unless (exists $self->{_seq}{$seq_id});
-		    $self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
+			$self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
+		    }
+		    close(FH) || $self->_logdie("Unable to close file '$curr_file': $!");
+		} else {
+
+		    if ($curr_file =~ /.(?:bed|gff|gtf|interpro|ptt)$/)
+		    {
+			# can be handled by Bio::FeatureIO
+			require Bio::FeatureIO;
+
+			my $in  = Bio::FeatureIO->new(-file => $curr_file);
+			while ( my $feature = $in->next_feature() ) {
+			    push(@features, $feature);
+			}
+
+		    } else {
+			# might be handled by BioSeqIO itself
+			require Bio::SeqIO;
+
+			my $fileio = Bio::SeqIO->new(-file => $curr_file);
+
+			while (my $seq_obj = $fileio->next_seq())
+			{
+			    push(@features, $seq_obj->get_all_SeqFeatures());
+			}
+		    }
 		}
-		close(FH) || $self->_logdie("Unable to close file '$curr_file': $!");
+
+		foreach my $feature (@features)
+		{
+		    if ($feature_id eq $feature->primary_tag())
+		    {
+			my $seq_id = $feature->seq_id();
+			my $start = $feature->start();
+			my $end = $feature->end();
+			my $strand = $feature->strand();
+			my $name = "";
+			foreach my $tag (qw(gene Name ID))
+			{
+			    if ($feature->has_tag($tag))
+			    {
+				$name = join("_", $feature->get_tag_values($tag));
+				last;
+			    }
+			}
+			if ($name eq "")
+			{
+			    $name = "no name specified";
+			}
+
+			$self->_store_feature($feature_id, $seq_id, $start, $end, $strand, $name);
+		    }
+		}
 	    }
 	}
     }
@@ -110,6 +161,10 @@ sub _store_feature
     my $self = shift;
 
     my ($feature_id, $seq_id, $start, $end, $strand, $name) = @_;
+
+    #$seq_id = $self->_orig_id_to_uniq_id($seq_id);
+    # ignore features for non existing sequences
+    return unless ($self->seq_exists($seq_id));
 
     # if feature_id is a link, we need to check if a link with exactly
     # the same coordinates exists. In that case, we need to return its
@@ -375,7 +430,7 @@ sub _orig_id_to_uniq_id
 	return $orig_id;
     } else {
 	# should die, if the mapping does not exist
-	$self->_logdie("Original ID was not found!");
+	$self->_logdie("Original ID '$orig_id' was not found in genome named '".$self->name()."'!");
     }
 }
 

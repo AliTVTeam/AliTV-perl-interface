@@ -249,7 +249,7 @@ sub get_json
 	    $data{conf}{features}{supportedFeatures}{$feat}{visible} = ($self->{_yml_import}{features}{$feat}{visible}) ? JSON::true : JSON::false;
 	} else {
 	    $data{conf}{features}{supportedFeatures}{$feat} = {
-		color => '#808080',
+		color => '#EBCE20',
 		form => 'rect',
 		height => 30,
 		visible => JSON::true
