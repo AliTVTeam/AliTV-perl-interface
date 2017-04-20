@@ -27,7 +27,7 @@ foreach my $orig (@expected_orig)
 }
 
 # a non existing original ID should cause an exception
-throws_ok { $obj->_orig_id_to_uniq_id('non_existing_orig_id'); } qr/Original ID was not found!/, 'Exception caused by a non existing original ID';
+throws_ok { $obj->_orig_id_to_uniq_id('non_existing_orig_id'); } qr/Original ID 'non_existing_orig_id' was not found in genome named 'Test genome'!/, 'Exception caused by a non existing original ID';
 
 # test if non existing uniq names lead to an exception
 $counter = 0;
@@ -47,7 +47,7 @@ foreach my $idx (1..@expected_orig)
 }
 
 # a non existing original ID should still cause an exception
-throws_ok { $obj->_orig_id_to_uniq_id('non_existing_orig_id'); } qr/Original ID was not found!/, 'Exception still caused by a non existing original ID';
+throws_ok { $obj->_orig_id_to_uniq_id('non_existing_orig_id'); } qr/Original ID 'non_existing_orig_id' was not found in genome named 'Test genome'!/, 'Exception still caused by a non existing original ID';
 
 # test if each unique ID is converted into correct original ID after initialization of unique IDs
 foreach my $idx (1..@expected_uniq)

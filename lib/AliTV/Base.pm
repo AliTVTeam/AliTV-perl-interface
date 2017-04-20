@@ -53,7 +53,7 @@ sub _logdie
     my $self = shift;
     my $msg = shift;
 
-    $self->_logging($msg, "logdie");
+    $self->_logging($msg, "logcroak");
 }
 
 sub _logwarn
