@@ -396,7 +396,7 @@ sub _fix_maf_revcomp
     {
 	unless (exists $self->{_sequence_set_index}{$alignment_segment->{id}})
 	{
-	    $self->_logdie("Unable to identify sequence in sequence set by name '$alignment_segment->{id}'");
+	    $self->_logdie("Unable to identify sequence in sequence set by name '$alignment_segment->{id}'"); # uncoverable statement
 	}
 
 	my $seq = $self->sequence_set()->[$self->{_sequence_set_index}{$alignment_segment->{id}}];
