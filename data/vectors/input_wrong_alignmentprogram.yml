@@ -1,0 +1,30 @@
+---
+genomes: 
+   -
+    name: M13mp18
+    sequence_files:
+      - data/vectors/M13mp18.fasta
+
+   -
+    name: pBluescribeKSPlus
+    sequence_files:
+      - data/vectors/pBluescribeKSPlus.fasta
+
+   -
+    name: pBR322
+    sequence_files:
+      - data/vectors/pBR322.fasta
+
+   -
+    name: pUC19
+    sequence_files:
+      - data/vectors/pUC19.fasta
+
+alignment:
+    program: lastzz
+    parameter:
+       - "--format=maf"
+       - "--noytrim"
+       - "--ambiguous=iupac"
+       - "--gapped"
+       - "--strand=both"

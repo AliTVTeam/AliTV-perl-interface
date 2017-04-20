@@ -18,4 +18,11 @@ $obj = new_ok('AliTV', ["-file" => $chloroset_fail]);
 
 throws_ok { $obj->run(); } qr/Genome-ID .* is not uniq/, 'Exception with non-uniq genome ID';
 
+# Testing with a wrong alignment program
+# sets a wrong alignment program (lastzz instead of lastz)
+my $vectorset_pass = 'data/vectors/input_wrong_alignmentprogram.yml';
+$obj = new_ok('AliTV', ["-file" => $vectorset_pass]);
+
+throws_ok { $obj->run(); } qr/Unable to load alignment module 'AliTV::Alignment::lastzz'/, 'Exception with wrong alignment module';
+
 done_testing;
