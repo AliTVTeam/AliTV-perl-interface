@@ -349,9 +349,10 @@ s reverse_complement            4455 1500 - 10000 ATTTGTAGCCGCTAGACGATTACGCGGTGC
     # input contains one alignment
     my $aln = $in->next_aln();
 
+    # uncoverable branch true
     unless (defined $aln)
     {
-	$self->_logdie("Unable to get the alignment");
+	$self->_logdie("Unable to get the alignment"); # uncoverable statement
     }
 
     my @seqs = ();
