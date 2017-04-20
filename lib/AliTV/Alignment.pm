@@ -54,11 +54,12 @@ sub sequence_set
 	{
 	    my $seq = $self->{_sequence_set}[$i];
 	    my $name = $i;
+	    # uncoverable branch false
 	    if ($seq->can("display_id") && $seq->display_id() ne "")
 	    {
 		$name = $seq->display_id();
 	    } else {
-		$self->_info("Unable to call display_id() or display_id() returns an empty string");
+		$self->_info("Unable to call display_id() or display_id() returns an empty string"); # uncoverable statement
 	    }
 	    $self->{_sequence_set_index}{$name} = $i;
 	}
