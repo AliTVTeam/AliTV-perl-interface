@@ -379,7 +379,7 @@ s reverse_complement            4455 1500 - 10000 ATTTGTAGCCGCTAGACGATTACGCGGTGC
 	return 0;
     } else {
 	# unexpected condition
-	$self->_logdie("Condition unexpected for MAF import");
+	$self->_logdie("Condition unexpected for MAF import"); # uncoverable statement
     }
 }
 
