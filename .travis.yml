@@ -14,13 +14,11 @@ addons:
       - build-essential
       - libxml-dom-perl
       - libxml-dom-xpath-perl
-#     - bioperl
-#     - bioperl-run
+      - libdb-dev
 env:
-#    - PERL5LIB=/usr/share/perl5/
     - BIOPERLVERSION='~1.0007'
     - BIOPERLVERSION='~<1.007'
-    - BIOPERLVERSION='~<1.006923'
+    - BIOPERLVERSION='~<=1.006923'
 install:
     - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=c HARNESS_TIMER=1
     - cpanm --quiet --notest Bio::SeqIO$BIOPERLVERSION Bio::FeatureIO
