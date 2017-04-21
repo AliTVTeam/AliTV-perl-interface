@@ -4,6 +4,10 @@ MANIFEST
 README.md
 LICENSE
 
+# Documentation files
+doc/alitv-filter.md
+doc/alitv.md
+
 # here are the test scripts
 t/001_AliTV-Base.t
 t/002_AliTV-Base-version.t
