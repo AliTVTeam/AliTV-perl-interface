@@ -202,7 +202,7 @@ AliTV perl interface - generates the required JSON file for AliTV
 
 =head1 DESCRIPTION
 
-The script creates the required JSON file to run AliTV. The output
+The script creates the required JSON file for AliTV. The output
 file is required to load into the AliTV website to use AliTV for the
 visualization of multiple whole genome alignments.
 
@@ -233,14 +233,14 @@ be based on the project name.
 
 Default behaviour is to keep existing project yml and json files. If
 C<--overwrite> or C<--force> is specified, the files will be
-overwritten. Overwritting can be expicitly disabled by
+overwritten. Overwriting can be expicitly disabled by
 C<--no-overwrite> or C<--no-force> parameter.
 
 =back
 
 =head1 PARAMETERS
 
-The parameters might be a single YML file or at least to sequence
+The parameters might be a single YML file or at least two sequence
 files. In case a YML file is specified, the project name will be set
 accordingly to the basename of the YML file (without path information
 and without the .yml suffix). In case of multiple sequence files, a
@@ -250,12 +250,12 @@ the file will be given for further runs.
 =head1 Description of the YML file format
 
 The YML file contains the whole project description. Currently, it
-supports three different sections:
+supports four different sections:
 
 =head2 Section genomes
 
-Within the genomes section, each genome has to be declared. One genome
-need to have a unique name, at least one sequence file, and
+Within the genomes section, each genome has to be declared. Each
+genome need to have a unique name, at least one sequence file, and
 additionally can have feature definitions.
 
 =over 4
@@ -271,7 +271,7 @@ the sequence(s) of the genome
 
 =item *
 
-C<feature_files> keys contains different features. Each is defined as
+C<feature_files> key contains different features. Each is defined as
 a seperate key inside the <feature_files> and contains a list of files
 describing the features and their locations. In the case of
 genbank/gff files the name of the feature has to match the type field
@@ -322,7 +322,9 @@ The following example defines the location of the tree file:
 
 =head2 Section features
 
-This section can be used to define how features are displayed. For each defined feature, a key with the feature name exists for which the following keys can be defined:
+This section can be used to define how features are displayed. For
+each defined feature, a key with the feature name exists for which the
+following keys can be defined:
 
 =over 4
 
@@ -360,7 +362,7 @@ The following example, defines the design of the C<invertedRepeat> feature and t
 
 =head2 Section alignment
 
-This section contains of the specification of the alignment program
+This section contains the specification of the alignment program
 via the C<program> key and the parameter settings for the program
 specified via a list for the C<parameter> key.
 
