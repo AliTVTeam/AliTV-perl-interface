@@ -54,11 +54,12 @@ sub sequence_set
 	{
 	    my $seq = $self->{_sequence_set}[$i];
 	    my $name = $i;
+	    # uncoverable branch false
 	    if ($seq->can("display_id") && $seq->display_id() ne "")
 	    {
 		$name = $seq->display_id();
 	    } else {
-		$self->_info("Unable to call display_id() or display_id() returns an empty string");
+		$self->_info("Unable to call display_id() or display_id() returns an empty string"); # uncoverable statement
 	    }
 	    $self->{_sequence_set_index}{$name} = $i;
 	}
@@ -348,9 +349,10 @@ s reverse_complement            4455 1500 - 10000 ATTTGTAGCCGCTAGACGATTACGCGGTGC
     # input contains one alignment
     my $aln = $in->next_aln();
 
+    # uncoverable branch true
     unless (defined $aln)
     {
-	$self->_logdie("Unable to get the alignment");
+	$self->_logdie("Unable to get the alignment"); # uncoverable statement
     }
 
     my @seqs = ();
@@ -377,7 +379,7 @@ s reverse_complement            4455 1500 - 10000 ATTTGTAGCCGCTAGACGATTACGCGGTGC
 	return 0;
     } else {
 	# unexpected condition
-	$self->_logdie("Condition unexpected for MAF import");
+	$self->_logdie("Condition unexpected for MAF import"); # uncoverable statement
     }
 }
 
@@ -394,7 +396,7 @@ sub _fix_maf_revcomp
     {
 	unless (exists $self->{_sequence_set_index}{$alignment_segment->{id}})
 	{
-	    $self->_logdie("Unable to identify sequence in sequence set by name '$alignment_segment->{id}'");
+	    $self->_logdie("Unable to identify sequence in sequence set by name '$alignment_segment->{id}'"); # uncoverable statement
 	}
 
 	my $seq = $self->sequence_set()->[$self->{_sequence_set_index}{$alignment_segment->{id}}];

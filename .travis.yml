@@ -5,17 +5,23 @@ perl:
   - "5.14"
   - "5.18"
   - "5.20"
+#  - "5.22"
 sudo:
   false
 addons:
-  apt:
-    packages:
-    - bioperl
-    - bioperl-run
+   apt:
+     packages:
+      - build-essential
+      - libxml-dom-perl
+      - libxml-dom-xpath-perl
+      - libdb-dev
 env:
-    - PERL5LIB=/usr/share/perl5/
+    - BIOPERLVERSION='~1.0007'
+    - BIOPERLVERSION='~<1.007'
+    - BIOPERLVERSION='~<=1.006923'
 install:
     - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=c HARNESS_TIMER=1
+    - cpanm --quiet --notest Bio::SeqIO$BIOPERLVERSION Bio::FeatureIO
     - cpanm --quiet --notest Devel::Cover::Report::Coveralls
     - cpanm --quiet --installdeps .
     - wget 'http://www.bx.psu.edu/~rsharris/lastz/newer/lastz-1.03.73.tar.gz'

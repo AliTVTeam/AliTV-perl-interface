@@ -141,6 +141,7 @@ data/vectors/pBR322.fasta
 data/vectors/pUC19.fasta
 data/vectors/vectors.fasta
 data/vectors/input.yml
+data/vectors/input_wrong_alignmentprogram.yml
 
 # reference alignments
 data/vectors/001.maf

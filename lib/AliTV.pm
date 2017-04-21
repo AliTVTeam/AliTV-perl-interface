@@ -569,7 +569,7 @@ sub _make_and_set_uniq_seq_names
 	    )
 	    );
     } else {
-	$self->_logdie("Should never be reached");
+	$self->_logdie("Should never be reached"); # uncoverable statement
     }
 
     # sequences names are not uniq! Therefore, generate new names
