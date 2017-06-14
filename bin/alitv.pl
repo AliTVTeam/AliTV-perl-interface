@@ -33,8 +33,8 @@ GetOptions(
     'overwrite|force!' => \$overwrite,
     ) or pod2usage(2);
 
-pod2usage(1) if ($help || @ARGV== 0);
 pod2usage(-exitval => 0, -verbose => 2) if $man;
+pod2usage(1) if ($help || @ARGV== 0);
 
 my $yml = "";
 
