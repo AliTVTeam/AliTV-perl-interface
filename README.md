@@ -33,7 +33,8 @@ Additionally the software in any specific version can be cited via its zenodo do
 
 ## AUTHOR
 
-Frank Förster &lt;foersterfrank@gmx.de>
+- Frank Förster <foersterfrank@gmx.de>
+- Markus J. Ankenbrand <markus.ankenbrand@uni-wuerzburg.de>
 
 ## SEE ALSO
 
