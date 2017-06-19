@@ -1,6 +1,19 @@
 Revision history for Perl extension AliTV.
 
+1.0.3 <2017-06-19>
+ - add citation info
+
+1.0.2 <2017-04-21>
+ - tests for different BioPerl versions
+ - improve documentation
+
+1.0.1 <2017-04-20>
+ - add alitv-filter.pl
+
+1.0.0 <2017-04-13>
+ - first stable release
+
 0.1  Thu Sep  3 19:37:41 2015
-	- original version; created by h2xs 1.23 with options
-		-AXc --use-new-tests --skip-exporter --version=0.1 -b 5.10.0 -n AliTV
+ - original version; created by h2xs 1.23 with options
+   -AXc --use-new-tests --skip-exporter --version=0.1 -b 5.10.0 -n AliTV
 
