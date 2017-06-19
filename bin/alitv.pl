@@ -33,8 +33,8 @@ GetOptions(
     'overwrite|force!' => \$overwrite,
     ) or pod2usage(2);
 
-pod2usage(1) if ($help || @ARGV== 0);
 pod2usage(-exitval => 0, -verbose => 2) if $man;
+pod2usage(1) if ($help || @ARGV== 0);
 
 my $yml = "";
 
@@ -393,6 +393,12 @@ parameters to call the program for alignment generation.
          - "--gapped"
          - "--strand=both"
 
+
+=head1 CITATION
+
+An article about AliTV has been published in PeerJ Computer Science: https://peerj.com/articles/cs-116/
+Please cite this article if you use AliTV-perl-interface in your project.
+Additionally the software in any specific version can be cited via its zenodo doi: https://zenodo.org/badge/latestdoi/41874017
 
 =head1 AUTHOR
 
