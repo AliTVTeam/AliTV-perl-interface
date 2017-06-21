@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+package AliTV::Script;
 
 use strict;
 use warnings;
@@ -18,52 +19,60 @@ use File::Basename;
 
 use YAML;
 
-my $man = 0;
-my $help = 0;
+__PACKAGE__->run( @ARGV ) unless caller();
 
-my ($project, $logfile, $output);
-my $overwrite = 0; # keeping existing files is default
-
-GetOptions(
-    'help|?' => \$help,
-    man => \$man,
-    'project=s' => \$project,
-    'logfile=s' => \$logfile,
-    'output=s' => \$output,
-    'overwrite|force!' => \$overwrite,
-    ) or pod2usage(2);
-
-pod2usage(-exitval => 0, -verbose => 2) if $man;
-pod2usage(1) if ($help || @ARGV== 0);
-
-my $yml = "";
-
-# Check if we have a single parameter left, which needs to be a yml file
-if (@ARGV == 1)
+sub run
 {
-    $yml = shift @ARGV;
+    my $class = shift;
 
-    # yml specified, therefor use the ymls basename (without suffix
-    # .yml) as project name
+    my @params = @_;
 
-    if ($project)
+    my $man = 0;
+    my $help = 0;
+
+    my ($project, $logfile, $output);
+    my $overwrite = 0; # keeping existing files is default
+
+    Getopt::Long::GetOptionsFromArray(\@params,
+	'help|?' => \$help,
+	man => \$man,
+	'project=s' => \$project,
+	'logfile=s' => \$logfile,
+	'output=s' => \$output,
+	'overwrite|force!' => \$overwrite,
+	) or pod2usage(2);
+
+    pod2usage(-exitval => 0, -verbose => 2) if $man;
+    pod2usage(1) if ($help || @params== 0);
+
+    my $yml = "";
+
+    # Check if we have a single parameter left, which needs to be a yml file
+    if (@params == 1)
     {
-	$project = fileparse($yml, qr/\Q.yml\E/i);
-	warn "YML file specified, therefore the project name was overwritten by '$project'!\n";
+	$yml = shift @params;
+
+	# yml specified, therefor use the ymls basename (without suffix
+	# .yml) as project name
+
+	if ($project)
+	{
+	    $project = fileparse($yml, qr/\Q.yml\E/i);
+	    warn "YML file specified, therefore the project name was overwritten by '$project'!\n";
+	}
     }
-}
 
-# generate a uniq project name if not specified and a log file name
-# accordingly if also not specified
+    # generate a uniq project name if not specified and a log file name
+    # accordingly if also not specified
 
-($project, $output, $logfile) = generate_filenames($project, $output, $logfile);
+    ($project, $output, $logfile) = generate_filenames($project, $output, $logfile, $overwrite);
 
-# Log4Perl configuration
-my $conf = q(
+    # Log4Perl configuration
+    my $conf = q(
     log4perl.category                  = INFO, Logfile, Screen
 
     log4perl.appender.Logfile          = Log::Log4perl::Appender::File
-    log4perl.appender.Logfile.filename = sub { logfile(); };
+    log4perl.appender.Logfile.filename = sub { logfile($logfile); };
     log4perl.appender.Logfile.layout   = Log::Log4perl::Layout::PatternLayout
     log4perl.appender.Logfile.layout.ConversionPattern = [%r] %F %L %m%n
 
@@ -72,11 +81,11 @@ my $conf = q(
     log4perl.appender.Screen.layout = Log::Log4perl::Layout::SimpleLayout
   );
 
-Log::Log4perl::init( \$conf );
-my $logger = Log::Log4perl->get_logger();
+    Log::Log4perl::init( \$conf );
+    my $logger = Log::Log4perl->get_logger();
 
-# print a status message including a version information
-printf STDERR "
+    # print a status message including a version information
+    printf STDERR "
 ***********************************************************************
 *                                                                     *
 *  AliTV perl interface                                               *
@@ -86,41 +95,43 @@ printf STDERR "
 You are using version %s.
 ", $AliTV::VERSION;
 
-if (@ARGV > 1)
-{
-    my $config = AliTV::get_default_settings();
-    $config->{genomes} = [];
-
-    foreach my $infile (@ARGV)
+    if (@params > 1)
     {
-	push(@{$config->{genomes}}, {name => $infile, sequence_files => [ $infile ]});
+	my $config = AliTV::get_default_settings();
+	$config->{genomes} = [];
+
+	foreach my $infile (@params)
+	{
+	    push(@{$config->{genomes}}, {name => $infile, sequence_files => [ $infile ]});
+	}
+
+	$yml = $project.".yml";
+
+	YAML::DumpFile($yml, $config);
+
+	$logger->info("Wrote temporary YAML file '$yml'");
     }
 
-    $yml = $project.".yml";
+    my $obj = AliTV->new(-file => $yml, -project => $project);
 
-    YAML::DumpFile($yml, $config);
+    my $outputfh;
 
-    $logger->info("Wrote temporary YAML file '$yml'");
+    if ($output eq "-" || $output eq "")
+    {
+	$outputfh = *STDOUT;
+    } else {
+	open($outputfh, ">", $output) || die "Unable to open file '$output' for writing: $!";
+    }
+
+    print $outputfh $obj->run();
+
+    close($outputfh) || die "Unable to close file '$output' after writing: $!";
+
 }
-
-my $obj = AliTV->new(-file => $yml, -project => $project);
-
-my $outputfh;
-
-if ($output eq "-" || $output eq "")
-{
-    $outputfh = *STDOUT;
-} else {
-    open($outputfh, ">", $output) || die "Unable to open file '$output' for writing: $!";
-}
-
-print $outputfh $obj->run();
-
-close($outputfh) || die "Unable to close file '$output' after writing: $!";
 
 sub generate_filenames
 {
-    my ($project, $output, $logfile) = @_;
+    my ($project, $output, $logfile, $overwrite) = @_;
 
     unless (defined $project)
     {
@@ -174,6 +185,8 @@ sub generate_filenames
 
 sub logfile()
 {
+    my $logfile = shift;
+
     if (defined $logfile)
     {
 	return $logfile;
