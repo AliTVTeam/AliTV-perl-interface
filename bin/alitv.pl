@@ -30,8 +30,10 @@ sub run
     my $man = 0;
     my $help = 0;
 
-    my ($project, $logfile, $output);
+    my ($project, $logfile, $output, $yml);
     my $overwrite = 0; # keeping existing files is default
+
+    my @seq_files = ();
 
     Getopt::Long::GetOptionsFromArray(\@params,
 	'help|?' => \$help,
@@ -45,21 +47,22 @@ sub run
     pod2usage(-exitval => 0, -verbose => 2) if $man;
     pod2usage(1) if ($help || @params== 0);
 
-    my $yml = "";
-
-    # Check if we have a single parameter left, which needs to be a yml file
+    # Check if we have a single parameter left, which needs to be a
+    # yml file or more than one parameter which should be sequence
+    # files
     if (@params == 1)
     {
+	# a yml file is given
 	$yml = shift @params;
 
-	# yml specified, therefor use the ymls basename (without suffix
-	# .yml) as project name
+    } elsif (@params > 1) {
+	# a sequence file set is given
+	@seq_files = @params;
 
-	if ($project)
-	{
-	    $project = fileparse($yml, qr/\Q.yml\E/i);
-	    warn "YML file specified, therefore the project name was overwritten by '$project'!\n";
-	}
+    } else {
+	# should never happen... Therefore, print the help and exit
+	print STDERR "\n\nERROR: Missing parameter! You need to specify a yml file or more than one sequence files\n\n";
+	pod2usage(-exitval => 0, -verbose => 2);
     }
 
     # generate a uniq project name if not specified and a log file name
@@ -95,17 +98,15 @@ sub run
 You are using version %s.
 ", $AliTV::VERSION;
 
-    if (@params > 1)
+    if (@seq_files)
     {
 	my $config = AliTV::get_default_settings();
 	$config->{genomes} = [];
 
-	foreach my $infile (@params)
+	foreach my $infile (@seq_files)
 	{
 	    push(@{$config->{genomes}}, {name => $infile, sequence_files => [ $infile ]});
 	}
-
-	$yml = $project.".yml";
 
 	YAML::DumpFile($yml, $config);
 
