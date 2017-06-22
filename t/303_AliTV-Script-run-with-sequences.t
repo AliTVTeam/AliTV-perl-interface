@@ -2,6 +2,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Exit;
 use JSON;
 
 BEGIN { use_ok('AliTV::Script') };
@@ -10,13 +11,15 @@ can_ok('AliTV::Script', qw(run));
 
 my $projectname = "test303";
 
-my @files = glob($projectname."*");
-if (@files)
+my $expected_json = "";
+while (<DATA>)
 {
-    unlink(@files) || die "Unable to remove the files ".$projectname."*\n";
+    $expected_json .= $_;
 }
 
 my $json_output = $projectname.".json";
+
+cleanfiles($projectname);
 
 AliTV::Script->run("--project", $projectname, qw(data/vectors/M13mp18.fasta  data/vectors/pBluescribeKSPlus.fasta  data/vectors/pBR322.fasta  data/vectors/pUC19.fasta));
 
@@ -30,15 +33,22 @@ while (<$fh>)
 }
 close($fh) || die "Unable to close file '$json_output'\n";
 
-my $expected_json = "";
-while (<DATA>)
-{
-    $expected_json .= $_;
-}
-
-is_deeply(JSON->new->decode($got_json), JSON->new->decode($expected_json), 'JSON file contains the expected content');
+exits_ok { AliTV::Script->run("--project", $projectname); } "Exited with success with project set but no input";
+exits_ok { AliTV::Script->run(); } "Exited with success without project and input";
 
 done_testing;
+
+sub cleanfiles
+{
+    my $projectname = shift;
+
+    my @files = glob($projectname."*");
+    if (@files)
+    {
+	unlink(@files) || die "Unable to remove the files ".$projectname."*\n";
+    }
+}
+
 
 __DATA__
 
