@@ -67,11 +67,11 @@ sub run
     ($project, $output, $logfile, $yml) = generate_filenames($project, $output, $logfile, $overwrite, $yml);
 
     # Log4Perl configuration
-    my $conf = q(
+    my $conf = qq(
     log4perl.category                  = INFO, Logfile, Screen
 
     log4perl.appender.Logfile          = Log::Log4perl::Appender::File
-    log4perl.appender.Logfile.filename = sub { logfile($logfile); };
+    log4perl.appender.Logfile.filename = $logfile
     log4perl.appender.Logfile.layout   = Log::Log4perl::Layout::PatternLayout
     log4perl.appender.Logfile.layout.ConversionPattern = [%r] %F %L %m%n
 
