@@ -173,41 +173,29 @@ sub generate_filenames
     unless (defined $output)
     {
 	$output = $project.".json";
+    }
 
-	if (-e $output)
+    if (-e $output)
+    {
+	if ($overwrite)
 	{
-	    if ($overwrite)
-	    {
-		warn "File '$output' exists... But due to overwrite parameter is specified the file will be overwritten!\n";
-	    } else {
-		die "File '$output' exists... Unless you specify --overwrite the file will not be overwritten!\n";
-	    }
+	    warn "File '$output' exists... But due to overwrite parameter is specified the file will be overwritten!\n";
+	} else {
+	    die "File '$output' exists... Unless you specify --overwrite the file will not be overwritten!\n";
 	}
     }
 
     unless (defined $logfile)
     {
 	$logfile = $project.".log";
+    }
 
-	if (-e $logfile)
-	{
-	    warn "Log File '$logfile' exists... Log messages will be appended\n";
-	}
+    if (-e $logfile)
+    {
+	warn "Log File '$logfile' exists... Log messages will be appended\n";
     }
 
     return ($project, $output, $logfile, $yml);
-}
-
-sub logfile()
-{
-    my $logfile = shift;
-
-    if (defined $logfile)
-    {
-	return $logfile;
-    } else {
-	return "logfile.log";
-    }
 }
 
 1;
