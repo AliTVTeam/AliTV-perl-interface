@@ -44,6 +44,7 @@ t/230_AliTV-Seq-output.t
 t/301_AliTV-Script.t
 t/302_AliTV-Script-generate_filenames.t
 t/303_AliTV-Script-run-with-sequences.t
+t/304_AliTV-Script-run-with-yml.t
 
 t/500_AliTV.t
 t/502_AliTV-new.t
@@ -149,6 +150,7 @@ data/vectors/pUC19.fasta
 data/vectors/vectors.fasta
 data/vectors/input.yml
 data/vectors/input_wrong_alignmentprogram.yml
+data/vectors/run_test_input.yml
 
 # reference alignments
 data/vectors/001.maf
