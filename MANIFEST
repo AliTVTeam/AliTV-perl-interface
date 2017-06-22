@@ -92,6 +92,8 @@ t/751_AliTV-Alignment-lastz-_check.t
 t/752_AliTV-Alignment-lastz-run.t
 
 t/760_AliTV-Alignment-importer.t
+t/761_AliTV-Alignment-importer-_check.t
+t/762_AliTV-Alignment-importer-run.t
 
 t/999-AliTV-POD-coverage.t
 
