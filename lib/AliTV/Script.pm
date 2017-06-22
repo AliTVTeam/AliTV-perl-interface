@@ -158,15 +158,15 @@ sub generate_filenames
     unless ($yml)
     {
 	$yml = $project.".yml";
-    }
 
-    if (-e $yml)
-    {
-	if ($overwrite)
+	if (-e $yml)
 	{
-	    warn "File '$yml' exists... But due to overwrite parameter is specified the file will be overwritten!\n";
-	} else {
-	    die "File '$yml' exists... Unless you specify --overwrite the file will not be overwritten!\n";
+	    if ($overwrite)
+	    {
+		warn "File '$yml' exists... But due to overwrite parameter is specified the file will be overwritten!\n";
+	    } else {
+		die "File '$yml' exists... Unless you specify --overwrite the file will not be overwritten!\n";
+	    }
 	}
     }
 
