@@ -28,7 +28,19 @@ $ctx->addfile($fh);
 
 close($fh) || die "Unable to close file '$json_output'\n";
 
-is($ctx->hexdigest(), "55aa3339f8dfddd17b9467984be47dc9", 'Output JSON contains expected data');
+if ($ctx->hexdigest() eq "55aa3339f8dfddd17b9467984be47dc9")
+{
+    is($ctx->hexdigest(), "55aa3339f8dfddd17b9467984be47dc9", 'Output JSON contains expected data (MD5: 55aa3339f8dfddd17b9467984be47dc9)');
+} elsif ($ctx->hexdigest() eq "24dc21cbb3e3f4e1788f54428efee190")
+{
+    is($ctx->hexdigest(), "24dc21cbb3e3f4e1788f54428efee190", 'Output JSON contains expected data (MD5: 24dc21cbb3e3f4e1788f54428efee190)');
+
+    print `cat $json_output`;
+} else {
+    is($ctx->hexdigest(), "55aa3339f8dfddd17b9467984be47dc9 or 24dc21cbb3e3f4e1788f54428efee190", 'Output JSON contains expected data (MD5: 55aa3339f8dfddd17b9467984be47dc9/24dc21cbb3e3f4e1788f54428efee190)');
+
+    print `cat $json_output`;
+}
 
 done_testing;
 
