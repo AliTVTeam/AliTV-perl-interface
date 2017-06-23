@@ -59,7 +59,7 @@ sub run
     } else {
 	# should never happen... Therefore, print the help and exit
 	print STDERR "\n\nERROR: Missing parameter! You need to specify a yml file or more than one sequence files\n\n";
-	pod2usage(-exitval => 0, -verbose => 2);
+	pod2usage(-exitval => 1, -verbose => 2);
     }
 
     # generate a uniq project name if not specified and a log file name

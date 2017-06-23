@@ -33,8 +33,8 @@ while (<$fh>)
 }
 close($fh) || die "Unable to close file '$json_output'\n";
 
-exits_ok { AliTV::Script->run("--project", $projectname); } "Exited with success with project set but no input";
-exits_ok { AliTV::Script->run(); } "Exited with success without project and input";
+is exit_code { AliTV::Script->run("--project", $projectname); }, 1,  "Exited with success with project set but no input";
+is exit_code { AliTV::Script->run(); }, 1, "Exited with success without project and input";
 
 done_testing;
 
