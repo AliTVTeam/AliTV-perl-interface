@@ -42,7 +42,7 @@ sub run
 	) or pod2usage(2);
 
     pod2usage(-exitval => 0, -verbose => 2) if $man;
-    pod2usage(1) if ($help || @params== 0);
+    pod2usage(1) if $help;
 
     # Check if we have a single parameter left, which needs to be a
     # yml file or more than one parameter which should be sequence
