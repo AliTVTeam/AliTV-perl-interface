@@ -38,6 +38,12 @@ is exit_code { AliTV::Script->run(); }, 1, "Exited with success without project 
 
 done_testing;
 
+=pod
+
+Just a placeholder for the exit and pod2usage calls
+
+=cut
+
 sub cleanfiles
 {
     my $projectname = shift;
