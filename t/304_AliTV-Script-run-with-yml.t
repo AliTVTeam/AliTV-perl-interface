@@ -32,6 +32,8 @@ while (<$fh>)
 }
 close($fh) || die "Unable to close file '$json_output'\n";
 
+is_deeply(JSON->new->decode($got_json), JSON->new->decode($expected_json), 'JSON file contains the expected content');
+
 done_testing;
 
 sub cleanfiles

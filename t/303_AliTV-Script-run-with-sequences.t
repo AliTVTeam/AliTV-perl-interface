@@ -33,6 +33,8 @@ while (<$fh>)
 }
 close($fh) || die "Unable to close file '$json_output'\n";
 
+is_deeply(JSON->new->decode($got_json), JSON->new->decode($expected_json), 'JSON file contains the expected content');
+
 is exit_code { AliTV::Script->run("--project", $projectname); }, 1,  "Exited with success with project set but no input";
 is exit_code { AliTV::Script->run(); }, 1, "Exited with success without project and input";
 
@@ -54,7 +56,6 @@ sub cleanfiles
 	unlink(@files) || die "Unable to remove the files ".$projectname."*\n";
     }
 }
-
 
 __DATA__
 
