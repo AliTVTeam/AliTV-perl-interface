@@ -35,8 +35,36 @@ close($fh) || die "Unable to close file '$json_output'\n";
 
 is_deeply(JSON->new->decode($got_json), JSON->new->decode($expected_json), 'JSON file contains the expected content');
 
+
+cleanfiles($projectname);
+
+$json_output = $json_output."_captured_from_STDOUT";
+
+do {
+    local *STDOUT;
+
+    # redirect STDOUT to $json_output
+    open (STDOUT, '>>', $json_output);
+
+    AliTV::Script->run("--project", $projectname, "--output", "-", qw(data/vectors/M13mp18.fasta  data/vectors/pBluescribeKSPlus.fasta  data/vectors/pBR322.fasta  data/vectors/pUC19.fasta));
+};
+
+ok(-e $json_output, 'JSON file was written to STDOUT');
+
+open(my $fh, "<", $json_output) || die "Unable to open file '$json_output'\n";
+my $got_json = "";
+while (<$fh>)
+{
+    $got_json .= $_;
+}
+close($fh) || die "Unable to close file '$json_output'\n";
+
+is_deeply(JSON->new->decode($got_json), JSON->new->decode($expected_json), 'JSON file from STDOUT contains the expected content');
+
 is exit_code { AliTV::Script->run("--project", $projectname); }, 1,  "Exited with success with project set but no input";
 is exit_code { AliTV::Script->run(); }, 1, "Exited with success without project and input";
+
+cleanfiles($projectname);
 
 done_testing;
 
