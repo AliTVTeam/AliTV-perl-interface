@@ -186,105 +186,125 @@ sub import_alignments
 		push(@seqs, $aligned_seq_segment);
 	    }
 
-	    # calculate percentage identity
-	    if (@seqs > 2)
+	    # split the alignment into pairwise alignments
+	    for(my $x=0; $x<@seqs-1; $x++)
 	    {
-		# for multiple alignment, just let bioperl do the job
-		$identity = $aln->percentage_identity();
-	    } elsif (@seqs == 2) {
-		# for two sequences lets do it ourself
-		my @seqa = split(//, lc($seqs[0]{seq}));
-		my @seqb = split(//, lc($seqs[1]{seq}));
-
-		my $cigar = "";
-		my ($match, $mismatch) = (0, 0);
-		for(my $i=0; $i<@seqa; $i++)
+		for (my $y=$x+1; $y<@seqs; $y++)
 		{
-		    if ($seqa[$i] eq "-")
+		    my @seqs=($seqs[$x], $seqs[$y]);
+
+		    # calculate percentage identity
+		    if (@seqs > 2)
 		    {
-			$cigar .= "I";
-		    } elsif ($seqb[$i] eq "-") {
-			$cigar .= "D";
-		    } elsif ($seqa[$i] eq $seqb[$i]) {
-			$cigar .= "=";
-			$match++;
-		    } else {
-			$cigar .= "X";
-			$mismatch++;
+			# for multiple alignment, just let bioperl do the job
+			$identity = $aln->percentage_identity();
+		    } elsif (@seqs == 2) {
+			# for two sequences lets do it ourself
+			my @seqa = split(//, lc($seqs[0]{seq}));
+			my @seqb = split(//, lc($seqs[1]{seq}));
+
+			my $cigar = "";
+			my ($match, $mismatch) = (0, 0);
+			for(my $i=0; $i<@seqa; $i++)
+			{
+			    if ($seqa[$i] eq "-" && $seqb[$i] eq "-")
+			    {
+				$cigar .= "-";
+			    } elsif ($seqa[$i] eq "-")
+			    {
+				$cigar .= "I";
+			    } elsif ($seqb[$i] eq "-") {
+				$cigar .= "D";
+			    } elsif ($seqa[$i] eq $seqb[$i]) {
+				$cigar .= "=";
+				$match++;
+			    } else {
+				$cigar .= "X";
+				$mismatch++;
+			    }
+			}
+
+			$identity = $match/($match+$mismatch)*100;
 		    }
-		}
 
-		$identity = $match/($match+$mismatch)*100;
+		    # sort the seqs by id followed by start and end postion, strand and seq itself
+		    @seqs = sort {
+			$a->{id} cmp $b->{id}             # first alphabetically the sequence ids
+			||
+			    $a->{start} <=> $b->{start}   # second a lower start column
+			||
+			    $b->{end} <=> $a->{end}       # third a higher end column
+			||
+			    $a->{strand} <=> $b->{strand} # forth strand different
+			||
+			    $a->{seq} cmp $b->{seq}       # fifth different sequences
+		    } (@seqs);
+
+		    # store the information if they are not identical (self-hit over complete length)
+		    if ($identity == 100)
+		    {
+			# only need to test if the alignment is identical
+			my %seen_seqs = ();
+			foreach my $seq (@seqs)
+			{
+			    $seen_seqs{join("\t", (map {$seq->{$_}} sort (keys (%{$seq}))))}++;
+			}
+			# if seen_seqs contains only a single key, we need to skip the entry
+			if ((keys %seen_seqs)+0 == 1)
+			{
+			    next;
+			}
+		    }
+
+		    # generate a checksum for the alignment entry to avoid multiple identical entries
+		    # due to the MAF revcomp issue, a filtering here might not
+		    # be sufficient and a re-filtering while link import
+		    # (AliTV::Genome) is necessary
+		    my $md5 = Digest::MD5->new;
+		    foreach my $seq (@seqs)
+		    {
+			foreach my $key (sort keys %{$seq})
+			{
+			    if (exists $seq->{$key} && ! defined $seq->{$key})
+			    {
+				if ($key ne "strand")
+				{
+				    $seq->{$key} = "";
+				} else {
+				    $seq->{$key} = 0;
+				}
+			    }
+			    $md5->add($seq->{$key});
+			}
+		    }
+		    $md5->add($identity) if (defined $identity);
+		    $md5->add($score) if (defined $score);
+		    $md5->add($length) if (defined $length);
+
+		    # prepare the new entry
+		    my $new_alignment = {
+			identity => $identity,
+			score    => $score,
+			len      => $length,
+			md5      => $md5->hexdigest(),
+			seqs     => \@seqs
+		    };
+
+		    # search for an entry with the same hash
+		    my @collisions = grep { $_->{md5} eq $new_alignment->{md5} } (@{$self->{_alignments}});
+		    if (@collisions > 0)
+		    {
+			# identical hash found, therefore skip the entry
+			foreach my $old_alignment (@collisions)
+			{
+			    $self->_debug("Identical MD5 found for entries ".Dumper({new => $new_alignment, old => $old_alignment}));
+			}
+			next;
+		    }
+
+		    push(@{$self->{_alignments}}, $new_alignment);
+		}
 	    }
-
-	    # sort the seqs by id followed by start and end postion, strand and seq itself
-	    @seqs = sort {
-		$a->{id} cmp $b->{id}             # first alphabetically the sequence ids
-		||
-		    $a->{start} <=> $b->{start}   # second a lower start column
-		||
-		    $b->{end} <=> $a->{end}       # third a higher end column
-		||
-		    $a->{strand} <=> $b->{strand} # forth strand different
-		||
-		    $a->{seq} cmp $b->{seq}       # fifth different sequences
-	    } (@seqs);
-
-	    # store the information if they are not identical (self-hit over complete length)
-	    if ($identity == 100)
-	    {
-		# only need to test if the alignment is identical
-		my %seen_seqs = ();
-		foreach my $seq (@seqs)
-		{
-		    $seen_seqs{join("\t", (map {$seq->{$_}} sort (keys (%{$seq}))))}++;
-		}
-		# if seen_seqs contains only a single key, we need to skip the entry
-		if ((keys %seen_seqs)+0 == 1)
-		{
-		    next;
-		}
-	    }
-
-	    # generate a checksum for the alignment entry to avoid multiple identical entries
-	    # due to the MAF revcomp issue, a filtering here might not
-	    # be sufficient and a re-filtering while link import
-	    # (AliTV::Genome) is necessary
-	    my $md5 = Digest::MD5->new;
-	    foreach my $seq (@seqs)
-	    {
-		foreach my $key (sort keys %{$seq})
-		{
-		    $md5->add($seq->{$key});
-		}
-	    }
-	    $md5->add($identity);
-	    $md5->add($score);
-	    $md5->add($length);
-
-	    # prepare the new entry
-	    my $new_alignment = {
-		identity => $identity,
-		score    => $score,
-		len      => $length,
-		md5      => $md5->hexdigest(),
-		seqs     => \@seqs
-	    };
-
-	    # search for an entry with the same hash
-	    my @collisions = grep { $_->{md5} eq $new_alignment->{md5} } (@{$self->{_alignments}});
-	    if (@collisions > 0)
-	    {
-		# identical hash found, therefore skip the entry
-		foreach my $old_alignment (@collisions)
-		{
-		    $self->_debug("Identical MD5 found for entries ".Dumper({new => $new_alignment, old => $old_alignment}));
-		}
-		next;
-	    }
-
-	    push(@{$self->{_alignments}}, $new_alignment);
-
 	}
     }
 }
@@ -422,7 +442,7 @@ with different alignment programs
   use AliTV::Alignment::type;
 
   # call mechanism not clear so far
-  
+
 =head1 DESCRIPTION
 
 This is the AliTV::Alignment class to align a given sequence set and return the generated alignments.
