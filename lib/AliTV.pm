@@ -310,7 +310,7 @@ sub get_json
 	my %genomes = map { $data{data}{karyo}{chromosomes}{$_}{genome_id} => 1 } (keys %{$data{data}{karyo}{chromosomes}});
 	$data{filters}{karyo}{genome_order} = [sort keys %genomes];
     }
-    return to_json(\%data);
+    return JSON->new->utf8(1)->canonical->encode(\%data);
 }
 
 sub _import_links

@@ -1,0 +1,21 @@
+---
+genomes: 
+   -
+    name: data/vectors/M13mp18.fasta
+    sequence_files:
+      - data/vectors/M13mp18.fasta
+
+   -
+    name: data/vectors/pBluescribeKSPlus.fasta
+    sequence_files:
+      - data/vectors/pBluescribeKSPlus.fasta
+
+   -
+    name: data/vectors/pBR322.fasta
+    sequence_files:
+      - data/vectors/pBR322.fasta
+
+   -
+    name: data/vectors/pUC19.fasta
+    sequence_files:
+      - data/vectors/pUC19.fasta

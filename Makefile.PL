@@ -11,6 +11,7 @@ WriteMakefile(
     PREREQ_PM         => {
 	Test::Exception => 0,
 	Test::Warnings => 0,
+	Test::Exit => 0,
 	Storable => 0,              # Core module since perl v5.7.3
 	Bio::Root::Version => 0,    # should be 1.006923 but does not seem to work
 	Bio::Seq => 0,              # was 1.006923, but the installed version cannot determined
