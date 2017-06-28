@@ -493,10 +493,6 @@ sub get_default_settings
     my $default_yml_content = '
 ---
 # this is the default yml file
-output:
-    data: data.json
-    conf: conf.json
-    filter: filter.json
 alignment:
     program: lastz
     parameter:

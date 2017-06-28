@@ -16,8 +16,18 @@ can_ok('AliTV', qw(get_default_settings));
 
 my $obj = new_ok('AliTV');
 
-my $expected_yml = join("", <DATA>);
-my $expected = YAML::Load($expected_yml);
+my $expected = {
+    alignment => {
+	program => "lastz",
+	parameter => [
+	    "--format=maf",
+	    "--noytrim",
+	    "--ambiguous=iupac",
+	    "--gapped",
+	    "--strand=both"
+	    ]
+    }
+};
 
 is_deeply($obj->{_yml_import}, $expected, 'First parsing of default set works');
 is_deeply($obj->get_default_settings(), $expected, 'Multiple calls of get_default_settings() as object method return the same settings 1st attempt');
@@ -27,20 +37,3 @@ is_deeply(AliTV::get_default_settings(), $expected, 'Multiple calls of get_defau
 is_deeply(AliTV::get_default_settings(), $expected, 'Multiple calls of get_default_settings() as class method return the same settings 2nd attempt');
 
 done_testing;
-
-__DATA__
----
-# this is the default yml file
-output:
-    data: data.json
-    conf: conf.json
-    filter: filter.json
-alignment:
-    program: lastz
-    parameter:
-       - "--format=maf"
-       - "--noytrim"
-       - "--ambiguous=iupac"
-       - "--gapped"
-       - "--strand=both"
-
