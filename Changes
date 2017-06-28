@@ -1,5 +1,8 @@
 Revision history for Perl extension AliTV.
 
+1.0.6 <2017-06-28>
+ - Default YAML file without the undocumented and unused output section. (Github issue #145)
+
 1.0.5 <2017-06-26>
  - alitv script is now unit tested
 
