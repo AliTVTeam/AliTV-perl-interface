@@ -95,7 +95,8 @@ C<name> key defines the name of the genome and has to be unique.
 =item *
 
 C<sequence_files> key contains a list of sequence files which define
-the sequence(s) of the genome
+the sequence(s) of the genome (beware that lowercase letters in fasta
+files are treated as masked by lastz, see #152 for details)
 
 =item *
 
