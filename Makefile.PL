@@ -35,6 +35,7 @@ WriteMakefile(
 	Storable => 0,
         Digest::MD5 => 0,
 	FindBin::Real => 0,
+	POSIX => 0,
     }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/AliTV.pm', # retrieve abstract from module

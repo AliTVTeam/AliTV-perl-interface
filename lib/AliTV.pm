@@ -6,6 +6,8 @@ use warnings;
 
 use parent 'AliTV::Base';
 
+use POSIX qw(ceil floor);
+
 use YAML;
 use Hash::Merge;
 
@@ -268,9 +270,9 @@ sub get_json
                                     },
                          'links' => {
                                       'invisibleLinks' => {},
-                                      'maxLinkIdentity' => $self->{_links_max_id}+0,
+                                      'maxLinkIdentity' => ceil($self->{_links_max_id}),
                                       'maxLinkLength' => $self->{_links_max_len}+0,
-                                      'minLinkIdentity' => $self->{_links_min_id}+0,
+                                      'minLinkIdentity' => floor($self->{_links_min_id}),
                                       'minLinkLength' => $self->{_links_min_len}+0
                                     },
                          'onlyShowAdjacentLinks' => JSON::true,
