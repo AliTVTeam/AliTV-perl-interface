@@ -268,9 +268,9 @@ sub get_json
                                     },
                          'links' => {
                                       'invisibleLinks' => {},
-                                      'maxLinkIdentity' => $self->{_links_max_id}+0,
+                                      'maxLinkIdentity' => ($self->{_links_max_id} >= 100) ? 100: int($self->{_links_max_id}+1),
                                       'maxLinkLength' => $self->{_links_max_len}+0,
-                                      'minLinkIdentity' => $self->{_links_min_id}+0,
+                                      'minLinkIdentity' => int($self->{_links_min_id}+0),
                                       'minLinkLength' => $self->{_links_min_len}+0
                                     },
                          'onlyShowAdjacentLinks' => JSON::true,
