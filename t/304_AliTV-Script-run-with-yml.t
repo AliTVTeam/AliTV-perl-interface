@@ -425,9 +425,9 @@ __DATA__
     },
     "links": {
       "invisibleLinks": {},
-      "maxLinkIdentity": 99.9482669425763,
+      "maxLinkIdentity": 100,
       "maxLinkLength": 2010,
-      "minLinkIdentity": 65.7084188911704,
+      "minLinkIdentity": 65,
       "minLinkLength": 58
     },
     "onlyShowAdjacentLinks": true,
