@@ -68,7 +68,10 @@ additionally can have feature definitions.
 
 - `name` key defines the name of the genome and has to be unique.
 - `sequence_files` key contains a list of sequence files which define
-the sequence(s) of the genome
+the sequence(s) of the genome (beware that lowercase letters in fasta
+files are treated as masked by lastz, see
+[issue#152](https://github.com/AliTVTeam/AliTV-perl-interface/issues/152)
+for details)
 - `feature_files` key contains different features. Each is defined as
 a seperate key inside the &lt;feature\_files> and contains a list of files
 describing the features and their locations. In the case of
