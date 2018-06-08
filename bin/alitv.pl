@@ -96,7 +96,9 @@ C<name> key defines the name of the genome and has to be unique.
 
 C<sequence_files> key contains a list of sequence files which define
 the sequence(s) of the genome (beware that lowercase letters in fasta
-files are treated as masked by lastz, see #152 for details)
+files are treated as masked by lastz, see
+L<issue#152|https://github.com/AliTVTeam/AliTV-perl-interface/issues/152>
+for details)
 
 =item *
 
