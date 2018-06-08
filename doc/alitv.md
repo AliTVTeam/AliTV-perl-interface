@@ -177,6 +177,12 @@ parameters to call the program for alignment generation.
            - "--gapped"
            - "--strand=both"
 
+# CITATION
+
+An article about AliTV has been published in PeerJ Computer Science: [https://doi.org/10.7717/peerj-cs.116](https://doi.org/10.7717/peerj-cs.116)
+Please cite this article if you use `AliTV-perl-interface` in your project.
+Additionally the software in any specific version can be cited via its zenodo doi: [https://doi.org/10.5281/zenodo.597916](https://doi.org/10.5281/zenodo.597916)
+
 # AUTHOR
 
 Frank Förster &lt;foersterfrank@gmx.de>
