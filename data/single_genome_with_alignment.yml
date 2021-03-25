@@ -3,10 +3,10 @@ genomes:
    -
     name: Lindenbergia_philippensis
     sequence_files:
-      - chloroset/Lindenbergia_philippensis.fasta
-    feature_files:
-      genes: 
-                  - chloroset/Lindenbergia_philippensis.gb   
+      - data/chloroset/Lindenbergia_philippensis.fasta
+            feature_files:
+              genes:
+                          - data/chloroset/Lindenbergia_philippensis.gb
 alignment:
   parameter:
     - data/vectors/001.maf
