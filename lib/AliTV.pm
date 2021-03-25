@@ -345,7 +345,10 @@ sub _import_links
     }
 
     # add a new link to the link-list
-    $self->_logdie("unable to create features") unless (@linkdat == 2);
+    unless (@linkdat == 2){
+        my @seqnames = map { $_->{id} } @{$entry->{seqs}};
+        $self->_logdie("unable to create features for seqs: @seqnames");
+    }
     $self->{_linkcounter}++;
     my $genome1 = $linkdat[0]{genome};
     my $genome2 = $linkdat[1]{genome};
