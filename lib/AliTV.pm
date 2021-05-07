@@ -436,6 +436,17 @@ sub project
     return $self->{_project};
 }
 
+sub keepids
+{
+    my $self = shift;
+    # is another parameter given?
+    if (@_)
+    {
+	$self->{_keepids} = shift;
+    }
+    return $self->{_keepids};
+}
+
 sub file
 {
     my $self = shift;
@@ -544,9 +555,12 @@ sub _make_and_set_uniq_seq_names
     my $only_word_characters = ((grep {$_->{name} =~ /\W/} @all_seq_ids) == 0);
     my $comply_maximum_id_length = ((grep {length($_->{name}) > $max_seq_length} @all_seq_ids) == 0);
 
-    if ( $uniq_names && $only_word_characters && $comply_maximum_id_length)
+    if ( $uniq_names && $only_word_characters && $comply_maximum_id_length )
     {
 	# sequence names are uniq and can be used as uniq names
+	@all_seq_ids = map { {name => $_->{name}, genome => $_->{genome}, uniq_name => $_->{name}} } (@all_seq_ids);
+    } elsif ($self->{_keepids}) {
+	$self->_warn("IDs would normally be renamed but it is explicitly disabled with --keepids");
 	@all_seq_ids = map { {name => $_->{name}, genome => $_->{genome}, uniq_name => $_->{name}} } (@all_seq_ids);
     } elsif (! $uniq_names) {
 	$self->_info("Sequence names are not unique and will be replaced by unique sequence names\n");
@@ -574,7 +588,7 @@ sub _make_and_set_uniq_seq_names
     }
 
     # sequences names are not uniq! Therefore, generate new names
-    unless ( $uniq_names && $only_word_characters && $comply_maximum_id_length)
+    unless ( $uniq_names && ($self->{_keepids} || ($only_word_characters && $comply_maximum_id_length)) )
     {
 	my $counter = 0;
 

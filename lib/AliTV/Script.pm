@@ -29,6 +29,7 @@ sub run
 
     my ($project, $logfile, $output, $yml);
     my $overwrite = 0; # keeping existing files is default
+    my $keepids = 0; # keeping existing ids (no renaming if too long or non-word characters)
 
     my @seq_files = ();
 
@@ -39,6 +40,7 @@ sub run
 	'logfile=s' => \$logfile,
 	'output=s' => \$output,
 	'overwrite|force!' => \$overwrite,
+	'keepids!' => \$keepids,
 	) or pod2usage(2);
 
     pod2usage(-exitval => 0, -verbose => 2) if $man;
@@ -109,7 +111,7 @@ You are using version %s.
 	$logger->info("Wrote temporary YAML file '$yml'");
     }
 
-    my $obj = AliTV->new(-file => $yml, -project => $project);
+    my $obj = AliTV->new(-file => $yml, -project => $project, -keepids => $keepids);
 
     my $outputfh;
 
