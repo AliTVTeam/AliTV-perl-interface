@@ -11,6 +11,8 @@ This repository contains two helper scripts for [AliTV](https://github.com/AliTV
 - [A perl script `alitv.pl`](doc/alitv.md) to generate input files for [AliTV](https://github.com/AliTVTeam/AliTV).
 - [A perl script `alitv-filter.pl`](doc/alitv-filter.md) to filter the json input files for [AliTV](https://github.com/AliTVTeam/AliTV).
 
+⚠️ If your fasta file contains lowercase letters they will be treated as masked by `lastz`, see [issue#152](https://github.com/AliTVTeam/AliTV-perl-interface/issues/152)
+
 ## INSTALLATION
 
 External Requirements:
