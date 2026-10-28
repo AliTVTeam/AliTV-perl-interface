@@ -1,5 +1,13 @@
 Revision history for Perl extension AliTV.
 
+1.0.7 <2026-10-28>
+ - CI moved from Travis CI to GitHub Actions (Perl 5.36, 5.38, 5.40)
+ - Makefile.PL: repository metadata, license, minimum Perl version,
+   complete list of prerequisites (Bio::FeatureIO is a separate
+   distribution)
+ - README: prominent warning that lowercase letters are treated as
+   masked by lastz (Github issue #152)
+
 1.0.6 <2017-06-28>
  - Default YAML file without the undocumented and unused output section. (Github issue #145)
 
