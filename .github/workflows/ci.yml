@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   test:
+    name: Perl ${{ matrix.perl-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
