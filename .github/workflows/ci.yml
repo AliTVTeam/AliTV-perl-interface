@@ -22,7 +22,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y lastz libexpat1-dev libdb-dev
-          lastz --version
+          lastz --version || true  # lastz exits with status 1 after printing its version
       - uses: shogo82148/actions-setup-perl@v1
         with:
           perl-version: ${{ matrix.perl-version }}
