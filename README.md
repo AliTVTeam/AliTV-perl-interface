@@ -20,6 +20,11 @@
 
 Latest build: [![Build Status](https://travis-ci.org/AliTVTeam/AliTV-perl-interface.svg?branch=master)](https://travis-ci.org/AliTVTeam/AliTV-perl-interface) [![Coverage Status](https://coveralls.io/repos/github/AliTVTeam/AliTV-perl-interface/badge.svg?branch=master)](https://coveralls.io/github/AliTVTeam/AliTV-perl-interface?branch=master)
 
+## Repo Status
+
+[![Project Status: Inactive](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
+Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.
+
 ## DESCRIPTION
 
 This repository contains two helper scripts for [AliTV](https://github.com/AliTVTeam/AliTV):
