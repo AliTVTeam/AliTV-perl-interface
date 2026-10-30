@@ -137,13 +137,19 @@ sub import_alignments
 	}
 	if ($format eq "maf")
 	{
-	    $need_maf_workaround = $self->_check_if_maf_fix_is_required;
-	    if ($need_maf_workaround)
+	    # the BioPerl version does not change during a run,
+	    # therefore check and log only once (Github issue #168)
+	    unless (exists $self->{_need_maf_workaround})
 	    {
-		$self->_info("MAF input file and buggy BioPerl detected... Therefore, workaround for revcom issue activated");
-	    } else {
-		$self->_info("MAF input file detected, but Bioperl is bugfree... Therefore, workaround for revcom issue is not activated");
+		$self->{_need_maf_workaround} = $self->_check_if_maf_fix_is_required;
+		if ($self->{_need_maf_workaround})
+		{
+		    $self->_info("MAF input file and buggy BioPerl detected... Therefore, workaround for revcom issue activated");
+		} else {
+		    $self->_info("MAF input file detected, but Bioperl is bugfree... Therefore, workaround for revcom issue is not activated");
+		}
 	    }
+	    $need_maf_workaround = $self->{_need_maf_workaround};
 	}
 
 	while ( my $aln = $in->next_aln ) {
