@@ -1,5 +1,21 @@
 # AliTV-Perl interface
 
+[![AI-assisted](https://img.shields.io/badge/AI--assisted-since%20v2.0.0-orange.svg)](#ai-assistance)
+[![Last release without AI](https://img.shields.io/badge/last%20release%20without%20AI-v1.0.6-blue.svg)](https://github.com/AliTVTeam/AliTV-perl-interface/releases/tag/v1.0.6)
+
+> [!WARNING]
+> **AI-assisted development since version 2.0.0**
+>
+> Starting with version 2.0.0, we use AI tools to help maintain AliTV-perl-interface.
+> Right now we do not have the time to keep it up to date actively without AI support.
+>
+> - **What AI does at the moment:** it mainly helps us keep all dependencies up to date.
+> - **What may come:** we do not rule out AI-assisted feature development in the future.
+> - **Our promise:** we report openly what was done with AI support.
+>   Every commit says what AI was used for, and every release lists the AI-assisted changes in [`Changes`](Changes).
+>
+> The last version developed without AI support is [v1.0.6](https://github.com/AliTVTeam/AliTV-perl-interface/releases/tag/v1.0.6).
+
 ## Build status
 
 Latest build: [![Build Status](https://travis-ci.org/AliTVTeam/AliTV-perl-interface.svg?branch=master)](https://travis-ci.org/AliTVTeam/AliTV-perl-interface) [![Coverage Status](https://coveralls.io/repos/github/AliTVTeam/AliTV-perl-interface/badge.svg?branch=master)](https://coveralls.io/github/AliTVTeam/AliTV-perl-interface?branch=master)
@@ -25,6 +41,16 @@ Install with:
 git clone https://github.com/AliTVTeam/AliTV-perl-interface
 cpanm --installdeps .
 ```
+
+## AI ASSISTANCE
+
+Since version 2.0.0, AliTV-perl-interface is maintained with the help of AI tools.
+The maintainers review every AI-assisted change before it is merged.
+Each AI-assisted commit has a trailer that names the AI tool and says what it did, for example:
+```
+AI-Assisted: Claude Code drafted the dependency updates
+```
+If you prefer a version without any AI involvement, use [v1.0.6](https://github.com/AliTVTeam/AliTV-perl-interface/releases/tag/v1.0.6).
 
 ## CITE
 

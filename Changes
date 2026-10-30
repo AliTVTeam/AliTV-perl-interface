@@ -1,5 +1,8 @@
 Revision history for Perl extension AliTV.
 
+2.0.0 <unreleased>
+ - Add notice on AI-assisted maintenance (AI-assisted: drafted with Claude Code)
+
 1.0.6 <2017-06-28>
  - Default YAML file without the undocumented and unused output section. (Github issue #145)
 
