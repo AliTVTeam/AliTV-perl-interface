@@ -1,5 +1,8 @@
 Revision history for Perl extension AliTV.
 
+2.0.1 <unreleased>
+ - Add CITATION.cff (Github issue #163) (AI-assisted: test and file written with Claude Code)
+
 2.0.0 <2026-10-30>
  - Replace Travis CI with GitHub Actions (Perl 5.36, 5.38, 5.40) (AI-assisted: written with Claude Code)
  - Add notice on AI-assisted maintenance (AI-assisted: drafted with Claude Code)
