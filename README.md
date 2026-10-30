@@ -1,7 +1,7 @@
 # AliTV-Perl interface
 
 [![AI-assisted](https://img.shields.io/badge/AI--assisted-since%20v2.0.0-orange.svg)](#ai-assistance)
-[![Last release without AI](https://img.shields.io/badge/last%20release%20without%20AI-v1.0.6-blue.svg)](https://github.com/AliTVTeam/AliTV-perl-interface/releases/tag/v1.0.6)
+[![Last release without AI](https://img.shields.io/badge/last%20release%20without%20AI-v1.0.7-blue.svg)](https://github.com/AliTVTeam/AliTV-perl-interface/releases/tag/v1.0.7)
 
 > [!WARNING]
 > **AI-assisted development since version 2.0.0**
@@ -14,7 +14,7 @@
 > - **Our promise:** we report openly what was done with AI support.
 >   Every commit says what AI was used for, and every release lists the AI-assisted changes in [`Changes`](Changes).
 >
-> The last version developed without AI support is [v1.0.6](https://github.com/AliTVTeam/AliTV-perl-interface/releases/tag/v1.0.6).
+> The last version developed without AI support is [v1.0.7](https://github.com/AliTVTeam/AliTV-perl-interface/releases/tag/v1.0.7).
 
 ## Build status
 
@@ -55,7 +55,7 @@ Each AI-assisted commit has a trailer that names the AI tool and says what it di
 ```
 AI-Assisted: Claude Code drafted the dependency updates
 ```
-If you prefer a version without any AI involvement, use [v1.0.6](https://github.com/AliTVTeam/AliTV-perl-interface/releases/tag/v1.0.6).
+If you prefer a version without any AI involvement, use [v1.0.7](https://github.com/AliTVTeam/AliTV-perl-interface/releases/tag/v1.0.7).
 
 ## CITE
 

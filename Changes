@@ -2,6 +2,13 @@ Revision history for Perl extension AliTV.
 
 2.0.0 <unreleased>
  - Add notice on AI-assisted maintenance (AI-assisted: drafted with Claude Code)
+ - Add repo status badge to README (AI-assisted: copied from the viewer README with Claude Code)
+ - Name v1.0.7 as the last release without AI support (AI-assisted: updated with Claude Code)
+
+1.0.7 <2026-10-30>
+ - Add prominent disclaimer for lowercase masking
+ - Update copyright years to 2015-2026 and fix the LICENSE file reference
+ - Fix empty POD heading for method run
 
 1.0.6 <2017-06-28>
  - Default YAML file without the undocumented and unused output section. (Github issue #145)
