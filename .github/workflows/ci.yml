@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [master, develop]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Perl ${{ matrix.perl-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        perl-version: ['5.36', '5.38', '5.40']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install lastz and build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lastz libexpat1-dev libdb-dev
+          lastz --version || true  # lastz exits with status 1 after printing its version
+      - uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl-version }}
+      - name: Install Perl dependencies
+        run: |
+          cpanm --quiet --notest --installdeps .
+          cpanm --quiet --notest Test::Pod::Coverage
+      - name: Run tests
+        run: prove -lr t
