@@ -37,13 +37,14 @@ This repository contains two helper scripts for [AliTV](https://github.com/AliTV
 ## INSTALLATION
 
 External Requirements:
- - perl
- - cpanm
- - [lastz](https://github.com/lastz/lastz)
+ - Perl 5.10 or newer (tested with Perl 5.36, 5.38 and 5.40)
+ - [cpanm](https://metacpan.org/pod/App::cpanminus)
+ - [lastz](https://github.com/lastz/lastz), for example `apt install lastz` (Debian/Ubuntu) or `conda install -c bioconda lastz`
 
-Install with:
+Install the latest release with:
 ```
-git clone https://github.com/AliTVTeam/AliTV-perl-interface
+git clone --branch v2.0.0 https://github.com/AliTVTeam/AliTV-perl-interface
+cd AliTV-perl-interface
 cpanm --installdeps .
 ```
 
