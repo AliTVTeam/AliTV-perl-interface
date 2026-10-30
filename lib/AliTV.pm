@@ -50,7 +50,7 @@ sub _initialize
 
 =head1 Method run
 
-=head2
+=head2 run
 
 run the generation script
 
@@ -654,7 +654,7 @@ sub _generate_seq_set
 
     # finally, sort the sequences by id and sequence
     @seqs = sort {$a->id() cmp $b->id() || $a->seq() cmp $b->seq()} (@seqs);
-    
+
     # store the sequence set as attribute
     $self->{_seq_set} = \@seqs;
 
@@ -801,6 +801,6 @@ Frank FE<246>ster E<lt>foersterfrank@gmx.deE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-See the F<LICENCE> file for information about the licence.
+See the F<LICENSE> file for information about the licence.
 
 =cut

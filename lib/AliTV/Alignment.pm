@@ -422,7 +422,7 @@ with different alignment programs
   use AliTV::Alignment::type;
 
   # call mechanism not clear so far
-  
+
 =head1 DESCRIPTION
 
 This is the AliTV::Alignment class to align a given sequence set and return the generated alignments.
@@ -435,7 +435,7 @@ Frank Foerster, E<lt>foersterfrank@gmx.deE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2015 by Frank Foerster
+Copyright (C) 2015-2026 by Frank Foerster
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10 or,
