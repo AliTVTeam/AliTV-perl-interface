@@ -97,6 +97,7 @@ t/760_AliTV-Alignment-importer.t
 t/761_AliTV-Alignment-importer-_check.t
 t/762_AliTV-Alignment-importer-run.t
 
+t/998_CITATION-cff.t
 t/999-AliTV-POD-coverage.t
 
 # library files are listed here
