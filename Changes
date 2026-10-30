@@ -4,6 +4,7 @@ Revision history for Perl extension AliTV.
  - Add notice on AI-assisted maintenance (AI-assisted: drafted with Claude Code)
  - Add repo status badge to README (AI-assisted: copied from the viewer README with Claude Code)
  - Name v1.0.7 as the last release without AI support (AI-assisted: updated with Claude Code)
+ - Makefile.PL: add repository metadata, MIT license and missing prerequisites (AI-assisted: written with Claude Code)
 
 1.0.7 <2026-10-30>
  - Add prominent disclaimer for lowercase masking
