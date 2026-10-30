@@ -9,7 +9,7 @@ authors:
   - family-names: Ankenbrand
     given-names: "Markus J"
     orcid: https://orcid.org/0000-0002-6620-807X
-    affiliation: "Center for Computational and Theoretical Biology, University of Würzburg, Germany"
+    affiliation: "Chair for Computational and Theoretical Biology, University of Würzburg, Germany"
     email: markus.ankenbrand@uni-wuerzburg.de
 title: AliTV-perl-interface
 version: 2.0.1
