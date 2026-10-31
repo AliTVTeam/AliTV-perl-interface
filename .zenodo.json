@@ -1,0 +1,37 @@
+{
+  "title": "AliTV-perl-interface",
+  "upload_type": "software",
+  "description": "<p>AliTV-perl-interface creates the input for the AliTV viewer (interactive visualization of whole genome comparisons). It calculates or imports whole genome alignments and converts them, together with sequences, features and trees, into the JSON format of AliTV.</p><p>Since version 2.0.0, AliTV-perl-interface is maintained with the help of AI tools. Every commit says what AI was used for, and every release lists the AI-assisted changes. The last version developed without AI support is v1.0.7.</p>",
+  "creators": [
+    {
+      "name": "Förster, Frank",
+      "orcid": "0000-0003-4166-5423",
+      "affiliation": "Fraunhofer Institute for Molecular Biology and Applied Ecology IME: Gießen"
+    },
+    {
+      "name": "Ankenbrand, Markus J",
+      "orcid": "0000-0002-6620-807X",
+      "affiliation": "Chair for Computational and Theoretical Biology, University of Würzburg, Germany"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Comparative genomics",
+    "Alignment",
+    "Visualization"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.7717/peerj-cs.116",
+      "relation": "isSupplementTo",
+      "scheme": "doi",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "https://github.com/AliTVTeam/AliTV",
+      "relation": "isSupplementTo",
+      "scheme": "url",
+      "resource_type": "software"
+    }
+  ]
+}
