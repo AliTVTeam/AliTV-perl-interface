@@ -65,6 +65,8 @@ Please cite this article if you use AliTV-perl-interface in your project.
 Additionally the software in any specific version can be cited via its zenodo doi:
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.597916.svg)](https://doi.org/10.5281/zenodo.597916)
 
+The file [`CITATION.cff`](CITATION.cff) contains this citation information in a machine-readable form.
+
 ## AUTHOR
 
 - Frank Förster <foersterfrank@gmx.de>
